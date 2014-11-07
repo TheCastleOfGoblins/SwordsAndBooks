@@ -1,14 +1,14 @@
-var Users = function () {
+var Heroes = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
   this.index = function (req, resp, params) {
     var self = this;
-  
-    geddy.model.User.all(function(err, users) {
+
+    geddy.model.Hero.all(function(err, heroes) {
       if (err) {
         throw err;
       }
-      self.respondWith(users, {type:'User'});
+      self.respondWith(heroes, {type:'Hero'});
     });
   };
 
@@ -18,17 +18,17 @@ var Users = function () {
 
   this.create = function (req, resp, params) {
     var self = this
-      , user = geddy.model.User.create(params);
+      , hero = geddy.model.Hero.create(params);
 
-    if (!user.isValid()) {
-      this.respondWith(user);
+    if (!hero.isValid()) {
+      this.respondWith(hero);
     }
     else {
-      user.save(function(err, data) {
+      hero.save(function(err, data) {
         if (err) {
           throw err;
         }
-        self.respondWith(user, {status: err});
+        self.respondWith(hero, {status: err});
       });
     }
   };
@@ -36,15 +36,15 @@ var Users = function () {
   this.show = function (req, resp, params) {
     var self = this;
 
-    geddy.model.User.first(params.id, function(err, user) {
+    geddy.model.Hero.first(params.id, function(err, hero) {
       if (err) {
         throw err;
       }
-      if (!user) {
+      if (!hero) {
         throw new geddy.errors.NotFoundError();
       }
       else {
-        self.respondWith(user);
+        self.respondWith(hero);
       }
     });
   };
@@ -52,15 +52,15 @@ var Users = function () {
   this.edit = function (req, resp, params) {
     var self = this;
 
-    geddy.model.User.first(params.id, function(err, user) {
+    geddy.model.Hero.first(params.id, function(err, hero) {
       if (err) {
         throw err;
       }
-      if (!user) {
+      if (!hero) {
         throw new geddy.errors.BadRequestError();
       }
       else {
-        self.respondWith(user);
+        self.respondWith(hero);
       }
     });
   };
@@ -68,21 +68,21 @@ var Users = function () {
   this.update = function (req, resp, params) {
     var self = this;
 
-    geddy.model.User.first(params.id, function(err, user) {
+    geddy.model.Hero.first(params.id, function(err, hero) {
       if (err) {
         throw err;
       }
-      user.updateProperties(params);
+      hero.updateProperties(params);
 
-      if (!user.isValid()) {
-        self.respondWith(user);
+      if (!hero.isValid()) {
+        self.respondWith(hero);
       }
       else {
-        user.save(function(err, data) {
+        hero.save(function(err, data) {
           if (err) {
             throw err;
           }
-          self.respondWith(user, {status: err});
+          self.respondWith(hero, {status: err});
         });
       }
     });
@@ -91,19 +91,19 @@ var Users = function () {
   this.remove = function (req, resp, params) {
     var self = this;
 
-    geddy.model.User.first(params.id, function(err, user) {
+    geddy.model.Hero.first(params.id, function(err, hero) {
       if (err) {
         throw err;
       }
-      if (!user) {
+      if (!hero) {
         throw new geddy.errors.BadRequestError();
       }
       else {
-        geddy.model.User.remove(params.id, function(err) {
+        geddy.model.Hero.remove(params.id, function(err) {
           if (err) {
             throw err;
           }
-          self.respondWith(user);
+          self.respondWith(hero);
         });
       }
     });
@@ -111,4 +111,4 @@ var Users = function () {
 
 };
 
-exports.Users = Users;
+exports.Heroes = Heroes;
