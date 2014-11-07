@@ -1,16 +1,12 @@
-var Episode = function () {
+var Condition = function () {
 
   this.defineProperties({
-    title: {type: 'string', required: true},
-    isFinal: {type: 'boolean'},
-    isFirst: {type: 'boolean'},
-    coordX: {type: 'int'},
-    coordY: {type: 'int'}
+    // points: {type: 'object'},
+    isWinner: {type: 'object'},
+    // wasHere: {type: 'object'},
+    // hasItem: {type: 'object'},
+    click: {type: 'obejct'}
   });
-
-  this.hasOne('Book');
-  this.hasOne('Parent', {model: 'Episode'});
-  this.hasMany('Children', {model: 'Episode'});
 
   /*
   this.property('login', 'string', {required: true});
@@ -38,14 +34,14 @@ var Episode = function () {
 
 /*
 // Can also define them on the prototype
-Episode.prototype.someOtherMethod = function () {
+Condition.prototype.someOtherMethod = function () {
   // Do some other stuff
 };
 // Can also define static methods and properties
-Episode.someStaticMethod = function () {
+Condition.someStaticMethod = function () {
   // Do some other stuff
 };
-Episode.someStaticProperty = 'YYZ';
+Condition.someStaticProperty = 'YYZ';
 */
 
-Episode = geddy.model.register('Episode', Episode);
+Condition = geddy.model.register('Condition', Condition);
