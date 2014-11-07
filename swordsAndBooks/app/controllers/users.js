@@ -3,7 +3,10 @@ var Users = function () {
 
   this.index = function (req, resp, params) {
     var self = this;
-
+    var user = geddy.model.User.create({name:'fua'});
+    user.save(function(err, saved){
+      console.log(user,saved);
+    });
     geddy.model.User.all(function(err, users) {
       if (err) {
         throw err;

@@ -17,7 +17,7 @@
 */
 
 var config = {
-  appName: 'Geddy App'
+  appName: 'Swords And Books'
 , detailedErrors: false
 , hostname: null
 , port: 4000
@@ -27,7 +27,7 @@ var config = {
 , db: {
     mongo: {
       username: null
-    , dbname: 'production'
+    , dbname: 'swordsAndBooks'
     , prefix: null
     , password: null
     , host: 'localhost'
