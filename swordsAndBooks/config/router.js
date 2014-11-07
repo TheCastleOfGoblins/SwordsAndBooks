@@ -40,4 +40,5 @@ router.get('/').to('Main.index');
 // });
 
 router.resource('users');
+router.resource('books');
 exports.router = router;
