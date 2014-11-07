@@ -1,0 +1,14 @@
+{
+  "name": "empty_project",
+  "version": "0.0.1",
+  "author": "",
+  "dependencies": {
+    "jquery": "^2.1.1",
+    "socket.io": "^1.2.0",
+    "underscore": "^1.7.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "0.8.x"
+  }
+}
