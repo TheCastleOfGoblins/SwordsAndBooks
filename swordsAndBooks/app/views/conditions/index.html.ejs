@@ -1,0 +1,19 @@
+<div class="hero-unit">
+  <h2>All Conditions</h2>
+  <%- linkTo('Create a new Condition', addConditionPath, {class: 'btn pull-right'}); %>
+</div>
+
+<div id="conditions-list">
+<% if (conditions) { %>
+<% for (var i = 0, ii = conditions.length; i < ii; i++) { %>
+  <div class="row list-item" id="condition-<%= conditions[i].id; %>">
+    <div class="span8">
+      <h3><%- linkTo(conditions[i].id, conditionPath(conditions[i].id)); %></h3>
+    </div>
+    <div class="span4">
+      <h3><i class="icon-list-alt"></i><%= conditions[i].id; %></h3>
+    </div>
+  </div>
+<% } %>
+<% } %>
+</div>
