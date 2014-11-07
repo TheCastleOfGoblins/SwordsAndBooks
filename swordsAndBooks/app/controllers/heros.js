@@ -1,14 +1,14 @@
-var Heroes = function () {
+var Heros = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
   this.index = function (req, resp, params) {
     var self = this;
 
-    geddy.model.Hero.all(function(err, heroes) {
+    geddy.model.Hero.all({userId:params.userId},function(err, heros) {
       if (err) {
         throw err;
       }
-      self.respondWith(heroes, {type:'Hero'});
+      self.respondWith(heros, {type:'Hero'});
     });
   };
 
@@ -111,4 +111,4 @@ var Heroes = function () {
 
 };
 
-exports.Heroes = Heroes;
+exports.Heros = Heros;

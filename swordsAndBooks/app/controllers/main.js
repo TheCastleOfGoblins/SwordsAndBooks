@@ -21,21 +21,44 @@ var Main = function () {
   	var _ = require('underscore');
   	var jquery = require('jquery');
 
-  	var io = require('socket.io').listen(geddy.server);
+    this.redirect('/login');
+  	// var io = require('socket.io').listen(geddy.server);
 
-  	io.sockets.on('connection', function (socket) {
-	  console.log("Good!");
-	  socket.on('newMessage', function (data) {
-	  	socket.emit('new', { message: 'world' });
-	    console.log(data);
-	  });
-	});
-
+  	// io.sockets.on('connection', function (socket) {
+	  // socket.on('newMessage', function (data) {
+	  // 	socket.emit('new', { message: 'world' });
+	  //   console.log(data);
+	  // });
+	  // });
     this.respond({params: params}, {
       format: 'html'
     , template: 'app/views/main/index'
     });
   };
+  this.login = function (req, resp, params){
+    this.respond({params: params}, {
+      format: 'html'
+    , template: 'app/views/main/login'
+    });
+  }
+
+  this.prepareSession = function (req, resp, params) {
+    console.log(params);
+    var self = this;
+    geddy.model.User.first({name:params.userName},function(err, user){
+      if(err || !user){
+        console.log(err);
+        self.flash.error('Wrong user or password');
+        self.redirect('/login');
+        return;
+      }
+      self.session.set('user',user);
+      
+      console.log(self.session.get('user'));
+
+      self.redirect('/heros/' + user.id);
+    });
+  }
 };
 
 exports.Main = Main;

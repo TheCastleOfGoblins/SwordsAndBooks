@@ -10,7 +10,8 @@ var Hero = function () {
     intelligence:{type:'number',required: true},
     image:{type:'string',required:true}
   });
-
+  
+  this.belongsTo('User');
   /*
   this.property('login', 'string', {required: true});
   this.property('password', 'string', {required: true});

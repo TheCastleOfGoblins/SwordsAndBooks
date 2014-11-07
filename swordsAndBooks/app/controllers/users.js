@@ -3,7 +3,7 @@ var Users = function () {
 
   this.index = function (req, resp, params) {
     var self = this;
-  
+    
     geddy.model.User.all(function(err, users) {
       if (err) {
         throw err;
