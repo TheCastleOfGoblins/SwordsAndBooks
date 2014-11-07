@@ -43,4 +43,6 @@ router.resource('users');
 router.resource('books');
 router.resource('episodes');
 router.resource('conditions');
+router.resource('heroes');
+
 exports.router = router;

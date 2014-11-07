@@ -1,12 +1,16 @@
-var User = function () {
+var Hero = function () {
 
   this.defineProperties({
-    name: {type: 'string', required: true},
-    password: {type:'string', required:true}
+    name:{type:'string', required:true},
+    gender:{type:'string', required: true }, 
+    level: {type:'number', required: true},
+    power:{type:'number',required: true}, 
+    strength:{type:'number',required: true},
+    speed:{type:'number',required: true},
+    intelligence:{type:'number',required: true},
+    image:{type:'string',required:true}
   });
-  
-  this.hasMany('Heroes');
-  
+
   /*
   this.property('login', 'string', {required: true});
   this.property('password', 'string', {required: true});
@@ -33,14 +37,14 @@ var User = function () {
 
 /*
 // Can also define them on the prototype
-User.prototype.someOtherMethod = function () {
+Hero.prototype.someOtherMethod = function () {
   // Do some other stuff
 };
 // Can also define static methods and properties
-User.someStaticMethod = function () {
+Hero.someStaticMethod = function () {
   // Do some other stuff
 };
-User.someStaticProperty = 'YYZ';
+Hero.someStaticProperty = 'YYZ';
 */
 
-User = geddy.model.register('User', User);
+Hero = geddy.model.register('Hero', Hero);
