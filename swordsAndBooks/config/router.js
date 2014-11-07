@@ -41,4 +41,5 @@ router.get('/').to('Main.index');
 
 router.resource('users');
 router.resource('books');
+router.resource('episodes');
 exports.router = router;
