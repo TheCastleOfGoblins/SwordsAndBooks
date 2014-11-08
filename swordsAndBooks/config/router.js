@@ -44,8 +44,9 @@ router.resource('users');
 router.resource('books');
 router.resource('episodes');
 
-router.get('/heros/:userId').to('Heros.index');
+// router.get('/heros/:userId').to('Heros.index');
 router.resource('heros');
+router.get('/selectHero/:heroId').to('Heros.selectHero');
 
 router.resource('conditions');
 

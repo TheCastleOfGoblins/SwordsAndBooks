@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <style>
+      #panel{
+        width:550px;
+        height:550px;
+        position:relative;
+        border:1px solid black;
+      }
+      #graph
+      {
+        position:absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+      }
+      #panel > canvas
+      {
+        width:100%;
+        height:100%;
+      }
+      .node
+      {
+        fill:green;
+      }
+      .node:hover
+      {
+        stroke:gray;
+        stroke-width:3;
+      }
+      .selected
+      {
+        fill:blue;
+      }
+      .node-title
+      {
+        font-size:10px;
+      }
+      #graphEdges
+      {
+        stroke:blue;
+        stroke-width:3;
+      }
+    </style>
+    <script src="jquery.min.js"></script>
+    <script src="svgraph.js"></script>
+  </head>
+  <body>
+    <figure id="panel">
+      <img src="http://freegeographytools.com/wp-content/uploads/2007/05/terrain-merge.jpg">
+      <svg id="graph">
+        <path id="graphEdges" d="M0 0 Z"/>
+      </svg>
+    </figure>
+    <script>
+      var id = 1024;
+      var parrent = 1024;
+      var curNode = {
+        "title" : "current episode name",
+        "url" : "/current/",
+      }
+      $(document).ready(function(){
+        var graph = new SvGraph(document.getElementById("graph"),document.getElementById("graphEdges"));
+        $("figure").click(function(e){
+          curNode.id = id++;
+          curNode.current = true;
+          curNode.x = e.offsetX;
+          curNode.y = e.offsetY;
+          var current = graph.currentNodeId();
+          graph.addNode(
+            curNode
+          );
+          graph.addEdge({
+            start : current,
+            end : curNode.id
+          });
+          $("figure").off("click");
+        });
+        graph.addNodes({
+  "edit" : false,
+  node:[
+    {
+      "x":150,
+      "y":70,
+      "title":"The battle of quell danas",
+      "url":"/book/episode/battle",
+      "id": 1000,
+      "current":true
+    },
+    {
+      "x":190,
+      "y":220,
+      "title":"The clash of the titans",
+      "url":"/book/episode/city1",
+      "id": 1001,
+    },
+    {
+      "x":115,
+      "y":98,
+      "title":"When all hell broke loose",
+      "url":"/book/episode/damnit3",
+      "id": 1002,
+    },
+    {
+      "x":201,
+      "y":88,
+      "title":"Ninjas attack",
+      "url":"/book/episode/gagag",
+      "id": 1003,
+    }
+  ],
+  edges:[
+    {
+      "start":1000,
+      "end":[1001],
+    },
+    {
+      "start":1001,
+      "end":[1002],
+    },
+    {
+      "start":1002,
+      "end":[1003],
+    }
+  ]
+})
+      });
+    </script>
+  </body>
+</html>

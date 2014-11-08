@@ -3,14 +3,28 @@ var Heros = function () {
 
   this.index = function (req, resp, params) {
     var self = this;
-
-    geddy.model.Hero.all({userId:params.userId},function(err, heros) {
+    
+    geddy.model.Hero.all({userId:self.session.get('user').id},function(err, heros) {
       if (err) {
         throw err;
       }
-      self.respondWith(heros, {type:'Hero'});
+      
+      self.respond({heros:heros});
     });
   };
+
+  this.selectHero = function(req, resp, params){
+    var self = this;
+    geddy.model.Hero.first(params.heroId,function(err, hero){
+      if(err || !hero){
+        self.error.flash('No such hero.');
+        redirect('/heros/');
+      }
+
+      self.session.set('selectedHero', hero);
+      self.respond({params:params}, {template:'app/views/navigation'} )
+    });
+  }
 
   this.add = function (req, resp, params) {
     this.respond({params: params});

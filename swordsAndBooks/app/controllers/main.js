@@ -16,7 +16,7 @@
  *
 */
 
-var Main = function () {
+var Main = function () {  
   this.index = function (req, resp, params) {
   	var _ = require('underscore');
   	var jquery = require('jquery');
@@ -43,7 +43,7 @@ var Main = function () {
   }
 
   this.prepareSession = function (req, resp, params) {
-    console.log(params);
+    
     var self = this;
     geddy.model.User.first({name:params.userName},function(err, user){
       if(err || !user){
@@ -52,11 +52,9 @@ var Main = function () {
         self.redirect('/login');
         return;
       }
-      self.session.set('user',user);
       
-      console.log(self.session.get('user'));
-
-      self.redirect('/heros/' + user.id);
+      self.session.set('user',user);
+      self.redirect('/heros/');
     });
   }
 };

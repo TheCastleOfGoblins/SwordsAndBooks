@@ -1,19 +1,31 @@
 <div class="hero-unit">
-  <h2>All Heros</h2>
-  <%- linkTo('Create a new Hero', addHeroPath, {class: 'btn pull-right'}); %>
+  <h2><%=session.get('user').name%>'s Heros</h2>
 </div>
 
 <div id="heros-list">
 <% if (heros) { %>
-<% for (var i = 0, ii = heros.length; i < ii; i++) { %>
-  <div class="row list-item" id="hero-<%= heros[i].id; %>">
-    <div class="span8">
-      <h3><%- linkTo(heros[i].id, heroPath(heros[i].id)); %></h3>
-    </div>
-    <div class="span4">
-      <h3><i class="icon-list-alt"></i><%= heros[i].id; %></h3>
-    </div>
-  </div>
-<% } %>
+    <% for (var i = 0, ii = heros.length; i < ii; i++) { %>
+      <div class='span2 offset4 hero' style='margin-top:15px;border:solid 2px' id='<%=heros[i].id%>'>
+        <div class='span2'>
+          <img src='<%=heros[i].image%>' width='50px' height='50px'/>
+        </div>
+        <div class='span2'>
+          <strong>
+            <%=heros[i].name%>
+          </strong>
+        </div>
+        <div class='span2'>
+          Gender: <%=heros[i].gender%>
+        </div>
+        <div class='span2'>
+          Level: <%=heros[i].level%>
+        </div>
+      </div>
+    <% } %>
 <% } %>
 </div>
+<script type="text/javascript">
+  $('.hero').click(function() {
+    window.location.href = '/selectHero/' + $(this).attr('id');
+  });
+</script>
