@@ -54,8 +54,8 @@ var Books = function () {
         throw new geddy.errors.NotFoundError();
       }
       else {
-        book.getEpisodes(function(err, data) {
-          self.respond({book: book, episodes: data.length});
+        book.getEpisodes(function(err, episodes) {
+          self.respond({book: book, episodes: episodes});
         })
       }
     });

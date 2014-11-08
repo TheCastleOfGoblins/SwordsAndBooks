@@ -7,7 +7,7 @@ var Condition = function () {
     // hasItem: {type: 'object'},
     click: {type: 'obejct'}
   });
-
+  this.hasOne('Episode');
   /*
   this.property('login', 'string', {required: true});
   this.property('password', 'string', {required: true});

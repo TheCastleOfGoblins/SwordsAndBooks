@@ -19,16 +19,18 @@
       </div>
       <% } %>
 
-      <%- partial('form', {episode: params, books: books}) %>
+      <%- partial('form', {episode: params}) %>
 
       <textarea name="story">Easy! You should check out MoxieManager!</textarea>
 
       Conditions: <br>
       <div class="control-group conditions">
       Text:
-      <input type="text" name=conditions[]>
+      <input type="text" name=clickContidions[]>
       <a href="">Create the next episode</a> <br>
       </div>
+
+      <input type='hidden' name='isWinner'>
 
       <a href="" id="add-condition">Add condition</a>
 

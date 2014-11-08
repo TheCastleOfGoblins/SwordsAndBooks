@@ -1,18 +1,18 @@
 var Episode = function () {
 
   this.defineProperties({
-    title: {type: 'string', required: true},
-    story: {type: 'text', required: true},
+    title: {type: 'string'},
+    story: {type: 'text'},
     isFinal: {type: 'boolean'},
     isFirst: {type: 'boolean'},
     coordX: {type: 'int'},
-    coordY: {type: 'int'}
+    coordY: {type: 'int'},
+    clickContidions: {type: 'object'},
+    // isWinner: {type: 'object'}
   });
 
   this.hasOne('Book');
-  this.hasOne('Parent', {model: 'Episode'});
-  this.hasMany('Children', {model: 'Episode'});
-  this.hasMany('Conditions', {model: 'Condition'});
+
 
   /*
   this.property('login', 'string', {required: true});

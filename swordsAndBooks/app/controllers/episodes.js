@@ -14,18 +14,19 @@ var Episodes = function () {
 
   this.add = function (req, resp, params) {
     var self = this;
-    geddy.model.Book.all(function (err, data) {
-      if (err) {
-        throw err;
-      }
-      self.respond({params: params, books: data});
+    geddy.model.Book.first(params.bookId,function(err,book){
+      self.session.set('book',book);
+      self.respond({params: params});
     });
+    
   };
 
   this.create = function (req, resp, params) {
+
     var self = this
       , episode = geddy.model.Episode.create(params);
 
+    console.log(params);
     if (!episode.isValid()) {
       this.respondWith(episode);
     }
