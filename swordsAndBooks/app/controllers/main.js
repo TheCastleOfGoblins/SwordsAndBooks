@@ -40,7 +40,7 @@ var Main = function () {
       format: 'html'
     , template: 'app/views/main/login'
     });
-  }
+  };
 
   this.prepareSession = function (req, resp, params) {
     
@@ -56,6 +56,10 @@ var Main = function () {
       self.session.set('user',user);
       self.redirect('/heros/');
     });
+  };
+
+  this.navigation = function (req, resp, params) {
+    this.respond({params:params}, {format: 'html',  template:'app/views/navigation'});
   }
 };
 

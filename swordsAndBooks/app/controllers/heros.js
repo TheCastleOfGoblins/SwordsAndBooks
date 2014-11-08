@@ -22,9 +22,10 @@ var Heros = function () {
       }
 
       self.session.set('selectedHero', hero);
+      self.redirect('/navigation');
       self.respond({params:params}, {template:'app/views/navigation'} )
     });
-  }
+  };
 
   this.add = function (req, resp, params) {
     this.respond({params: params});

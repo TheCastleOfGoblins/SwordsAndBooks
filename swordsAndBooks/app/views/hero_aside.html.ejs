@@ -1,7 +1,7 @@
 <aside>
 	<% var hero = session.get('selectedHero');%>
 
-	<div class='span2 hero' style='margin-top:15px;border:solid 2px' id='<%=hero.id%>'>
+	<div class='span3' style='margin-top:15px;border:solid 2px' id='<%=hero.id%>'>
 		<div class='span2'>
 		  <img src='<%=hero.image%>' width='50px' height='50px'/>
 		</div>
@@ -17,11 +17,29 @@
 		  Level: <%=hero.level%>
 		</div>
 
-		<div class='span2'>
+		<div class='span2' style='margin-top:15px'>
 		  <strong>
 		    Stats:
 		  </strong>
 		</div>
-		
+		<div class='span2'>
+		  <div class='healthBar' style='background:green;border-radius:20px;text-align:center;'>
+		  	<strong>
+		  		<%=hero.currentHealth%> / <%= hero.maxHealth%>
+		  	</strong>
+		  </div> 
+		</div>
+		<div class='span2'>
+		  Power: <%=hero.power%>
+		</div>
+		<div class='span2'>
+		  Strength: <%=hero.strength%>
+		</div>
+		<div class='span2'>
+		  Speed: <%=hero.speed%>
+		</div>
+		<div class='span2'>
+		  Intelligence: <%=hero.intelligence%>
+		</div>
 	</div>
 </aside>

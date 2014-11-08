@@ -47,7 +47,7 @@ router.resource('episodes');
 // router.get('/heros/:userId').to('Heros.index');
 router.resource('heros');
 router.get('/selectHero/:heroId').to('Heros.selectHero');
-
+router.get('/navigation').to('Main.navigation');
 router.resource('conditions');
 
 exports.router = router;

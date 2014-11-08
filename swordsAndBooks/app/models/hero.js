@@ -2,6 +2,8 @@ var Hero = function () {
 
   this.defineProperties({
     name:{type:'string', required:true},
+    maxHealth: {type:'number',required:true},
+    currentHealth: {type:'number',required:true},
     gender:{type:'string', required: true }, 
     level: {type:'number', required: true},
     power:{type:'number',required: true}, 
