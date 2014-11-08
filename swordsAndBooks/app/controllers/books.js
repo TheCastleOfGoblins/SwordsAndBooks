@@ -20,6 +20,7 @@ var Books = function () {
     var self = this
       , book = geddy.model.Book.create(params);
 
+
     if (!book.isValid()) {
       this.respondWith(book);
     }
@@ -28,6 +29,12 @@ var Books = function () {
         if (err) {
           throw err;
         }
+
+        book.setCreator(self.session.get('user'));
+
+        console.log('----------------------');
+        console.log(book);
+        console.log('----------------------');
         self.respondWith(book, {status: err});
       });
     }
@@ -35,6 +42,9 @@ var Books = function () {
 
   this.show = function (req, resp, params) {
     var self = this;
+    console.log('----------------------');
+    console.log(self.session.get('user'));
+    console.log('----------------------');
 
     geddy.model.Book.first(params.id, function(err, book) {
       if (err) {

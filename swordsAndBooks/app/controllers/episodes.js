@@ -14,6 +14,7 @@ var Episodes = function () {
 
   this.add = function (req, resp, params) {
     this.respond({params: params});
+    console.log(params);
   };
 
   this.create = function (req, resp, params) {

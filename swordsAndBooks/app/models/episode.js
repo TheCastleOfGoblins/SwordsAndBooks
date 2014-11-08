@@ -2,6 +2,7 @@ var Episode = function () {
 
   this.defineProperties({
     title: {type: 'string', required: true},
+    story: {type: 'text', required: true},
     isFinal: {type: 'boolean'},
     isFirst: {type: 'boolean'},
     coordX: {type: 'int'},
