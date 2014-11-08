@@ -8,10 +8,7 @@
 <% for (var i = 0, ii = books.length; i < ii; i++) { %>
   <div class="row list-item" id="book-<%= books[i].id; %>">
     <div class="span8">
-      <h3><%- linkTo(books[i].title, bookPath(books[i].id)); %></h3>
-    </div>
-    <div class="span4">
-      <h3><i class="icon-list-alt"></i><%= books[i].id; %></h3>
+      <h3><%- linkTo(books[i].title, bookPath(books[i].id)); %> (by <%= session.get('user').name %>)</h3>
     </div>
   </div>
 <% } %>

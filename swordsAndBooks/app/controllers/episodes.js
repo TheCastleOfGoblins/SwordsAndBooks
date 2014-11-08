@@ -13,8 +13,13 @@ var Episodes = function () {
   };
 
   this.add = function (req, resp, params) {
-    this.respond({params: params});
-    console.log(params);
+    var self = this;
+    geddy.model.Book.all(function (err, data) {
+      if (err) {
+        throw err;
+      }
+      self.respond({params: params, books: data});
+    });
   };
 
   this.create = function (req, resp, params) {

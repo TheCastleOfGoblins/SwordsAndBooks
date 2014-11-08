@@ -1,5 +1,5 @@
 <div class="hero-unit">
-  <h2 class="title"><%= book.title %></h2>
+<h2 class="title"><%= book.title %></h2>
   <%- linkTo('Edit this book', editBookPath(params.id), {class: 'btn pull-right'}); %>
   <%- linkTo('Back to list', bookPath(''), {class: 'btn pull-right'}); %>
 </div>
@@ -10,6 +10,7 @@
 <div class="row list-item">
   <div class="span4">
     <h3><%= i %></h3>
+    <h2><%= episodes %> episodes</h2>
   </div>
   <div class="span8">
     <p><%= i %></p>
@@ -17,6 +18,4 @@
 
  </div>
 </div>
-<a href=""><%= book.creator.name %></a>
-<a href="">Nanana</a>
 <% } -%><% } -%>
