@@ -6,7 +6,7 @@ db = mongo.getDB(databaseToUse);
 // db = mongo.getDB(databaseToUse);
 
 
-db.users.insert({name: 'Hary',password:'123'});
-db.users.insert({name:'Emi', password: '123'});
-db.users.insert({name:'Misho', password: '123'});
+db.users.insert({id:'1', name: 'Hary',password:'123'});
+db.users.insert({id:'2',name:'Emi', password: '123'});
+db.users.insert({id:'3',name:'Misho', password: '123'});
 

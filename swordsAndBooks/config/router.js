@@ -20,7 +20,8 @@
 var router = new geddy.RegExpRouter();
 
 router.get('/').to('Main.index');
-
+router.get('/login').to('Main.login');
+router.post('/prepareSession').to('Main.prepareSession');
 // Basic routes
 // router.match('/moving/pictures/:id', 'GET').to('Moving.pictures');
 //
@@ -42,7 +43,10 @@ router.get('/').to('Main.index');
 router.resource('users');
 router.resource('books');
 router.resource('episodes');
+
+router.get('/heros/:userId').to('Heros.index');
+router.resource('heros');
+
 router.resource('conditions');
-router.resource('heroes');
 
 exports.router = router;
