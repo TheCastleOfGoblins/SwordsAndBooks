@@ -61,6 +61,33 @@ var Main = function () {
   this.navigation = function (req, resp, params) {
     this.respond({params:params}, {format: 'html',  template:'app/views/navigation'});
   }
+
+  this.startBattle = function(req, resp, params){
+    var self = this;
+    geddy.model.Hero.first(params.opponentId,function(err, opponent){
+
+      var yourHero = self.session.get('selectedHero');
+      self.session.set('opponent', opponent);
+
+      var io = require('socket.io').listen(geddy.server);
+
+      io.sockets.on('connection', function (socket) {
+
+        socket.on('userAtack', function (attackZone) {
+          console.log(attackZone);
+          socket.emit('enemyAtack', { succes: true });
+        });
+
+        socket.on('userDefense', function (defenseZone) {
+          console.log(defenseZone);
+          socket.emit('userDamageTaken', { damageTaken: {} });
+        });
+      });
+
+
+      self.respond({params:params, yourHero:yourHero, opponent:opponent},{format:'html',template: 'app/views/battle'})
+    });
+  }
 };
 
 exports.Main = Main;

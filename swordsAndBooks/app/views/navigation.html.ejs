@@ -1,5 +1,10 @@
 <%-partial('./hero_aside',{session:session})%>	
 
 <div class='row-fliud offset2' style='margin-top:67px'>
-	<%-contentTag('button','Get Random Opponent',{class:'btn btn-large span2'})%>
+	<%-contentTag('button','Get Random Opponent',{class:'btn btn-large span2',id:'battleStart'})%>
+	<script type="text/javascript">
+		$('#battleStart').click(function () {
+			window.location.href = '/startBattle/111'
+		});
+	</script>
 </div>

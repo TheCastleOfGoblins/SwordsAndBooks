@@ -1,0 +1,145 @@
+<div class='span3' style='margin-top:15px;border:solid 2px;' id='<%=yourHero.id%>'>
+		<div class='span2'>
+		  <img src='<%=yourHero.image%>' width='50px' height='50px'/>
+		</div>
+		<div class='span2'>
+		  <strong>
+		    <%=yourHero.name%>
+		  </strong>
+		</div>
+		<div class='span2'>
+		  Gender: <%=yourHero.gender%>
+		</div>
+		<div class='span2'>
+		  Level: <%=yourHero.level%>
+		</div>
+		<div class='healthBar span2' style='background:green;border-radius:20px;text-align:center;'>
+		  	<strong>
+		  		<%=yourHero.currentHealth%> / <%= yourHero.maxHealth%>
+		  	</strong>
+		</div>
+
+		<div class='span2 attackMenu' style='margin-top:15px;'>
+			<strong>Attack Menu:</strong>
+			<div style='margin-top:15px;'>
+				Head:
+				<%-contentTag('input','',{type:'checkbox', class:'attack', value:'head'})%>
+			</div>
+			<div style='margin-top:15px;'>
+				Body:
+				<%-contentTag('input','',{type:'checkbox', class:'attack', value:'body'})%>
+			</div>
+			<div style='margin-top:15px;'>
+				Arms:
+				<%-contentTag('input','',{type:'checkbox', class:'attack', value:'arms'})%>
+			</div>
+			<div style='margin-top:15px;'>
+				Legs:
+				<%-contentTag('input','',{type:'checkbox', class:'attack', value:'legs'})%>
+			</div>
+
+			<div style='margin-top:15px;'>
+				<%-contentTag('input','Attack',{type:'button', class:'btn-danger', id:'submitAtack'})%>
+			</div>
+		</div>
+		<div class='span2 defenseMenu' style='margin-top:15px;display:none'>
+			<strong>Defense Menu:</strong>
+			<div style='margin-top:15px;'>
+				Head:
+				<%-contentTag('input','',{type:'checkbox', class:'defense', value:'head'})%>
+			</div>
+			<div style='margin-top:15px;'>
+				Body:
+				<%-contentTag('input','',{type:'checkbox', class:'defense', value:'body'})%>
+			</div>
+			<div style='margin-top:15px;'>
+				Arms:
+				<%-contentTag('input','',{type:'checkbox', class:'defense', value:'arms'})%>
+			</div>
+			<div style='margin-top:15px;'>
+				Legs:
+				<%-contentTag('input','',{type:'checkbox', class:'defense', value:'legs'})%>
+			</div>
+
+			<div style='margin-top:15px;'>
+				<%-contentTag('input','Defense',{type:'button', class:'defense btn-info', id:'submitDefense'})%>
+			</div>
+		</div>
+</div>
+<div class='battleInfo span5' style='background:white;margin-top:15px;border:solid 2px;height:345px;text-align:center'>
+	<div class='roundContainer'>
+		<h1 class='roundCounter'> Round 1 </h1>
+		<div class='row' style='margin-top:15px'>
+			<strong class='damageDone span5' style='color: green;'>You have done 123 damage </strong>
+			<strong class='attackBlock span5' style='color: red;'>123 Damage blocked</strong>
+		</div>
+		<div class='row' style='margin-top:15px'>
+			<strong class='damageTaken span5' style='color: red;'>123 Damage taken</strong>
+			<strong class='defenseBlock span5' style='color: green;'>123 Damage blocked</strong>	
+		</div>
+	</div>
+</div>
+
+<div class='span3' style='margin-top:15px;border:solid 2px;' id='<%=opponent.id%>'>
+		<div class='span2'>
+		  <img src='<%=opponent.image%>' width='50px' height='50px'/>
+		</div>
+		<div class='span2'>
+		  <strong>
+		    <%=opponent.name%>
+		  </strong>
+		</div>
+		<div class='span2'>
+		  Gender: <%=opponent.gender%>
+		</div>
+		<div class='span2'>
+		  Level: <%=opponent.level%>
+		</div>
+		<div class='healthBar span2' style='background:green;border-radius:20px;text-align:center;'>
+		  	<strong>
+		  		<%=opponent.currentHealth%> / <%= opponent.maxHealth%>
+		  	</strong>
+		</div>
+</div>
+
+<%- scriptLink('/js/socket.io.js', { type: 'text/javascript' }) %>
+<script>
+	var socket = io(window.location.hostname);
+	$('#submitAtack').click(function() {
+		
+		var attackZone = false;
+		$('.attack').each(function(){
+			if($(this).attr('checked')){
+				attackZone = $(this).val();
+			}
+
+		});
+		socket.emit('userAtack', { attackZone:attackZone });
+	});
+
+	socket.on('enemyAtack', function (data) {
+			$('.attackMenu').fadeOut('slow',function () {
+				$('.defenseMenu').fadeIn('slow');	
+			});
+			console.log(data);
+	});
+
+	$('#submitDefense').click(function() {
+		var defenseZone = [];
+		$('.defense').each(function(){
+			if($(this).attr('checked')){
+				defenseZone.push($(this).val());
+			}
+		});
+		socket.emit('userDefense', { defenseZone: defenseZone });
+	});
+
+	socket.on('userDamageTaken', function (damageTaken) {
+		$('.defenseMenu').fadeOut('slow',function(){
+			$('.attackMenu').fadeIn('slow');
+		});
+		console.log(damageTaken);
+	});
+
+
+</script>

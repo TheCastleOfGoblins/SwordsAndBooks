@@ -48,6 +48,8 @@ router.resource('episodes');
 router.resource('heros');
 router.get('/selectHero/:heroId').to('Heros.selectHero');
 router.get('/navigation').to('Main.navigation');
+router.get('/startBattle/:opponentId').to('Main.startBattle');
+
 router.resource('conditions');
 
 exports.router = router;
