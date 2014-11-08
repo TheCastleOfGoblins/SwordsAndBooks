@@ -14,16 +14,18 @@ h1,h2,h3,h4,h5,h6
 }
 .title-intro
 {
-  padding: 20px;
-  margin-bottom: 30px;
-  font-size: 18px;
-  font-weight: 200;
+  padding: 10px;
   line-height: 30px;
   color: inherit;
   background-color: #eee;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
+}
+.title-intro h2
+{
+  border-top:2px solid #777777;
+  border-bottom:2px solid #777777;
 }
 .blackline
 {
@@ -34,6 +36,22 @@ h1,h2,h3,h4,h5,h6
 {
   height:5px;
   background:#777777;
+}
+.btn-default
+{
+  border:none;
+  box-shadow:none;
+  border:1px solid black;
+  text-shadow:none;
+  border-radius:2px;
+  background:#222222;
+  color:#aaaaaa;
+  transition:all 1s;
+}
+input
+{
+  border-radius:0px !important;
+  border:1px solid black !important;
 }
 .main-visual
 {
@@ -63,10 +81,22 @@ h1,h2,h3,h4,h5,h6
   margin-top:15px;
   background:white;
 }
+.small-empty-space
+{
+  height:20px;
+}
+.empty-space
+{
+  height:100px;
+}
 .logo
 {
   width:50px;
   height:50px;
+}
+.bg1
+{
+  background-color:black;
 }
 .bg2
 {
@@ -145,11 +175,37 @@ code {
     margin-top: 10px;
   }
 }
-
+.hero
+{
+  height:200px;
+  background-color:#222222;
+  padding:5px;
+  border-radius:10px;
+  color:#aaaaaa;
+  overflow:hidden;
+}
+.hero:hover
+{
+  background-color:#333333;
+  color:black;
+}
+.hero > .span2
+{
+  margin:0;
+}
+.hero:nth-child(2n + 2)
+{
+  margin-left:10px;
+}
+.hero img
+{
+  height:200px;
+  border:1px solid black;
+  border-radius:15px;
+}
 
 .hero{
   cursor:pointer;
+  margin:0;
+  margin-bottom:25px;
 }
-.hero:hover{
-  background: yellow;
-};
