@@ -12,6 +12,7 @@ var Episode = function () {
   this.hasOne('Book');
   this.hasOne('Parent', {model: 'Episode'});
   this.hasMany('Children', {model: 'Episode'});
+  this.hasMany('Conditions', {model: 'Condition'});
 
   /*
   this.property('login', 'string', {required: true});

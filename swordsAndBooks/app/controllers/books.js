@@ -8,7 +8,15 @@ var Books = function () {
       if (err) {
         throw err;
       }
-      self.respondWith(books, {type:'Book'});
+
+      // var episodes = [];
+      // books.forEach(function(book) {
+      //   book.getEpisodes(function(err, data) {
+      //     episodes.push(data.length);
+      //   }));
+      // })
+
+      self.respond({books: books });
     });
   };
 
@@ -30,11 +38,6 @@ var Books = function () {
           throw err;
         }
 
-        book.setCreator(self.session.get('user'));
-
-        console.log('----------------------');
-        console.log(book);
-        console.log('----------------------');
         self.respondWith(book, {status: err});
       });
     }
@@ -42,9 +45,6 @@ var Books = function () {
 
   this.show = function (req, resp, params) {
     var self = this;
-    console.log('----------------------');
-    console.log(self.session.get('user'));
-    console.log('----------------------');
 
     geddy.model.Book.first(params.id, function(err, book) {
       if (err) {
@@ -54,7 +54,9 @@ var Books = function () {
         throw new geddy.errors.NotFoundError();
       }
       else {
-        self.respondWith(book);
+        book.getEpisodes(function(err, data) {
+          self.respond({book: book, episodes: data.length});
+        })
       }
     });
   };
