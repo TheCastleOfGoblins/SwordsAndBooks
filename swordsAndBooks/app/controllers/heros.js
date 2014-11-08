@@ -20,7 +20,7 @@ var Heros = function () {
         self.error.flash('No such hero.');
         redirect('/heros/');
       }
-
+      console.log(hero);
       self.session.set('selectedHero', hero);
       self.redirect('/navigation');
       self.respond({params:params}, {template:'app/views/navigation'} )

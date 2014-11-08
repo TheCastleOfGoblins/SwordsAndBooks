@@ -14,6 +14,9 @@ var Hero = function () {
   });
   
   this.belongsTo('User');
+  this.damage = function(){
+    return Math.ceil(Math().random() * 3) + this.power;
+  }
   /*
   this.property('login', 'string', {required: true});
   this.property('password', 'string', {required: true});

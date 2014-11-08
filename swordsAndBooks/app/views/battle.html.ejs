@@ -1,3 +1,47 @@
+<%- scriptLink('annyang.min.js', {type:'text/javascript'}) %>
+<script type="text/javascript">
+	function checkPropertBox(part){
+		if($('.attackMenu').is(':visible')){
+			$('.attack.' + part).attr('checked',true);
+		}else{
+			$('.defense.' + part).attr('checked',true);
+		}
+	}
+	if (annyang) {
+  		console.log('yeah?');
+  		
+	  	var commands = {
+	  		'head': function(){
+	  			checkPropertBox('head');
+	  		}, 
+	  		'body': function(){
+	  			checkPropertBox('body');
+	  		},
+	  		'arms': function(){
+	  			checkPropertBox('arms');
+	  		},
+	  		'legs': function(){
+	  			checkPropertBox('legs');
+	  		},
+	  		'attack':function(){
+	  			if($('#submitAtack').is(':visible')){
+	  				$('#submitAtack').click();
+	  			}
+	  		},
+	  		'defense':function(){
+	  			if($('#submitDefense').is(':visible')){
+	  				$('#submitDefense').click();
+	  			}
+	  		}
+	  	};
+
+		// Add our commands to annyang
+		annyang.addCommands(commands);
+
+	  	// Start listening. You can call this here, or attach this call to an event, button, etc.
+	  	annyang.start();
+	}
+</script>
 <div class='span3' style='margin-top:15px;border:solid 2px;' id='<%=yourHero.id%>'>
 		<div class='span2'>
 		  <img src='<%=yourHero.image%>' width='50px' height='50px'/>
@@ -13,9 +57,9 @@
 		<div class='span2'>
 		  Level: <%=yourHero.level%>
 		</div>
-		<div class='healthBar span2' style='background:green;border-radius:20px;text-align:center;'>
+		<div class='healthBar yourHealthBar span2' data-currentHealth = '<%=yourHero.currentHealth%>' style='background:green;border-radius:20px;text-align:center;'>
 		  	<strong>
-		  		<%=yourHero.currentHealth%> / <%= yourHero.maxHealth%>
+		  		<span id='yourCurrentHealth'><%=yourHero.currentHealth%></span> / <span id='yourMaxHealth'><%= yourHero.maxHealth%></span>
 		  	</strong>
 		</div>
 
@@ -23,19 +67,19 @@
 			<strong>Attack Menu:</strong>
 			<div style='margin-top:15px;'>
 				Head:
-				<%-contentTag('input','',{type:'checkbox', class:'attack', value:'head'})%>
+				<%-contentTag('input','',{type:'checkbox', class:'attack head', value:'head'})%>
 			</div>
 			<div style='margin-top:15px;'>
 				Body:
-				<%-contentTag('input','',{type:'checkbox', class:'attack', value:'body'})%>
+				<%-contentTag('input','',{type:'checkbox', class:'attack body', value:'body'})%>
 			</div>
 			<div style='margin-top:15px;'>
 				Arms:
-				<%-contentTag('input','',{type:'checkbox', class:'attack', value:'arms'})%>
+				<%-contentTag('input','',{type:'checkbox', class:'attack arms', value:'arms'})%>
 			</div>
 			<div style='margin-top:15px;'>
 				Legs:
-				<%-contentTag('input','',{type:'checkbox', class:'attack', value:'legs'})%>
+				<%-contentTag('input','',{type:'checkbox', class:'attack legs', value:'legs'})%>
 			</div>
 
 			<div style='margin-top:15px;'>
@@ -46,19 +90,19 @@
 			<strong>Defense Menu:</strong>
 			<div style='margin-top:15px;'>
 				Head:
-				<%-contentTag('input','',{type:'checkbox', class:'defense', value:'head'})%>
+				<%-contentTag('input','',{type:'checkbox', class:'defense head', value:'head'})%>
 			</div>
 			<div style='margin-top:15px;'>
 				Body:
-				<%-contentTag('input','',{type:'checkbox', class:'defense', value:'body'})%>
+				<%-contentTag('input','',{type:'checkbox', class:'defense body', value:'body'})%>
 			</div>
 			<div style='margin-top:15px;'>
 				Arms:
-				<%-contentTag('input','',{type:'checkbox', class:'defense', value:'arms'})%>
+				<%-contentTag('input','',{type:'checkbox', class:'defense arms', value:'arms'})%>
 			</div>
 			<div style='margin-top:15px;'>
 				Legs:
-				<%-contentTag('input','',{type:'checkbox', class:'defense', value:'legs'})%>
+				<%-contentTag('input','',{type:'checkbox', class:'defense legs', value:'legs'})%>
 			</div>
 
 			<div style='margin-top:15px;'>
@@ -66,17 +110,18 @@
 			</div>
 		</div>
 </div>
-<div class='battleInfo span5' style='background:white;margin-top:15px;border:solid 2px;height:345px;text-align:center'>
-	<div class='roundContainer'>
-		<h1 class='roundCounter'> Round 1 </h1>
+<div data-win = '<%=session.get("winUrl")%>' data-lose='<%=session.get("looseUrl")%>' class='battleInfo span5' style='background:white;margin-top:15px;border:solid 2px;height:345px;text-align:center'>
+	<div class='attackInfoContainer' style='display:none'>
+		<h1 class='roundInfo'> </h1>
 		<div class='row' style='margin-top:15px'>
-			<strong class='damageDone span5' style='color: green;'>You have done 123 damage </strong>
-			<strong class='attackBlock span5' style='color: red;'>123 Damage blocked</strong>
+			<strong class='damageDone span5' style='color: green;'>You have done <span class='dmg'>123</span> damage </strong>
+			<strong class='attackBlock span5' style='color: red;'><span class='dmg'>123</span> Damage blocked</strong>
 		</div>
-		<div class='row' style='margin-top:15px'>
-			<strong class='damageTaken span5' style='color: red;'>123 Damage taken</strong>
-			<strong class='defenseBlock span5' style='color: green;'>123 Damage blocked</strong>	
-		</div>
+	</div>
+	<div class='defenseInfoContainer' style='margin-top:15px;display:none'>
+			<h1 class='roundInfo'> </h1>
+			<strong class='damageTaken span5' style='color: red;'><strong class='dmg'>123</strong> Damage taken</strong>
+			<strong class='defenseBlock span5' style='color: green;'><strong class='dmg'>123</strong> Damage blocked</strong>	
 	</div>
 </div>
 
@@ -95,9 +140,9 @@
 		<div class='span2'>
 		  Level: <%=opponent.level%>
 		</div>
-		<div class='healthBar span2' style='background:green;border-radius:20px;text-align:center;'>
+		<div class='healthBar enemyHeathBar span2' data-currentHealth = '<%=opponent.currentHealth%>' style='background:green;border-radius:20px;text-align:center;'>
 		  	<strong>
-		  		<%=opponent.currentHealth%> / <%= opponent.maxHealth%>
+		  		<span class='opponentCurrentHealth'><%=opponent.currentHealth%></span>/ <%= opponent.maxHealth%>
 		  	</strong>
 		</div>
 </div>
@@ -105,6 +150,7 @@
 <%- scriptLink('/js/socket.io.js', { type: 'text/javascript' }) %>
 <script>
 	var socket = io(window.location.hostname);
+	
 	$('#submitAtack').click(function() {
 		
 		var attackZone = false;
@@ -114,14 +160,37 @@
 			}
 
 		});
-		socket.emit('userAtack', { attackZone:attackZone });
+		socket.emit('userAtack', { zone:attackZone });
 	});
 
 	socket.on('enemyAtack', function (data) {
 			$('.attackMenu').fadeOut('slow',function () {
 				$('.defenseMenu').fadeIn('slow');	
 			});
-			console.log(data);
+			if(data.win){
+				console.log('You win.');
+				$('.attackInfoContainer').html('<h1><strong>You Win!</strong></h1>');
+				setTimeout(function(){
+					window.location.href = $('.battleInfo').attr('data-win');
+				},2000);
+			}
+			$('.attackInfoContainer .damageDone .dmg').text(data.damageDone);
+
+			if(data.blocked){
+				$('.attackInfoContainer .roundInfo').text('Blocked');
+				$('.attackBlock .dmg').text(data.blockDamage);
+			}else{
+				$('.attackInfoContainer .roundInfo').text('Hit');
+				$('.attackBlock .dmg').text(0);
+			}
+
+			$('.defenseInfoContainer').fadeOut('slow',function(){
+				$('.attackInfoContainer').fadeIn('slow');
+			});
+
+			$('.opponentCurrentHealth').text(data.opponent.currentHealth);
+			$('.enemyHeathBar').attr('data-currentHealth', data.opponent.currentHealth);
+			$('.attack').attr('checked',false);
 	});
 
 	$('#submitDefense').click(function() {
@@ -131,15 +200,40 @@
 				defenseZone.push($(this).val());
 			}
 		});
-		socket.emit('userDefense', { defenseZone: defenseZone });
+		socket.emit('userDefense', { zone: defenseZone });
 	});
 
-	socket.on('userDamageTaken', function (damageTaken) {
+	socket.on('userDamageTaken', function (data) {
+
 		$('.defenseMenu').fadeOut('slow',function(){
 			$('.attackMenu').fadeIn('slow');
 		});
-		console.log(damageTaken);
+		if(data.lose){
+			console.log('You lose.');
+			$('.defenseInfoContainer').html('<h1><strong>You lose!</strong></h1>');
+				setTimeout(function(){
+					window.location.href = $('.battleInfo').attr('data-lose');
+				},2000);
+		}
+
+		$('.defenseInfoContainer .damageTaken .dmg').text(data.damageDone);
+
+		if(data.blocked){
+			$('.defenseInfoContainer .roundInfo').text('Blocked');
+			$('.defenseInfoContainer .defenseBlock .dmg').text(data.blockDamage);
+		}else{
+			$('.defenseInfoContainer .roundInfo').text('Hit');
+			$('.defenseInfoContainer .defenseBlock .dmg').text(0);
+		}
+		$('.attackInfoContainer').fadeOut('slow',function(){
+			$('.defenseInfoContainer').fadeIn('slow');
+		});
+	
+		
+		$('#yourCurrentHealth').text(data.yourHero.currentHealth);
+		$('.yourHealthBar').attr('data-currentHealth', data.yourHero.currentHealth);
+		$('.defense').attr('checked',false);
+
+		console.log(data);
 	});
-
-
 </script>
