@@ -1,9 +1,23 @@
-<div class="hero-unit">
-  <h2 class="title"><%= episode.title %></h2>
-  <%- linkTo('Edit this episode', editEpisodePath(params.id), {class: 'btn pull-right'}); %>
-  <%- linkTo('Back to list', episodePath(''), {class: 'btn pull-right'}); %>
+<div class="main-visual">
+  <img src="/img/map.jpg">
+</div>
+<div class="title-intro" style="border-radius:0">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+          <h2 class="title"><%= episode.title %></h2>
+          <%- linkTo('Edit this episode', editEpisodePath(params.id), {class: 'btn pull-right'}); %>
+          <%- linkTo('Back to list', episodePath(''), {class: 'btn pull-right'}); %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="grayline"></div>
+
+<div class="game bg2">
 </div>
 
+<!-- 
 <h2>Episode Properties</h2>
 <% for(var i in episode) { -%>
 <% if(i !== 'saved') { -%>
@@ -16,3 +30,14 @@
   </div>
 </div>
 <% } -%><% } -%>
+-->
+
+<script>
+  $(document).ready(function(){
+    $.ajax({
+      url:'/startBattle/111',
+    }).done(function(data) {
+      $('.game').html(data);
+    });
+  });
+</script>

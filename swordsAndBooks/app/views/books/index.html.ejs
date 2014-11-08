@@ -1,8 +1,28 @@
-<div class="hero-unit">
-  <h2>All Books</h2>
-  <%- linkTo('Create a new Book', addBookPath, {class: 'btn pull-right'}); %>
+<div class="main-visual">
+  <img src="/img/book.jpg">
 </div>
-
+<div class="title-intro">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <h2>All Books</h2>
+      </div>
+    </div>
+  </div>
+</div>        
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8" style="text-align:center;padding-top:25px;padding-bottom:25px">
+        <%- linkTo('Create a new Book', addBookPath, {class: 'btn btn-default btn-large offseted-content',style:'display:inline'}); %>
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="bg1">
+  <div class="small-empty-space"></div>
+  <div class="container">
+    <div class="row">
 <div id="books-list">
 <% if (books) { %>
 <% for (var i = 0, ii = books.length; i < ii; i++) { %>

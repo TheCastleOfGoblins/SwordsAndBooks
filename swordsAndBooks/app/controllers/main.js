@@ -151,7 +151,7 @@ var Main = function () {
       });
 
 
-      self.respond({params:params, yourHero:yourHero, opponent:opponent},{format:'html',template: 'app/views/battle'})
+      self.respond({params:params, yourHero:yourHero, opponent:opponent},{format:'html',template: 'app/views/battle', layout:false})
     });
   }
 };

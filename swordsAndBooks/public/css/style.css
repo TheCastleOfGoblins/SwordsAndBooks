@@ -1,3 +1,49 @@
+#panel{
+
+}
+#graph
+{
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+}
+#panel > canvas
+{
+  width:100%;
+  height:100%;
+}
+.node
+{
+  stroke:black;
+  stroke-width:2;
+  fill:rgba(255,255,255,0.7);
+}
+.node:hover
+{
+  stroke:gray;
+  stroke-width:3;
+}
+.node:last-of-type
+{
+  fill:rgba(255,60,60,0.7);;
+}
+.node:first-of-type
+{
+  fill:rgba(60,60,255,0.7);;
+}
+.node-title
+{
+  font-size:10px;
+}
+#graphEdges
+{
+  stroke:black;
+  stroke-dasharray:5,5;
+  stroke-width:3;
+}
+
 body {
   margin:0;
   padding:0;
@@ -11,6 +57,13 @@ body {
 h1,h2,h3,h4,h5,h6
 {
   font-style:italic;
+}
+.book-intro
+{
+  padding: 10px;
+  line-height: 30px;
+  color: inherit;
+  background-color: #558855;
 }
 .title-intro
 {
@@ -32,6 +85,103 @@ h1,h2,h3,h4,h5,h6
   height:5px;
   background:black;
 }
+.on-top
+{
+  position:relative;
+  z-index:1000 !important;
+}
+.health-orb
+{
+  z-index:100;
+  width:50px;
+  height:50px;
+  border-radius:100%;
+  box-shadow:0px 0px 5px;
+  background:red;
+  position:absolute;
+  overflow:hidden;
+  background: #e4f5fc; /* Old browsers */
+  background: -moz-linear-gradient(45deg,  #e4f5fc 0%, #bfe8f9 20%, #bfe8f9 20%, #9fd8ef 40%, #9fd8ef 40%, #9fd8ef 55%, #e4f5fc 74%, #2ab0ed 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#e4f5fc), color-stop(20%,#bfe8f9), color-stop(20%,#bfe8f9), color-stop(40%,#9fd8ef), color-stop(40%,#9fd8ef), color-stop(55%,#9fd8ef), color-stop(74%,#e4f5fc), color-stop(100%,#2ab0ed)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(45deg,  #e4f5fc 0%,#bfe8f9 20%,#bfe8f9 20%,#9fd8ef 40%,#9fd8ef 40%,#9fd8ef 55%,#e4f5fc 74%,#2ab0ed 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(45deg,  #e4f5fc 0%,#bfe8f9 20%,#bfe8f9 20%,#9fd8ef 40%,#9fd8ef 40%,#9fd8ef 55%,#e4f5fc 74%,#2ab0ed 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(45deg,  #e4f5fc 0%,#bfe8f9 20%,#bfe8f9 20%,#9fd8ef 40%,#9fd8ef 40%,#9fd8ef 55%,#e4f5fc 74%,#2ab0ed 100%); /* IE10+ */
+  background: linear-gradient(45deg,  #e4f5fc 0%,#bfe8f9 20%,#bfe8f9 20%,#9fd8ef 40%,#9fd8ef 40%,#9fd8ef 55%,#e4f5fc 74%,#2ab0ed 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e4f5fc', endColorstr='#2ab0ed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+.move-a-little-bit-right
+{
+  margin-left:20px;
+}
+.left-orb
+{
+  top:33%;
+  right:2%;
+}
+.right-orb
+{
+  top:33%;
+  left:2%;
+}
+.health-orb > .hp
+{
+  bottom:0;
+  position:absolute;
+  left:0;
+  width:100%;
+  height:100%;
+  transition:all 1s;
+background: #ea2222; /* Old browsers */
+background: -moz-linear-gradient(45deg,  #ea2222 0%, #ea2222 59%, #fc5a5d 71%, #ea2222 83%, #fc5a5d 91%, #fc5a5d 91%, #ea2222 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#ea2222), color-stop(59%,#ea2222), color-stop(71%,#fc5a5d), color-stop(83%,#ea2222), color-stop(91%,#fc5a5d), color-stop(91%,#fc5a5d), color-stop(100%,#ea2222)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(45deg,  #ea2222 0%,#ea2222 59%,#fc5a5d 71%,#ea2222 83%,#fc5a5d 91%,#fc5a5d 91%,#ea2222 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(45deg,  #ea2222 0%,#ea2222 59%,#fc5a5d 71%,#ea2222 83%,#fc5a5d 91%,#fc5a5d 91%,#ea2222 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(45deg,  #ea2222 0%,#ea2222 59%,#fc5a5d 71%,#ea2222 83%,#fc5a5d 91%,#fc5a5d 91%,#ea2222 100%); /* IE10+ */
+background: linear-gradient(45deg,  #ea2222 0%,#ea2222 59%,#fc5a5d 71%,#ea2222 83%,#fc5a5d 91%,#fc5a5d 91%,#ea2222 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ea2222', endColorstr='#ea2222',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.health-orb > .hp[data-hp='9']
+{
+  height:90%;
+}
+.health-orb > .hp[data-hp='8']
+{
+  height:80%;
+}
+.health-orb > .hp[data-hp='7']
+{
+  height:70%;
+}
+.health-orb > .hp[data-hp='6']
+{
+  height:60%;
+}
+.health-orb > .hp[data-hp='5']
+{
+  height:50%;
+}
+.health-orb > .hp[data-hp='4']
+{
+  height:40%;
+}
+.health-orb > .hp[data-hp='3']
+{
+  height:30%;
+}
+.health-orb > .hp[data-hp='2']
+{
+  height:20%;
+}
+.health-orb > .hp[data-hp='1']
+{
+  height:10%;
+}
+.health-orb > .hp[data-hp='0']
+{
+  height:0%;
+}
+
 .grayline
 {
   height:5px;
@@ -48,6 +198,7 @@ h1,h2,h3,h4,h5,h6
   color:#aaaaaa;
   transition:all 1s;
 }
+
 input
 {
   border-radius:0px !important;
@@ -62,6 +213,7 @@ input
 .main-visual img
 {
   width:100%;
+  height:370px;
 }
 .main-visual video
 {

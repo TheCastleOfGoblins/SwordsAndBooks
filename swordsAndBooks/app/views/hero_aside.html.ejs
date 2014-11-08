@@ -1,45 +1,53 @@
-<aside>
-	<% var hero = session.get('selectedHero');%>
-
-	<div class='span3' style='margin-top:15px;border:solid 2px' id='<%=hero.id%>'>
-		<div class='span2'>
-		  <img src='<%=hero.image%>' width='50px' height='50px'/>
-		</div>
-		<div class='span2'>
-		  <strong>
-		    <%=hero.name%>
-		  </strong>
-		</div>
-		<div class='span2'>
-		  Gender: <%=hero.gender%>
-		</div>
-		<div class='span2'>
-		  Level: <%=hero.level%>
-		</div>
-
-		<div class='span2' style='margin-top:15px'>
-		  <strong>
-		    Stats:
-		  </strong>
-		</div>
-		<div class='span2'>
-		  <div class='healthBar' style='background:green;border-radius:20px;text-align:center;'>
-		  	<strong>
-		  		<%=hero.currentHealth%> / <%= hero.maxHealth%>
-		  	</strong>
-		  </div>
-		</div>
-		<div class='span2'>
-		  Power: <%=hero.power%>
-		</div>
-		<div class='span2'>
-		  Strength: <%=hero.strength%>
-		</div>
-		<div class='span2'>
-		  Speed: <%=hero.speed%>
-		</div>
-		<div class='span2'>
-		  Intelligence: <%=hero.intelligence%>
-		</div>
-	</div>
-</aside>
+<% var hero = session.get('selectedHero');%>
+<div class='span4 hero' style="margin-left:-10px;height:250px" id='<%=hero.id%>'>
+  <div class='span2'>
+    <img src='<%=hero.image%>'/>
+  </div>
+  <div class='span2'>
+    <h4 class="offseted-content">
+      <%=hero.name%>
+    </h4>
+  </div>
+  <div class='span2'>
+    <span class="offseted-content">
+      <i>Gender:</i> <%=hero.gender%>
+    </span class="offseted-content">
+  </div>
+  <div class='span2'>
+    <span class="offseted-content">
+      <i>Level:</i> <%=hero.level%>
+    </span>
+  </div>
+  <div class='span2'>
+    <strong class="offseted-content">
+      Stats:
+    </strong>
+  </div>
+  <div class='span2'>
+    <div class='healthBar offseted-content' style='background:green;border-radius:20px;text-align:center;'>
+      <strong>
+        <%=hero.currentHealth%> / <%= hero.maxHealth%>
+      </strong>
+    </div>
+  </div>
+  <div class='span2'>
+    <span class="offseted-content">
+      Power: <%=hero.power%>
+    </span>
+  </div>
+  <div class='span2'>
+    <span class="offseted-content">
+      Strength: <%=hero.strength%>
+    </span>
+  </div>
+  <div class='span2'>
+    <span class="offseted-content">
+      Speed: <%=hero.speed%>
+    </span>
+  </div>
+  <div class='span2'>
+    <span class="offseted-content">
+      Intelligence: <%=hero.intelligence%>
+    </span>
+  </div>
+</div>
