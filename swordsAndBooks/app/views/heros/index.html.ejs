@@ -1,33 +1,82 @@
 <div class="main-visual">
   <img src="/img/battle1.jpg">
 </div>
-
 <div class="title-intro">
-  <h1><%=session.get('user').name%>'s Heroes</h2>
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <h2><%=session.get('user').name%>'s Heroes</h2>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div id="heros-list">
-<% if (heros) { %>
-    <% for (var i = 0, ii = heros.length; i < ii; i++) { %>
-      <div class='span2 offset4 hero' style='margin-top:15px;border:solid 2px' id='<%=heros[i].id%>'>
-        <div class='span2'>
-          <img src='<%=heros[i].image%>' width='50px' height='50px'/>
-        </div>
-        <div class='span2'>
-          <strong>
-            <%=heros[i].name%>
-          </strong>
-        </div>
-        <div class='span2'>
-          Gender: <%=heros[i].gender%>
-        </div>
-        <div class='span2'>
-          Level: <%=heros[i].level%>
+<div class="small-empty-space"></div>
+<div class="bg1">
+  <div class="small-empty-space"></div>
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <% if (heros) { %>
+            <% for (var i = 0, ii = heros.length; i < ii; i++) { %>
+              <div class='span4 hero' id='<%=heros[i].id%>'>
+                <div class='span2'>
+                  <img src='<%=heros[i].image%>'/>
+                </div>
+                <div class='span2'>
+                  <h4 class="offseted-content">
+                    <%=heros[i].name%>
+                  </h4>
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                    <i>Gender:</i> <%=heros[i].gender%>
+                  </span class="offseted-content">
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                    <i>Level:</i> <%=heros[i].level%>
+                  </span>
+                </div>
+              </div>
+            <% } %>
+        <% } %>
+        <div class='span4 hero'>
+          <div class='span2'>
+            <img src='/img/plus.png'/>
+          </div>
+          <div class='span2'>
+            <h4 class="offseted-content">
+              Add new hero
+            </h4>
+          </div>
+          <div class='span2'>
+            <span class="offseted-content">
+              <i>Gender:</i> You decide
+            </span class="offseted-content">
+          </div>
+          <div class='span2'>
+            <span class="offseted-content">
+              <i>Level:</i> 
+            </span>
+          </div>
         </div>
       </div>
-    <% } %>
-<% } %>
+    </div>
+  </div>
+  <div class="small-empty-space"></div>
 </div>
+
+<div class="grayline">
+</div>
+
+<div class="small-empty-space">
+  <div class="container">
+  </div>
+</div>
+
+<div class="blackline">
+</div>
+
 <script type="text/javascript">
   $('.hero').click(function() {
     window.location.href = '/selectHero/' + $(this).attr('id');
