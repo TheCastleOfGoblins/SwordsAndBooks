@@ -21,6 +21,7 @@ function SvGraph(_svg,_path){
     for(var key in data.node)
     {
       this.addNode(data.node[key]);
+      currentNodeId = data.node[key].id;
     }
     for(var edge in data.edges){
       this.addEdge(data.edges[edge]);
@@ -31,25 +32,16 @@ function SvGraph(_svg,_path){
     nodes[node.id] = node;
     var model = {cx: node.x, cy: node.y, r:9, class:"node"};
 
-    if(node.current)
-    {
-      model.class = "node selected";
-    }
     var circle = makeSVG('circle', model);
-    if(!node.current)
-    {
-      circle.ondblclick = function() {
-        window.location = node.url;
-      }
+    circle.ondblclick = function() {
+      window.location = node.url;
     }
-    else
-    {
-      currentNodeId = node.id;
-    }
+    
     var text = makeSVG('text', {x : node.x - 10 , y:node.y - 10, class:"node-title"}, node.title);
     svg.appendChild(circle);
     svg.appendChild(text);
   }
+
   this.currentNodeId = function()
   {
     return currentNodeId;

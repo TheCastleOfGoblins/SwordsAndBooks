@@ -1,10 +1,37 @@
-<%-partial('./hero_aside',{session:session})%>	
+<div class="main-visual">
+      <div class="content">
+        <div class="container">
+          <div class="row">
+            <div class="offset6 span4" style="margin-top:15px";>
+              <%-partial('./hero_aside',{session:session})%>	
+            </div>
+          </div>
+        </div>
+      </div>
+      <video autoplay="autoplay" src="/video/mainvisual2.mp4" id="video" loop="loop">
+      </video>
+</div>
+<div class="title-intro">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <h2>All Books</h2>
+      </div>
+    </div>
+  </div>
+</div>        
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8" style="text-align:center;padding-top:25px;padding-bottom:25px">
+        <a class="btn btn-default btn-large offseted-content" href="/books/" style="display:inline">Read a book</a>
+        <a class="btn btn-default btn-large offseted-content" href="/startBattle/111" style="display:inline">Try a fight against a random opponent</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="book">
 
-<div class='row-fliud offset2' style='margin-top:67px'>
-	<%-contentTag('button','Get Random Opponent',{class:'btn btn-large span2',id:'battleStart'})%>
-	<script type="text/javascript">
-		$('#battleStart').click(function () {
-			window.location.href = '/startBattle/111'
-		});
-	</script>
+</div>
+<div class="blackline">
 </div>

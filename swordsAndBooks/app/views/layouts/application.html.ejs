@@ -10,13 +10,21 @@
           </div>
           <div class="span6">
             <nav>
+              <% if(session && session.get('user')) { %>
+                <div class="dropdown" style="display: inline;">
+                <button class="btn btn-default dropdown-toggle btn-large" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                  <%= session.get('user').name %>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu display: inline;" role="menu" aria-labelledby="dropdownMenu1">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= session.get('user').name %></a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Logout</a></li>
+                </ul>
+              </div>
+              <% } %>
               <a href="#" class="btn btn-default btn-large">Books</a>
               <a href="#" class="btn btn-default btn-large">Categories</a>
               <a href="#" class="btn btn-default btn-large">Friends</a>
-              <a href="#" class="">
-              <% if(session && session.get('user')) { %>
-                <%= session.get('user').name %></a>
-              <% } %>
             </nav>
           </div>
         </div>
