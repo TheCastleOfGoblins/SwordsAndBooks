@@ -1,13 +1,52 @@
-<div class='span12 offset5'>
-	<form method='POST' action='/prepareSession'>
-		<div class='row'>
-			<%- contentTag('input','',{type:'text',name:'userName',id:'userName'})%>
-		</div>
-		<div class='row'>
-			<%- contentTag('input','',{type:'password',name:'password',id:'password'})%>
-		</div>
-		<div class='row'>
-			<%- contentTag('input','',{type:'submit',name:'submit',id:'submit', class:'btn btn-large'})%>
-		</div>
-	</form>
+<div class="main-visual">
+      <div class="content">
+        <div class="container">
+          <div class="row">
+            <div class="offset6 span4 intro">
+              <h4 class="offseted-content">Why Game books?</h4>
+              <p class="offseted-content">
+                We decided to do this about gamebooks because they are a different kind of entertainment, away from the mindless shooter
+                or the repetitive grinder games as of late.
+              </p>
+              <h5 class="offseted-content">A few more points</h5>
+              <p class="offseted-content">
+                <ul>
+                  <li>Game books invoke a tought process like a real book.</li>
+                  <li>They are not always that burdening as a novel , and give you a sence of control</li>
+                  <li>We try to break the dogma of games by taking them away from the current <i>Call of Shooter</i></li>
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <video autoplay="autoplay" src="/video/mainvisual1.mp4" id="video" loop="loop">
+      </video>
 </div>
+
+<div class="bg2">
+  <div class='container'>
+    <div class='row'>
+      <div class='offset2 span8'>
+        <form role="form" class="form-inline" method='POST' action='/prepareSession'>
+          <h2 style="text-align:center">Login</h2>
+          <div class='form-group allmid' style="text-align:center">
+            <label class="sr-only" style="text-align:center;font-style:italic;" for="exampleInputEmail2">Username</label>
+            <%- contentTag('input','',{class:'turbobig',type:'text',name:'userName',id:'userName'})%>
+          </div>
+          <div class='form-group allmid' style="text-align:center">
+            <label class="sr-only"  style="font-style:italic;" for="exampleInputEmail2">Password</label>
+            <%- contentTag('input','',{class:'turbobig',type:'password',name:'password',id:'password'})%>
+          </div>
+          
+          <div class='row offseted-content'>
+            <div class="offset4 span2">
+              <%- contentTag('input','',{class:'turbobig',type:'submit',name:'submit',id:'submit', value:'Enter the adventure', class:'btn btn-large'})%>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="blackline"></div>

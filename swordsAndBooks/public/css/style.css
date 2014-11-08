@@ -1,6 +1,91 @@
 body {
-  background: url('../img/whitey.png');
+  margin:0;
+  padding:0;
+  font-family:Helvetica;
+  background:#334433;
 }
+.turbobig
+{
+  width:100%;
+}
+h1,h2,h3,h4,h5,h6
+{
+  font-style:italic;
+}
+.title-intro
+{
+  padding: 20px;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  color: inherit;
+  background-color: #eee;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+.blackline
+{
+  height:5px;
+  background:black;
+}
+.grayline
+{
+  height:5px;
+  background:#777777;
+}
+.main-visual
+{
+  overflow:hidden;
+  position:relative;
+}
+
+.main-visual img
+{
+  width:100%;
+}
+.main-visual video
+{
+  margin-top:-30%;
+  width:100%;
+}
+.main-visual .content
+{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+}
+.main-visual .intro
+{
+  border-radius:15px;
+  margin-top:15px;
+  background:white;
+}
+.logo
+{
+  width:50px;
+  height:50px;
+}
+.bg2
+{
+  background-color:white;
+}
+.offseted-content
+{
+  margin:15px;
+}
+header
+{
+  background:#334433;
+  padding:5px;
+}
+header nav
+{
+  float:right;
+}
+
 body.application {
   padding-top: 60px;
   padding-bottom: 40px;
@@ -10,8 +95,6 @@ code {
 }
 
 .navbar-fixed-top {
-  box-shadow: 0px 0px 3px #000;
-  border-bottom: 1px solid #999;
 }
 
 .geddy-welcome-box {
