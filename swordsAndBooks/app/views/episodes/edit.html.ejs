@@ -35,7 +35,7 @@
             <%- partial('form', {episode: episode}) %>
 
             <textarea name="story"><%=episode.story%></textarea>
-            <div>Add An Enemy:</div>
+            <div style="color:white">Add An Enemy:</div>
             <select name='heroId'>
               <option value=''> None</option>
               <% for(var i in allHeroes){%>
@@ -46,13 +46,12 @@
             </select>
 
             </br>
-            Next Episodes: <br>
-            <div class='conditions' style='margin-top:20px'></div>
+            <span style="color:white">Next Episodes:</span> <br>
+            <div class='conditions' style='margin-top:20px;color:white'></div>
 
             <input type='hidden' name='isWinner'>
-
-            <div class="form-actions">
-              <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
+            <div class="control-group">
+              <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-submit btn-large'}) %>
             </div>
           </fieldset>
 

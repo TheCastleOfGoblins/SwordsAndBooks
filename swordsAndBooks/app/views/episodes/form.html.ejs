@@ -1,13 +1,11 @@
 <div class="control-group">
-  <label for="title" class="control-label">title</label>
-  <div class="controls">
-    <%- contentTag('input', episode.title, {type:'text', class:'span6', name:'title'}) %>
-  </div>
+  <label for="title" style="color:white">Title</label>
+  <%- contentTag('input', episode.title, {type:'text', class:'span8', name:'title'}) %>
 </div>
-<div class="control-group">
-  <label for="isFinal" class="control-label">isFinal</label>
-  <div class="controls">
-    <select name="isFinal", class="span1">
+<div class="control-group offset2 span1">
+  <label for="isFinal" style="color:white">isFinal</label>
+  <div>
+    <select name="isFinal" class="span1">
       <% if(episode.isFinal) { -%>
       <option>false</option>
       <option selected>true</option>
@@ -18,9 +16,9 @@
     </select>
   </div>
 </div>
-<div class="control-group">
-  <label for="isFirst" class="control-label">isFirst</label>
-  <div class="controls">
+<div class="control-group span3">
+  <label for="isFirst" style="color:white">isFirst</label>
+  <div>
     <select name="isFirst", class="span1">
       <% if(episode.isFirst) { -%>
       <option>false</option>
@@ -32,3 +30,4 @@
     </select>
   </div>
 </div>
+<div style="clear:both"></div>
