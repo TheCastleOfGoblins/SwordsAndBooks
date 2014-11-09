@@ -16,10 +16,13 @@
  *
 */
 
-var Main = function () {  
+var Main = function () {
   this.index = function (req, resp, params) {
   	var _ = require('underscore');
   	var jquery = require('jquery');
+    var formidable = require('formidable');
+    var fs = require('fs');
+    var path = require('path');
 
     this.redirect('/login');
   	// var io = require('socket.io').listen(geddy.server);
@@ -43,7 +46,7 @@ var Main = function () {
   };
 
   this.prepareSession = function (req, resp, params) {
-    
+
     var self = this;
     geddy.model.User.first({name:params.userName},function(err, user){
       if(err || !user){
@@ -52,7 +55,7 @@ var Main = function () {
         self.redirect('/login');
         return;
       }
-      
+
       self.session.set('user',user);
       self.redirect('/heros/');
     });
@@ -90,12 +93,12 @@ var Main = function () {
           var placeForDefence = shuffle(allPlaces);
           var damageDone = fullDamage;
           var blocked = false;
-          
+
           if(attack.zone == allPlaces[0] || attack.zone == allPlaces[1]){
             blocked = true;
             damageDone -= blockDamage;
           }
-          
+
           if(damageDone < 0 ){
             damageDone = 0;
           }
@@ -107,8 +110,8 @@ var Main = function () {
             win = true;
             opponent.currentHealth = opponent.maxHealth;
           }
-          
-          
+
+
 
           opponent.save(function(err, opponentSaved){
             socket.emit('enemyAtack', { succes: true, win:win, damageDone:damageDone, blocked:blocked, blockDamage:blockDamage, opponent:opponentSaved });
@@ -153,6 +156,14 @@ var Main = function () {
 
       self.respond({params:params, yourHero:yourHero, opponent:opponent},{format:'html',template: 'app/views/battle', layout:false})
     });
+  }
+
+  this.chess = function (req, resp, params) {
+    this.respond({params:params}, {format: 'html',  template:'app/views/chess'});
+  }
+
+  this.target = function (req, resp, params) {
+    this.respond({params:params}, {format: 'html',  template:'app/views/target'});
   }
 };
 

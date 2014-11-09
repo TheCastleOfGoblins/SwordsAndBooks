@@ -49,7 +49,11 @@ router.resource('heros');
 router.get('/selectHero/:heroId').to('Heros.selectHero');
 router.get('/navigation').to('Main.navigation');
 router.get('/startBattle/:opponentId').to('Main.startBattle');
+router.get('/chess').to('Main.chess');
+router.get('/target').to('Main.target');
 
 router.resource('conditions');
+
+router.match('/upload').to({controller: 'Main', action: 'upload'});
 
 exports.router = router;

@@ -361,3 +361,12 @@ code {
   margin:0;
   margin-bottom:25px;
 }
+
+.circle
+{
+position:absolute;
+width:15px;
+height:15px;
+background:blue;
+border-radius:100%;
+}
