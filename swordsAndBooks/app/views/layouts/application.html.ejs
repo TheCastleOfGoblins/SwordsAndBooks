@@ -1,6 +1,6 @@
 <%= partial('layout_header'); %>
   <body>
-    
+
     <div class="blackline">
     </div>
     <header>
@@ -25,7 +25,6 @@
               <% } %>
               <a href="/heros" class="btn btn-default btn-large">Heroes</a>
               <a href="/books" class="btn btn-default btn-large">Books</a>
-              <a href="/episodes" class="btn btn-default btn-large">Episodes</a>
               <a href="#" class="btn btn-default btn-large">Friends</a>
             </nav>
           </div>
@@ -60,12 +59,12 @@
       setTimeout(function(){
         window.frames[0].window.eval(js);
       },2000);
-     
+
       $(document).ready(function(){
                 var videoPlaying = false;
                 $("p").click(function(e){
                     var $this = $(this);
-                   
+
                     var content = $this.text();
                     var readParts = content.split(/[.,!:?]+/);
                     var currentPart = 0;
