@@ -18,7 +18,7 @@ var Episodes = function () {
       self.session.set('book',book);
       self.respond({params: params});
     });
-    
+
   };
 
   this.create = function (req, resp, params) {
@@ -26,7 +26,7 @@ var Episodes = function () {
     var self = this
       , episode = geddy.model.Episode.create(params);
 
-    
+
     if (!episode.isValid()) {
       this.respondWith(episode);
     }
@@ -60,11 +60,11 @@ var Episodes = function () {
           });
 
           var episodeFiltered = {title:episode.title,
-                               x:episode.coordX, 
+                               x:episode.coordX,
                                y:episode.coordY, url:'/episodes/' + episode.id + '/edit',
-                               id:episode.id, 
-                               current: true, 
-                               first:episode.isFirst, 
+                               id:episode.id,
+                               current: true,
+                               first:episode.isFirst,
                                clickContidions:episode.clickContidions};
           visibleEpisodes.push(episodeFiltered);
         }
@@ -79,7 +79,7 @@ var Episodes = function () {
 
     geddy.model.Episode.first(params.id, function(err, episode) {
       geddy.model.Episode.all({bookId:episode.bookId},function(err, allEpisodesFromTheBook){
-        
+
         if (err) {
           throw err;
         }
@@ -107,9 +107,17 @@ var Episodes = function () {
         self.respondWith(episode);
       }
       else {
+
         var async = require('async');
-      
+
         var i =0 ;
+
+        params.chess =   (params.chess == 'on');
+
+        console.log('--------------------');
+        console.log(params.chess);
+        console.log('--------------------');
+
         if(!params.clickContidions){
           episode.updateProperties(params);
 
@@ -141,7 +149,7 @@ var Episodes = function () {
           });
         }, function(err) {
               episode.updateProperties(params)
-              
+
               episode.save(function(err, data) {
               if (err) {
                 throw err;

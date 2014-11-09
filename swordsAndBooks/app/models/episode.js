@@ -8,7 +8,8 @@ var Episode = function () {
     coordX: {type: 'int'},
     coordY: {type: 'int'},
     clickContidions: {type: 'object'},
-    heroId:{type:'string'}
+    heroId:{type:'string'},
+    chess: {type: 'boolean'}
     // isWinner: {type: 'object'}
   });
 
