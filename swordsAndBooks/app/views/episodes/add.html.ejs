@@ -16,35 +16,39 @@
 </div>
 <div class="woodtable">
   <div class="container">
-    <form id="episode-form" class="form-horizontal" action="/episodes" method="POST">
-      <fieldset>
-        <legend>Create a new Episode</legend>
-        <% if(params.errors) { %>
-        <div class="control-group">
-          <ul>
-          <% for(var err in params.errors) { %>
-            <li><%= params.errors[err]; %></li>
-          <% } %>
-          </ul>
-        </div>
-        <% } %>
+    <div class="row">
+      <div class="offset2 span8">
+        <form id="episode-form" class="form-horizontal" action="/episodes" method="POST">
+          <fieldset style="text-align:center">
+            <legend style="color:white">Create a new Episode</legend>
+            <% if(params.errors) { %>
+            <div class="control-group">
+              <ul>
+              <% for(var err in params.errors) { %>
+                <li><%= params.errors[err]; %></li>
+              <% } %>
+              </ul>
+            </div>
+            <% } %>
 
-        <%- partial('form', {episode: params}) %>
+            <%- partial('form', {episode: params}) %>
 
-        <textarea name="story"></textarea>
+            <textarea name="story"></textarea>
 
-        Conditions: <br>
-        <div class="control-group conditions">
+            Conditions: <br>
+            <div class="control-group conditions">
 
-        <input type='hidden' name='isWinner'>
-        </div>
-        <a href="" id="add-condition">Add condition</a>
+            <input type='hidden' name='isWinner'>
+            </div>
+            <a href="" id="add-condition">Add condition</a>
 
-        <div class="form-actions">
-          <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
-        </div>
-      </fieldset>
-    </form>
+            <div class="form-actions">
+              <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 

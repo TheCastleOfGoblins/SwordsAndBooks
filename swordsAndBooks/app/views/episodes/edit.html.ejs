@@ -5,45 +5,60 @@
   </svg>
 </div>
 
-<div class="hero-unit">
-  <form id="episode-form" class="form-horizontal" action="/episodes/<%= params.id %>?_method=PUT" method="POST">
-    <fieldset>
-      <legend>Create a new Episode</legend>
-      <% if(params.errors) { %>
-      <div class="control-group">
-        <ul>
-        <% for(var err in params.errors) { %>
-          <li><%= params.errors[err]; %></li>
-        <% } %>
-        </ul>
+<div class="title-intro">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <h2><%= episode.title || "Create a new Episode" %></h2>
       </div>
-      <% } %>
+    </div>
+  </div>
+</div>
 
-      <%- partial('form', {episode: episode}) %>
+<div class="woodtable">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <form id="episode-form" class="form-horizontal" action="/episodes/<%= params.id %>?_method=PUT" method="POST">
+          <fieldset style="text-align:center">
+            <legend style="color:white">Another episode for your story</legend>
+            <% if(params.errors) { %>
+            <div class="control-group">
+              <ul>
+              <% for(var err in params.errors) { %>
+                <li><%= params.errors[err]; %></li>
+              <% } %>
+              </ul>
+            </div>
+            <% } %>
 
-      <textarea name="story"><%=episode.story%></textarea>
-      <div>Add An Enemy:</div>
-      <select name='heroId'>
-        <option value=''> None</option>
-        <% for(var i in allHeroes){%>
-        <option value="<%=allHeroes[i].id%>">
-          <%=allHeroes[i].name%> - <%=allHeroes[i].level%> LVL
-        </option>
-        <% } %>
-      </select>
+            <%- partial('form', {episode: episode}) %>
 
-      </br>
-      Next Episodes: <br>
-      <div class='conditions' style='margin-top:20px'></div>
+            <textarea name="story"><%=episode.story%></textarea>
+            <div>Add An Enemy:</div>
+            <select name='heroId'>
+              <option value=''> None</option>
+              <% for(var i in allHeroes){%>
+              <option value="<%=allHeroes[i].id%>">
+                <%=allHeroes[i].name%> - <%=allHeroes[i].level%> LVL
+              </option>
+              <% } %>
+            </select>
 
-      <input type='hidden' name='isWinner'>
+            </br>
+            Next Episodes: <br>
+            <div class='conditions' style='margin-top:20px'></div>
 
-      <div class="form-actions">
-        <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
-      </div>
-    </fieldset>
+            <input type='hidden' name='isWinner'>
 
-  </form>
+            <div class="form-actions">
+              <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
+            </div>
+          </fieldset>
+
+        </form>
+    </div>
+  </div>
 </div>
 <%
   function utf8_to_b64( str ) {
