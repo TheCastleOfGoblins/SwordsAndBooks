@@ -20,9 +20,6 @@ var Main = function () {
   this.index = function (req, resp, params) {
   	var _ = require('underscore');
   	var jquery = require('jquery');
-    var formidable = require('formidable');
-    var fs = require('fs');
-    var path = require('path');
 
     if(this.session && this.session.get('user')) {
       this.redirect('/heros');

@@ -55,6 +55,4 @@ router.get('/target').to('Main.target');
 
 router.resource('conditions');
 
-router.match('/upload').to({controller: 'Main', action: 'upload'});
-
 exports.router = router;
