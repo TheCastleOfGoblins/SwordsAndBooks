@@ -52,6 +52,24 @@
  %>
 
 <script>
+    tinymce.init({
+        selector: "textarea",
+        theme: "modern",
+        plugins: [
+            "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars code fullscreen",
+            "insertdatetime media nonbreaking save table contextmenu directionality",
+            "emoticons template paste textcolor colorpicker textpattern"
+        ],
+        toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        toolbar2: "print preview media | forecolor backcolor emoticons",
+        image_advtab: true,
+        templates: [
+            {title: 'Test template 1', content: 'Test 1'},
+            {title: 'Test template 2', content: 'Test 2'}
+        ]
+    });
+
       var id = 1025;//current id
       var parrent = 1024;
       var curNode = {
@@ -90,18 +108,18 @@
           curNode.x = e.offsetX;
           curNode.y = e.offsetY;
           var current = graph.currentNodeId();
-          
+
 
           graph.addNode(
             curNode
           );
           graph.addCurEdge(graph.nodes()[current], curNode);
 
-          
-          var newCondition = '<div class="control-group">Title: ' + '<input type="text" name="clickContidions['+ numberOfConditions.toString() +'][title]" class="title" value="Episode ' + numberOfConditions.toString() + '"> Condition '+ 
+
+          var newCondition = '<div class="control-group">Title: ' + '<input type="text" name="clickContidions['+ numberOfConditions.toString() +'][title]" class="title" value="Episode ' + numberOfConditions.toString() + '"> Condition '+
             '<input type="text" name="clickContidions['+ numberOfConditions.toString() + '][condition]" class="condition" >'
-          + '<input type="hidden" name="clickContidions['+ numberOfConditions.toString() + '][coordX]" class="" value=' + curNode.x + ' >' + 
-          '<input type="hidden" name="clickContidions['+ numberOfConditions.toString() + '][coordY]" class="" value='+ curNode.y + '>'   
+          + '<input type="hidden" name="clickContidions['+ numberOfConditions.toString() + '][coordX]" class="" value=' + curNode.x + ' >' +
+          '<input type="hidden" name="clickContidions['+ numberOfConditions.toString() + '][coordY]" class="" value='+ curNode.y + '>'
           + '</div>';
 
           $('.conditions').append(newCondition);
@@ -126,7 +144,7 @@
         console.log(edges);
         graph.addNodes({
           "edit" : false,
-          node:formatedNodes, 
+          node:formatedNodes,
           edges:edges
         });
 
