@@ -33,11 +33,11 @@ function SvGraph(_svg,_path){
     var model = {cx: node.x, cy: node.y, r:9, class:"node"};
 
     var circle = makeSVG('circle', model);
-    circle.ondblclick = function() {
+    circle.onclick = function() {
       window.location = node.url;
     }
     
-    var text = makeSVG('text', {x : node.x - 10 , y:node.y - 10, class:"node-title"}, node.title);
+    var text = makeSVG('text', {x : node.x - 35 , y:node.y - 10, class:"node-title"}, node.title);
     svg.appendChild(circle);
     svg.appendChild(text);
   }
