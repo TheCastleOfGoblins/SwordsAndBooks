@@ -1,0 +1,88 @@
+<canvas id="inputCanvas" width="320" height="240" style="display:none"></canvas>
+<video id="inputVideo" style="visibility:hidden" autoplay loop></video>
+
+<div class="circle">.</div>
+
+<div id="van" style="background-color:yellow;width:30px;height:30px;position:absolute"></div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        function checkPositions() {
+            $('.circle').css({background: 'blue'});
+            var st = parseInt($span.css('top'), 10);
+            var sl = parseInt($span.css('left'), 10);
+
+            var ct = parseInt($('.circle').css('top'), 10);
+            var cl = parseInt($('.circle').css('left'), 10);
+            /* console.log('Square top ' + st); */
+            /* console.log('Square left ' + sl); */
+            /* console.log('Cirlce top ' + ct); */
+            /* console.log('Circle left ' + cl); */
+
+            console.log('----------------');
+            console.log(Math.abs(st - ct));
+            console.log(Math.abs(sl - cl));
+            console.log('----------------');
+            if(Math.abs(st - ct) <= 20 && Math.abs(sl - cl) <= 20) {
+                console.log('matchin');
+                $('.circle').css({background: 'red'});
+                alert('You won!');
+
+            }
+        }
+        setInterval(checkPositions, 1000);
+
+        var leftPos, topPos;
+        var horizontal, vertical;
+        var $span = $("#van");
+
+        console.log('Left pos: ');
+        console.log($span.css('top'));
+        console.log('Top pos: ');
+        console.log($span.css('left'));
+
+        function moveDiv() {
+            $span.fadeOut(1000, function() {
+                var maxLeft = $(window).width() - $span.width();
+                var maxTop = $(window).height() - $span.height();
+                leftPos = Math.floor(Math.random() * (maxLeft + 1));
+                topPos = Math.floor(Math.random() * (230 - 180) + 180);
+
+                $span.css({ left: leftPos, top: topPos }).fadeIn(3000);
+            });
+        };
+
+        var square = moveDiv();
+        setInterval(moveDiv, 3000);
+
+
+
+      var videoInput = document.getElementById('inputVideo');
+      var canvasInput = document.getElementById('inputCanvas');
+
+      var htracker = new headtrackr.Tracker();
+      htracker.init(videoInput, canvasInput);
+      htracker.start();
+
+      document.addEventListener("facetrackingEvent", function( event ) {
+      // clear canvas
+      //overlayContext.clearRect(0,0,320,240);
+      // once we have stable tracking, draw rectangle
+        if (event.detection == "CS") {
+        var a = window.innerWidth / 400;
+        var b = window.innerHeight / 320;
+        horizontal = window.innerWidth - event.x * a;
+        vertical = window.innerHeight - event.y * b;
+        $(".circle").css("left",window.innerWidth - event.x * a);
+        $(".circle").css("top",window.innerHeight - event.y * b);
+        /*overlayContext.translate(event.x, event.y)
+        overlayContext.rotate(event.angle-(Math.PI/2));
+        overlayContext.strokeStyle = "#00CC00";
+        overlayContext.strokeRect((-(event.width/2)) >> 0, (-(event.height/2)) >> 0, event.width, event.height);
+        overlayContext.rotate((Math.PI/2)-event.angle);
+        overlayContext.translate(-event.x, -event.y);*/
+        }
+      });
+
+    });
+    </script>

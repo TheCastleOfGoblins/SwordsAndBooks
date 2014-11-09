@@ -418,6 +418,14 @@ code {
   margin-bottom:25px;
 }
 
+.circle
+{
+position:absolute;
+width:15px;
+height:15px;
+background:blue;
+border-radius:100%;
+
 .left-hover-img
 {
   /*-webkit-animation: wiggleLeft 100ms ease-in-out 0s infinite 10;*/
