@@ -165,6 +165,12 @@ var Main = function () {
   this.target = function (req, resp, params) {
     this.respond({params:params}, {format: 'html',  template:'app/views/target'});
   }
+
+  this.logout = function (req, resp, params) {
+    this.session = undefined;
+
+    this.respond({params:params}, {format: 'html',  template:'app/views/main/login'});
+  }
 };
 
 exports.Main = Main;

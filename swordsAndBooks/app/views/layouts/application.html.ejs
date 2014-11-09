@@ -18,12 +18,13 @@
                 </button>
                 <ul class="dropdown-menu display: inline;" role="menu" aria-labelledby="dropdownMenu1">
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= session.get('user').name %></a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Logout</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
                 </ul>
               </div>
               <% } %>
-              <a href="#" class="btn btn-default btn-large">Books</a>
-              <a href="#" class="btn btn-default btn-large">Categories</a>
+              <a href="/heros" class="btn btn-default btn-large">Heroes</a>
+              <a href="/books" class="btn btn-default btn-large">Books</a>
+              <a href="/episodes" class="btn btn-default btn-large">Episodes</a>
               <a href="#" class="btn btn-default btn-large">Friends</a>
             </nav>
           </div>
