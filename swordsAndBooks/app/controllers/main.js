@@ -24,7 +24,11 @@ var Main = function () {
     var fs = require('fs');
     var path = require('path');
 
-    this.redirect('/login');
+    if(this.session && this.session.get('user')) {
+      this.redirect('/heros');
+    } else {
+      this.redirect('/login');
+    }
   	// var io = require('socket.io').listen(geddy.server);
 
   	// io.sockets.on('connection', function (socket) {
@@ -167,7 +171,9 @@ var Main = function () {
   }
 
   this.logout = function (req, resp, params) {
-    this.session = undefined;
+    for(var i in this.session.data) {
+      this.session.unset(i);
+    }
 
     this.respond({params:params}, {format: 'html',  template:'app/views/main/login'});
   }
