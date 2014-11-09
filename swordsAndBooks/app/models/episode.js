@@ -8,6 +8,7 @@ var Episode = function () {
     coordX: {type: 'int'},
     coordY: {type: 'int'},
     clickContidions: {type: 'object'},
+    heroId:{type:'string'}
     // isWinner: {type: 'object'}
   });
 

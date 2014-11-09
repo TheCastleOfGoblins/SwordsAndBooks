@@ -51,6 +51,24 @@ var Episodes = function () {
         throw new geddy.errors.NotFoundError();
       }
       else {
+        var visibleEpisodes = self.session.get('visibleEpisodes') || [];
+
+        if(visibleEpisodes.length == 0 || visibleEpisodes[visibleEpisodes.length - 1].id != episode.id){
+          visibleEpisodes = visibleEpisodes.map(function(prevEp){
+            prevEp.current = false;
+            return prevEp;
+          });
+
+          var episodeFiltered = {title:episode.title,
+                               x:episode.coordX, 
+                               y:episode.coordY, url:'/episodes/' + episode.id + '/edit',
+                               id:episode.id, 
+                               current: true, 
+                               first:episode.isFirst, 
+                               clickContidions:episode.clickContidions};
+          visibleEpisodes.push(episodeFiltered);
+        }
+        self.session.set('visibleEpisodes', visibleEpisodes);
         self.respondWith(episode);
       }
     });
@@ -60,7 +78,6 @@ var Episodes = function () {
     var self = this;
 
     geddy.model.Episode.first(params.id, function(err, episode) {
-      
       geddy.model.Episode.all({bookId:episode.bookId},function(err, allEpisodesFromTheBook){
         
         if (err) {
@@ -70,8 +87,9 @@ var Episodes = function () {
           throw new geddy.errors.BadRequestError();
         }
         else {
-          // console.log(allEpisodesFromTheBook);
-          self.respond({episode: episode, allEpisodesFromTheBook:allEpisodesFromTheBook});
+          geddy.model.Hero.all(function(err, allHeroes){
+            self.respond({episode: episode, allEpisodesFromTheBook:allEpisodesFromTheBook, allHeroes:allHeroes});
+          });
         }
       });
     });
@@ -94,7 +112,7 @@ var Episodes = function () {
         var i =0 ;
         if(!params.clickContidions){
           episode.updateProperties(params);
-            
+
           episode.save(function(err, data) {
             self.redirect('/episodes/' + episode.id + '/edit')
           });

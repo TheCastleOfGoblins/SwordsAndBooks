@@ -1,25 +1,54 @@
 <div class="main-visual">
-  <img src="/img/map.jpg">
+  <img src="/img/map2.jpg">
+  <svg id="graph">
+    <path id="graphEdges" d="M0 0 Z"/>
+  </svg>
 </div>
 <div class="title-intro" style="border-radius:0">
   <div class="container">
     <div class="row">
       <div class="offset2 span8">
           <h2 class="title"><%= episode.title %></h2>
-          <%- linkTo('Edit this episode', editEpisodePath(params.id), {class: 'btn pull-right'}); %>
-          <%- linkTo('Back to list', episodePath(''), {class: 'btn pull-right'}); %>
       </div>
     </div>
   </div>
 </div>
-<!--
-<%- episode.story %>
--->
-<div class="grayline"></div>
-<div class="game bg2">
+<div class="woodtable" style="border-radius:0">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <div class="bg2 offseted-content" style="border-radius:15px;padding-top:25px;padding-bottom:25px;">
+          <div style="margin:25px">
+            <%-episode.story%>
+          </div>
+          <div>
+            <ul class="choosewisely">
+              <% for(var i in episode.clickContidions){
+                if(episode.clickContidions[i]){
+                  
+                %>
+                <li>
+                  <a href="/episodes/<%=episode.clickContidions[i].id%>" style=""><%=episode.clickContidions[i].condition%></a>
+                </li>
+                <% } %>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="grayline"></div>
+
+<%if(episode.heroId){ %>
+  <div class="game bg2">
+  </div>
+<% } %>
 <div class="blackline"></div>
 <div class="small-empty-space"></div>
+
 <!-- 
 <h2>Episode Properties</h2>
 <% for(var i in episode) { -%>
@@ -43,4 +72,35 @@
       $('.game').html(data);
     });
   });
+
+
+
+
+  $(document).ready(function(){
+        var graph = new SvGraph(document.getElementById("graph"),document.getElementById("graphEdges"));
+        var currentId = '<%-params.id%>';
+
+        var allNodes = JSON.parse('<%- JSON.stringify(session.get("visibleEpisodes"))%>');
+        // console.log(allNodes);
+        var formatedNodes = allNodes.map(function(element, index){
+          console.log(element); 
+          return {title:element.title, x:element.x, y:element.y, url:'/episodes/' + element.id + '', id:element.id, current: element.current, first:element.first}
+        });
+      
+        var edges = allNodes.map(function(element, index){
+          var ends = element.clickContidions.map(function(conditions, index){
+            if(!conditions){
+              return null;
+            }
+            return conditions.id;
+          });
+          return {start:element.id, end:ends};
+        });
+        console.log(edges);
+        graph.addNodes({
+          "edit" : false,
+          node:formatedNodes, 
+          edges:edges
+        });
+      });
 </script>

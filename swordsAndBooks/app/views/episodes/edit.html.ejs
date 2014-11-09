@@ -22,9 +22,19 @@
       <%- partial('form', {episode: episode}) %>
 
       <textarea name="story"><%=episode.story%></textarea>
+      <div>Add An Enemy:</div>
+      <select name='heroId'>
+        <option value=''> None</option>
+        <% for(var i in allHeroes){%>
+        <option value="<%=allHeroes[i].id%>">
+          <%=allHeroes[i].name%> - <%=allHeroes[i].level%> LVL
+        </option>
+        <% } %>
+      </select>
 
+      </br>
       Next Episodes: <br>
-      <div class='conditions'></div>
+      <div class='conditions' style='margin-top:20px'></div>
 
       <input type='hidden' name='isWinner'>
 

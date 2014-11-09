@@ -1,3 +1,36 @@
+.choosewisely
+{
+  background: url('/img/branch.jpg');
+  background-size:150px 150px;
+  background-repeat: no-repeat;
+  background-position: 90%;
+  list-style:none;border:1px solid gray;border-radius:15px;width:92%;
+  text-align: left;
+  font-size:18px;
+  font-family: Times New Roman;
+  font-style:italic;
+  font-weight: :bold;
+  overflow: hidden;;
+}
+.choosewisely li
+{
+  border-bottom: 1px solid gray;
+  padding-bottom:5px;
+  padding-top:5px;
+}
+.choosewisely li:hover
+{
+  background:#334433;  
+}
+.choosewisely li:hover a
+{
+  color:white;
+}
+.choosewisely a
+{
+  display:block;margin-left:35px;margin-right:5px;color:#334433;
+}
+
 #panel{
 
 }
