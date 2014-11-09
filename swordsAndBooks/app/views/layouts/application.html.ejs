@@ -1,5 +1,6 @@
 <%= partial('layout_header'); %>
   <body>
+    
     <div class="blackline">
     </div>
     <header>
@@ -34,7 +35,43 @@
     </div>
 
     <%- render(); %>
+    <iframe src="about:blank" style="visibility:hidden"></iframe>
+      <script type="text/javascript">
+        function sayEverything(parts, index)
+            {
+                if(index >= parts.length) return;
+                reader = window.frames[0].window.pageSay(parts[index]);
+                $(reader).on("ended",function(){
+                    sayEverything(parts, index + 1);
+                });
+            }
+      var js = 'function pageSay(text)'+
+            '{'+
+        'reader = document.getElementById("reader");'+
+                'reader.src = "http://translate.google.com/translate_tts?tl=en&q=" + encodeURI(text);'+
+                'reader.play();'+
+        'return reader;'+
+            '}';
 
+      setTimeout(function(){
+        window.frames[0].document.body.innerHTML = "<video id='reader' src='http://translate.google.com/translate_tts?tl=en&q=Lorem%20ipsum%20dolor%20sit%20amet' controls></video>";
+      },1000);
+      setTimeout(function(){
+        window.frames[0].window.eval(js);
+      },2000);
+     
+      $(document).ready(function(){
+                var videoPlaying = false;
+                $("p").click(function(e){
+                    var $this = $(this);
+                   
+                    var content = $this.text();
+                    var readParts = content.split(/[.,!:?]+/);
+                    var currentPart = 0;
+                    sayEverything(readParts, currentPart);
+                });
+            });
+    </script>
   </body>
 <%= partial('layout_footer'); %>
 
