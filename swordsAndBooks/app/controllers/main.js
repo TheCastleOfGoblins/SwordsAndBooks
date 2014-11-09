@@ -63,8 +63,8 @@ var Main = function () {
   };
 
   this.navigation = function (req, resp, params) {
-    this.session.set('winUrl', '/navigation');
-    this.session.set('looseUrl', '/navigation');
+    this.session.set('winUrl', '/battleEnd/win');
+    this.session.set('looseUrl', '/battleEnd/lose');
     this.respond({params:params}, {format: 'html',  template:'app/views/navigation'});
   }
 
@@ -158,7 +158,13 @@ var Main = function () {
       self.respond({params:params, yourHero:yourHero, opponent:opponent},{format:'html',template: 'app/views/battle', layout:false})
     });
   }
-
+  this.battleEnd = function(req,resp, params){
+    if(params.end == 'win'){
+      this.respond({params:params},{format: 'html',template:'app/views/win'});
+    }else{
+      this.respond({params:params},{format: 'html',template:'app/views/lose'});
+    }
+  }
   this.chess = function (req, resp, params) {
     this.respond({params:params}, {format: 'html',  template:'app/views/chess'});
   }

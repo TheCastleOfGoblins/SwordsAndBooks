@@ -8,7 +8,7 @@ var Books = function () {
       if (err) {
         throw err;
       }
-
+      self.session.unset('visibleEpisodes');
       // var episodes = [];
       // books.forEach(function(book) {
       //   book.getEpisodes(function(err, data) {
