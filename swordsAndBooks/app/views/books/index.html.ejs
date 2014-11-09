@@ -14,23 +14,37 @@
   <div class="container">
     <div class="row">
       <div class="offset2 span8" style="text-align:center;padding-top:25px;padding-bottom:25px">
-        <%- linkTo('Create a new Book', addBookPath, {class: 'btn btn-default btn-large offseted-content',style:'display:inline'}); %>
+        <%- linkTo('Write a new Book', addBookPath, {class: 'btn btn-default btn-large offseted-content',style:'display:inline'}); %>
       </div>
     </div>
   </div>
 </div> 
-<div class="bg1">
+<div class="blackline"></div>
+<div class="woodtable">
   <div class="small-empty-space"></div>
   <div class="container">
     <div class="row">
-<div id="books-list">
-<% if (books) { %>
-<% for (var i = 0, ii = books.length; i < ii; i++) { %>
-  <div class="row list-item" id="book-<%= books[i].id; %>">
-    <div class="span8">
-      <h3><%- linkTo(books[i].title, bookPath(books[i].id)); %> (by <%= session.get('user').name %>)</h3>
+      <div id="books-list" class="offset3 span6" style="font-family:Times New Roman">
+        <% if (books) { %>
+        <% for (var i = 0, ii = books.length; i < ii; i++) { %>
+          <div class="book" id="book-<%= books[i].id; %>">
+            <div class="span2" style="margin-left:75px;margin-top:45px;">
+              <h3><%- linkTo(books[i].title, bookPath(books[i].id), {style:'color:black;'}); %></h3>
+              <div style="text-align:right;margin-top:-10px;">(by <%= session.get('user').name %>)</div>
+              <p>Fantasy world is an epos about the pain and depression of the random content generator that is Misho
+                It features a lot of epic and good content I dont know anything about , Hari is not the real author , he
+                stole the idea from me and published it under a fake name "Hary".
+              </p>
+              <%- linkTo("Read it here...", bookPath(books[i].id), {style:'color:black;'}); %>
+            </div>
+            <div class="span2" style="margin-left:75px;margin-top:45px;">
+              <img style="width:95%;height:95%" src="/img/rose.png">
+            </div>
+          </div>
+        <% } %>
+        <% } %>
+      </div>
     </div>
   </div>
-<% } %>
-<% } %>
 </div>
+<div class="blackline"></div>

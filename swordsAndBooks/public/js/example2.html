@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+  <script src="simplex-noise.js"></script>
+</head>
+  <body>
+    <canvas width='1259' height='370' id="canvas"></canvas>
+    <script>
+    function lerp(a,b,epsilon)
+    {
+      return a * epsilon + b * (1 - epsilon);
+    }
+    function SimplexNoiseGenerator(frequency,minrange,maxrange,seed)
+			{
+				var _frequency = frequency;
+				var _minrange = minrange;
+				var _maxrange = maxrange;
+				var _seed = seed;
+        var noise = new SimplexNoise();
+				
+				this.frequency = function(value){
+					if(value)_frequency = value;
+					return _frequency;
+				}
+				this.minrange = function(value){
+					if(value)_minrange = value;
+					return _minrange;
+				}
+				this.maxrange = function(value){
+					if(value)_maxrange = value;
+					return _maxrange;
+				}
+				this.seed = function(value){
+					if(value)_seed = value;
+					return _seed;
+				}
+				
+
+				this.noise = function(x,y){
+					var noisy= noise.noise2D(x / _frequency, y / _frequency);
+					//normalize
+					noisy += 1;//change range from -1,1 to 0,2
+					noisy /= 2;//change range from 0,2 to 0,1
+					//convex combination
+					noisy = (1 - noisy) * _minrange + noisy * _maxrange;
+					return noisy;
+				}
+			}
+			
+			function CombinationGenerator(frequency,minrange,maxrange,generators)
+			{
+				var _frequency = frequency;
+				var _minrange = minrange;
+				var _maxrange = maxrange;
+				var _generators = generators;
+				
+				this.frequency = function(value){
+					if(value)_frequency = value;
+					return _frequency;
+				}
+				this.minrange = function(value){
+					if(value)_minrange = value;
+					return _minrange;
+				}
+				this.maxrange = function(value){
+					if(value)_maxrange = value;
+					return _maxrange;
+				}
+				this.generators = function(value){
+					if(value)_generators = value;
+					return _generators;
+				}
+				
+				this.noise = function(x,y){
+					var fx = x / _frequency;
+					var fy = y / _frequency;
+					var noisy = _generators.reduce(function(previousValue,currentValue){
+						return previousValue + currentValue.noise(fx,fy);
+					},0);
+
+          var totalMin = _generators.reduce(function(previousValue,currentValue){
+            return previousValue + currentValue.minrange();
+          },0);
+          var totalMax = _generators.reduce(function(previousValue,currentValue){
+            return previousValue + currentValue.maxrange();
+          },0);
+          noisy -= totalMin;
+          noisy /= totalMax - totalMin;
+          return minrange * (1 - noisy) + maxrange * noisy;
+				}
+      }
+      var seed = Math.random();
+      var generators = [new SimplexNoiseGenerator(10000, 0, 1, seed),
+        new SimplexNoiseGenerator(5000, 0.4,1, seed),
+        new SimplexNoiseGenerator(2500, 0,0.3, seed),
+        new SimplexNoiseGenerator(1200, 0.6,0.9, seed),
+        new SimplexNoiseGenerator(800, 0, 0.6, seed),
+        new SimplexNoiseGenerator(600, 0.5, 0.8, seed),
+        new SimplexNoiseGenerator(370, 0.2, 0.6, seed),
+        new SimplexNoiseGenerator(180, 0.5,0.7, seed),
+        new SimplexNoiseGenerator(100, 0.1,0.4, seed),
+        new SimplexNoiseGenerator(70, 0.4,0.6, seed),
+        new SimplexNoiseGenerator(56, 0.1,0.2, seed),
+        new SimplexNoiseGenerator(39, 0.5,0.65, seed),
+        new SimplexNoiseGenerator(19, 0.6,0.65, seed)
+      ];
+      var heights = new Array(1259 * 370);
+      for(var j = 0; j < heights.length; j++)
+      {
+        heights[j] = 0;
+      }
+      for(var j = 1 ; j <= generators.length; j++)
+      {
+        console.log(j);
+        var height = generators[j - 1];
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext('2d');
+        var imgData = ctx.createImageData(1259,370);
+        for (var i=0;i<imgData.data.length;i+=4)
+        {
+          var x = (i / 4) % 1259;
+          var y = (i / 4) / 370;
+          var h = height.noise(x,y) / 13;
+          heights[i/4] += h;
+          var epsilon = heights[i/4];
+          //console.log(epsilon);
+          if(epsilon < 0.43)
+          {
+            imgData.data[i+0]=30;
+            imgData.data[i+1]=40;
+            imgData.data[i+2]=170;
+            imgData.data[i+3]=255;
+          }
+          else if(epsilon > 0.53)
+          {
+            imgData.data[i+0]=255;
+            imgData.data[i+1]=255;
+            imgData.data[i+2]=255;
+            imgData.data[i+3]=255;
+          }
+          else if(epsilon > 0.50)
+          {
+            imgData.data[i+0]=lerp(120 , imgData.data[i+0], epsilon);
+            imgData.data[i+1]=lerp(150, imgData.data[i+1], epsilon);
+            imgData.data[i+2]=lerp(120, imgData.data[i+2], epsilon);
+            imgData.data[i+3]=255;
+          }
+          else if(epsilon > 0.48)
+          {
+            imgData.data[i+0]=lerp(70 , imgData.data[i+0], epsilon);
+            imgData.data[i+1]=lerp(120, imgData.data[i+1], epsilon);
+            imgData.data[i+2]=lerp(90, imgData.data[i+2], epsilon);
+            imgData.data[i+3]=255;
+          }
+          else
+          {
+            imgData.data[i+0]=lerp(10 , imgData.data[i+0], epsilon);
+            imgData.data[i+1]=lerp(160,imgData.data[i+1], epsilon);
+            imgData.data[i+2]=lerp(35, imgData.data[i+2], epsilon);
+            imgData.data[i+3]=255;
+          }
+        }
+      }
+      ctx.putImageData(imgData,0,0);
+      //1259 / 370
+      /*
+      var seed = Math.random();
+      var height = new CombinationGenerator(0.01,-70,100, [
+        new SimplexNoiseGenerator(30003, -50, 100, seed),
+        new SimplexNoiseGenerator(10001 , -20 , 35, seed),//landscape
+        new SimplexNoiseGenerator(5507 , -30 , 60, seed),
+      ]);
+      var river = new CombinationGenerator(0.01,0,100,[
+        new SimplexNoiseGenerator(1363 , 0 , 100, seed),
+        new SimplexNoiseGenerator(645 , 0 , 13, seed)
+      ]);
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext('2d');
+      var imgData = ctx.createImageData(1259,370);
+      for (var i=0;i<imgData.data.length;i+=4)
+      {
+        var x = (i / 4) % 1259;
+        var y = (i / 4) / 370;
+        var h = Math.floor(height.noise(x,y));
+        var r = Math.floor(river.noise(x,y));
+        if(h < -15 || r < 10)
+        {
+          imgData.data[i+0]=0;
+          imgData.data[i+1]=0;
+          imgData.data[i+2]=150;
+          imgData.data[i+3]=255;
+        }
+        else if(h > 10)
+        {
+          var green = new CombinationGenerator(15,60,190, [
+            new SimplexNoiseGenerator(120, -50, 100, seed),
+            new SimplexNoiseGenerator(45 , -20 , 35, seed),//landscape
+            new SimplexNoiseGenerator(4 , -30 , 60, seed),
+          ]);
+          var gray = new CombinationGenerator(33,60,120, [
+            new SimplexNoiseGenerator(1000 , -50, 100, seed),
+            new SimplexNoiseGenerator(500 , -20 , 35, seed),//landscape
+            new SimplexNoiseGenerator(120 , -30 , 60, seed),
+          ]);
+          var grayNoise = gray.noise(x,y);
+          var epsilon = (h - 10) / 40;
+          imgData.data[i+0]=Math.floor(lerp(75,0,epsilon));
+          imgData.data[i+1]=Math.floor(lerp(75,green.noise(x,y),epsilon));
+          imgData.data[i+2]=Math.floor(lerp(5,0,epsilon));
+          imgData.data[i+3]=255;
+        }
+        else
+        {
+          var green = new CombinationGenerator(95,60,190, [
+            new SimplexNoiseGenerator(120, -50, 100, seed),
+            new SimplexNoiseGenerator(45 , -20 , 35, seed),//landscape
+            new SimplexNoiseGenerator(4 , -30 , 60, seed),
+          ]);
+          imgData.data[i+0]=0;
+          imgData.data[i+1]=green.noise(x,y);
+          imgData.data[i+2]=0;
+          imgData.data[i+3]=255;
+        }
+      }
+      ctx.putImageData(imgData,0,0);*/
+    </script>
+	</body>
+</html>

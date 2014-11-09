@@ -44,138 +44,106 @@
 </script>
 
 <div class="bg2">
-    <div class="row move-a-little-bit-right">
+    <div class="row move-a-little-bit-right" style="overflow:hidden">
       <div class="span4" style="position:relative;height:350px">
         <img class="on-top" src="/img/dragon-left.png" style="height:350px">
         <div class="health-orb left-orb">
-          <div class="hp"></div>
+          <div data-hp='<%=Math.floor(yourHero.currentHealth / 10)%>' class="hp yourHealthBar"></div>
         </div>
       </div>
       <div class="span4" style="position:relative;height:350px">
         <div style="text-align:center">
           <h5>
-            <%=yourHero.name%> vs <%=opponent.name%>
+            <%=yourHero.name%>(<%=yourHero.level%> lvl) <img src='/img/crosswords.gif' style='display:inline-block;width:50px;height:50px'>(<%=opponent.level%> lvl) <%=opponent.name%>
           </h5>
+        </div>
+        <div data-win = '<%=session.get("winUrl")%>' data-lose='<%=session.get("looseUrl")%>' class='battleInfo' style='height:60px;text-align:center'>
+          <div class='attackInfoContainer' style='display:none'>
+            <h4 class='roundInfo'> </h4>
+            <div class='row' style='margin-left:5px;margin-top:5px;text-align:center;'>
+              <strong class='damageDone' style='color: green;'>You have done <span class='dmg'>123</span> damage </strong>
+              <br/>
+              <strong class='attackBlock' style='color: red;'><span class='dmg'>123</span> Damage blocked</strong>
+            </div>
+          </div>
+          <div class='defenseInfoContainer' style='margin-top:5px;text-align:center;display:none'>
+              <h4 class='roundInfo'> </h4>
+              <strong class='damageTaken' style='color: red;'><strong class='dmg'>123</strong> Damage taken</strong>
+              <br/>
+              <strong class='defenseBlock' style='color: green;'><strong class='dmg'>123</strong> Damage blocked</strong>	
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div class='attackMenu' style='margin-top:15px;font-size:12px'>
+            <strong>Try to attack his...</strong>
+            <br/>
+            <span style='margin-top:5px;margin-right: 5px;'>
+              Head
+              <%-contentTag('input','',{type:'checkbox', class:'attack head', value:'head'})%>
+            </span>
+            <span style='margin-top:5px;margin-right: 5px;'>
+              Body
+              <%-contentTag('input','',{type:'checkbox', class:'attack body', value:'body'})%>
+            </span>
+            <span style='margin-top:5px;margin-right: 5px;'>
+              Arms
+              <%-contentTag('input','',{type:'checkbox', class:'attack arms', value:'arms'})%>
+            </span>
+            <span style='margin-top:5px;margin-right: 5px;'>
+              Legs
+              <%-contentTag('input','',{type:'checkbox', class:'attack legs', value:'legs'})%>
+            </span>
+            <br/>
+            <span style='margin-top:5px;'>
+              <%-contentTag('input','Attack',{type:'button', class:'btn-danger', id:'submitAtack'})%>
+            </span>
+          </div>
+          <div class='defenseMenu' style='margin-top:15px;font-size:12px;display:none'>
+            <strong>Defend Yourself!</strong>
+            </br>
+            <span style='margin-top:5px;margin-right: 5px;'>
+              Head:
+              <%-contentTag('input','',{type:'checkbox', class:'defense head', value:'head'})%>
+            </span>
+            <span style='margin-top:5px;margin-right: 5px;'>
+              Body:
+              <%-contentTag('input','',{type:'checkbox', class:'defense body', value:'body'})%>
+            </span>
+            <span style='margin-top:5px;margin-right: 5px;'>
+              Arms:
+              <%-contentTag('input','',{type:'checkbox', class:'defense arms', value:'arms'})%>
+            </span>
+            <span style='margin-top:5px;margin-right: 5px;'>
+              Legs:
+              <%-contentTag('input','',{type:'checkbox', class:'defense legs', value:'legs'})%>
+            </span>
+            <br/>
+            <span style='margin-top:5px;'>
+              <%-contentTag('input','Defense',{type:'button', class:'defense btn-info', id:'submitDefense'})%>
+            </span>
+          </div>
+        </div>
+        <div>
+          <div style="width:25%;float:left;">
+            <img src='<%=yourHero.image%>' class="left-hover-img"/>
+          </div>
+          <div style="width:50%;float:left;">
+            .
+          </div>
+          <div style="width:25%;float:left;">
+            <img src='<%=opponent.image%>' class="right-hover-img"/>
+          </div>
+          <div class="clear:both"></div>
         </div>
       </div>
       <div class="span4" style="position:relative;height:350px">
         <img class="on-top" src="/img/dragon-right.png" style="height:350px">
         <div class="health-orb right-orb">
-          <div class="hp"></div>
+          <div data-hp='<%=Math.floor(opponent.currentHealth / 10)%>' class="hp enemyHeathBar"></div>
         </div>
       </div>
     </div>
 </div>
-
-<div class="container">
-  <div class="row">
-    <div class='span3' style='margin-top:15px;border:solid 2px;' id='<%=yourHero.id%>'>
-      <div class='span2'>
-        <img src='<%=yourHero.image%>' width='50px' height='50px'/>
-      </div>
-      <div class='span2'>
-        <strong>
-          <%=yourHero.name%>
-        </strong>
-      </div>
-      <div class='span2'>
-        Gender: <%=yourHero.gender%>
-      </div>
-      <div class='span2'>
-        Level: <%=yourHero.level%>
-      </div>
-      <div class='healthBar yourHealthBar span2' data-currentHealth = '<%=yourHero.currentHealth%>' style='background:green;border-radius:20px;text-align:center;'>
-          <strong>
-            <span id='yourCurrentHealth'><%=yourHero.currentHealth%></span> / <span id='yourMaxHealth'><%= yourHero.maxHealth%></span>
-          </strong>
-      </div>
-
-      <div class='span2 attackMenu' style='margin-top:15px;'>
-        <strong>Attack Menu:</strong>
-        <div style='margin-top:15px;'>
-          Head:
-          <%-contentTag('input','',{type:'checkbox', class:'attack head', value:'head'})%>
-        </div>
-        <div style='margin-top:15px;'>
-          Body:
-          <%-contentTag('input','',{type:'checkbox', class:'attack body', value:'body'})%>
-        </div>
-        <div style='margin-top:15px;'>
-          Arms:
-          <%-contentTag('input','',{type:'checkbox', class:'attack arms', value:'arms'})%>
-        </div>
-        <div style='margin-top:15px;'>
-          Legs:
-          <%-contentTag('input','',{type:'checkbox', class:'attack legs', value:'legs'})%>
-        </div>
-
-        <div style='margin-top:15px;'>
-          <%-contentTag('input','Attack',{type:'button', class:'btn-danger', id:'submitAtack'})%>
-        </div>
-      </div>
-      <div class='span2 defenseMenu' style='margin-top:15px;display:none'>
-        <strong>Defense Menu:</strong>
-        <div style='margin-top:15px;'>
-          Head:
-          <%-contentTag('input','',{type:'checkbox', class:'defense head', value:'head'})%>
-        </div>
-        <div style='margin-top:15px;'>
-          Body:
-          <%-contentTag('input','',{type:'checkbox', class:'defense body', value:'body'})%>
-        </div>
-        <div style='margin-top:15px;'>
-          Arms:
-          <%-contentTag('input','',{type:'checkbox', class:'defense arms', value:'arms'})%>
-        </div>
-        <div style='margin-top:15px;'>
-          Legs:
-          <%-contentTag('input','',{type:'checkbox', class:'defense legs', value:'legs'})%>
-        </div>
-
-        <div style='margin-top:15px;'>
-          <%-contentTag('input','Defense',{type:'button', class:'defense btn-info', id:'submitDefense'})%>
-        </div>
-      </div>
-    </div>
-    <div data-win = '<%=session.get("winUrl")%>' data-lose='<%=session.get("looseUrl")%>' class='battleInfo span5' style='background:white;margin-top:15px;border:solid 2px;height:345px;text-align:center'>
-      <div class='attackInfoContainer' style='display:none'>
-        <h1 class='roundInfo'> </h1>
-        <div class='row' style='margin-top:15px'>
-          <strong class='damageDone span5' style='color: green;'>You have done <span class='dmg'>123</span> damage </strong>
-          <strong class='attackBlock span5' style='color: red;'><span class='dmg'>123</span> Damage blocked</strong>
-        </div>
-      </div>
-      <div class='defenseInfoContainer' style='margin-top:15px;display:none'>
-          <h1 class='roundInfo'> </h1>
-          <strong class='damageTaken span5' style='color: red;'><strong class='dmg'>123</strong> Damage taken</strong>
-          <strong class='defenseBlock span5' style='color: green;'><strong class='dmg'>123</strong> Damage blocked</strong>	
-      </div>
-    </div>
-
-    <div class='span3' style='margin-top:15px;border:solid 2px;' id='<%=opponent.id%>'>
-        <div class='span2'>
-          <img src='<%=opponent.image%>' width='50px' height='50px'/>
-        </div>
-        <div class='span2'>
-          <strong>
-            <%=opponent.name%>
-          </strong>
-        </div>
-        <div class='span2'>
-          Gender: <%=opponent.gender%>
-        </div>
-        <div class='span2'>
-          Level: <%=opponent.level%>
-        </div>
-        <div class='healthBar enemyHeathBar span2' data-currentHealth = '<%=opponent.currentHealth%>' style='background:green;border-radius:20px;text-align:center;'>
-            <strong>
-              <span class='opponentCurrentHealth'><%=opponent.currentHealth%></span>/ <%= opponent.maxHealth%>
-            </strong>
-        </div>
-    </div>
-  </div>
-</div>
-
 
 <%- scriptLink('/js/socket.io.js', { type: 'text/javascript' }) %>
 <script>
@@ -219,7 +187,7 @@
 			});
 
 			$('.opponentCurrentHealth').text(data.opponent.currentHealth);
-			$('.enemyHeathBar').attr('data-currentHealth', data.opponent.currentHealth);
+			$('.enemyHeathBar').attr('data-hp', Math.floor(data.opponent.currentHealth/10));
 			$('.attack').attr('checked',false);
 	});
 
@@ -261,7 +229,7 @@
 	
 		
 		$('#yourCurrentHealth').text(data.yourHero.currentHealth);
-		$('.yourHealthBar').attr('data-currentHealth', data.yourHero.currentHealth);
+		$('.yourHealthBar').attr('data-hp', Math.floor(data.yourHero.currentHealth/10));
 		$('.defense').attr('checked',false);
 
 		console.log(data);

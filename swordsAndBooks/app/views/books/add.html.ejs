@@ -1,22 +1,264 @@
-<div class="hero-unit">
-  <form id="book-form" class="form-horizontal" action="/books" method="POST">
-    <fieldset>
-      <legend>Create a new Book</legend>
-      <% if(params.errors) { %>
-      <div class="control-group">
-        <ul>
-        <% for(var err in params.errors) { %>
-          <li><%= params.errors[err]; %></li>
-        <% } %>
-        </ul>
-      </div>
-      <% } %>
-
-      <%- partial('form', {book: params}) %>
-
-      <div class="form-actions">
-        <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
-      </div>
-    </fieldset>
-  </form>
+<div id="panel" class="main-visual">
+  <img id="unused" src="/img/map2.jpg" style="display:none"/>
+  <canvas id="canvas"></canvas>
+  <svg id="graph">
+    <path id="graphEdges" d="M0 0 Z"/>
+  </svg>
 </div>
+
+<div class="bg1">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span4">
+        <p class="offseted-content">
+          Double click anywhere on the map to select a start for your story.
+          You can always change it afterwards.
+        </p>
+      </div>
+      <div class="span4" style="text-align:right">
+        <div class="dropdown" style="display: inline;">
+          <button class="btn btn-default dropdown-toggle btn-large" style="margin-top:13px" type="button" id="dropdownMenu1" data-toggle="dropdown">
+            Map Selection
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu display: inline;" style="margin-top:25px" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Upload a map</a></li>
+            <li role="presentation"><a id="mapGen" role="menuitem" tabindex="-1" href="#">Generate a random map</a></li>
+            <li role="presentation"><a id="loadUnused" role="menuitem" tabindex="-1" href="#">Select one of our unused maps</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="title-intro">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <h2>Creating a new Book</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="blackline"></div>
+
+<div class="woodtable">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+          <form id="book-form" class="form-horizontal" action="/books" method="POST">
+            <fieldset style="text-align:center">
+              <legend style="color:white">Choose a title for your new book</legend>
+              <% if(params.errors) { %>
+              <div class="control-group">
+                <ul>
+                <% for(var err in params.errors) { %>
+                  <li><%= params.errors[err]; %></li>
+                <% } %>
+                </ul>
+              </div>
+              <% } %>
+
+              <%- partial('form', {book: params}) %>
+
+              <div class="control-group">
+                <%- contentTag('input', 'Begin writing your book.', {type: 'submit', class: 'btn btn-submit btn-large'}) %>
+              </div>
+              <legend></legend>
+            </fieldset>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#loadUnused").click(function(){
+        $("#unused").show();
+        $("#canvas").hide();
+    });
+    $("#mapGen").click(function(){
+        $("#unused").hide();
+        $("#canvas").show();
+        var seed = Math.random();
+        var generators = [new SimplexNoiseGenerator(10000, 0, 1, seed),
+          new SimplexNoiseGenerator(5000, 0.4,1, seed),
+          new SimplexNoiseGenerator(2500, 0,0.3, seed),
+          new SimplexNoiseGenerator(1200, 0.6,0.9, seed),
+          new SimplexNoiseGenerator(800, 0, 0.6, seed),
+          new SimplexNoiseGenerator(600, 0.5, 0.8, seed),
+          new SimplexNoiseGenerator(370, 0.2, 0.6, seed),
+          new SimplexNoiseGenerator(180, 0.5,0.7, seed),
+          new SimplexNoiseGenerator(100, 0.1,0.4, seed),
+          new SimplexNoiseGenerator(70, 0.4,0.6, seed),
+          new SimplexNoiseGenerator(56, 0.1,0.2, seed),
+          new SimplexNoiseGenerator(39, 0.4,0.65, seed),
+          new SimplexNoiseGenerator(19, 0.3,0.65, seed)
+        ];
+        var heights = new Array(1259 * 370);
+        for(var j = 0; j < heights.length; j++)
+        {
+          heights[j] = 0;
+        }
+        for(var j = 1 ; j <= generators.length; j++)
+        {
+          console.log(j);
+          var height = generators[j - 1];
+          var canvas = document.getElementById("canvas");
+          var ctx = canvas.getContext('2d');
+          var imgData = ctx.createImageData(1259,370);
+          for (var i=0;i<imgData.data.length;i+=4)
+          {
+            var x = (i / 4) % 1259;
+            var y = (i / 4) / 370;
+            var h = height.noise(x*40,y*8) / 12.8;
+            heights[i/4] += h;
+            var epsilon = heights[i/4];
+            //console.log(epsilon);
+            if(epsilon < 0.43)
+            {
+              imgData.data[i+0]=30;
+              imgData.data[i+1]=40;
+              imgData.data[i+2]=170;
+              imgData.data[i+3]=255;
+            }
+            else if(epsilon < 0.436)
+            {
+              imgData.data[i+0]=140;
+              imgData.data[i+1]=140;
+              imgData.data[i+2]=65;
+              imgData.data[i+3]=255;
+            }
+            else if(epsilon > 0.51)
+            {
+              imgData.data[i+0]=255;
+              imgData.data[i+1]=255;
+              imgData.data[i+2]=255;
+              imgData.data[i+3]=255;
+            }
+            else if(epsilon > 0.50)
+            {
+              imgData.data[i+0]=lerp(120 , imgData.data[i+0], epsilon);
+              imgData.data[i+1]=lerp(130, imgData.data[i+1], epsilon);
+              imgData.data[i+2]=lerp(120, imgData.data[i+2], epsilon);
+              imgData.data[i+3]=255;
+            }
+            else if(epsilon > 0.48)
+            {
+              imgData.data[i+0]=lerp(50 , imgData.data[i+0], epsilon);
+              imgData.data[i+1]=lerp(140, imgData.data[i+1], epsilon);
+              imgData.data[i+2]=lerp(70, imgData.data[i+2], epsilon);
+              imgData.data[i+3]=255;
+            }
+            else
+            {
+              imgData.data[i+0]=lerp(10 , imgData.data[i+0], epsilon);
+              imgData.data[i+1]=lerp(140,imgData.data[i+1], epsilon);
+              imgData.data[i+2]=lerp(35, imgData.data[i+2], epsilon);
+              imgData.data[i+3]=255;
+            }
+          }
+        }
+        ctx.putImageData(imgData,0,0);
+    });
+  });
+</script>
+<script type="text/javascript">
+  $('#book-form').submit(function(e){
+    // e.preventDefault();
+    var firstEpisode = {
+      title: 'Episode 0',
+      story: '',
+      isFinal: false,
+      isFirst: true,
+      coordX: $('.node').attr('cx'),
+      coordY: $('.node').attr('cy'),
+      clickContidions: []
+    }
+    console.log(firstEpisode);
+    var input = '<textarea name="firstEpisode" style="visibility:hidden">'+ JSON.stringify(firstEpisode)  + ' </textarea>';
+
+    $('#book-form').append(input);
+
+
+  });
+</script>
+<script>
+      var id = 1025;//current id
+      var parrent = 1024;
+      var curNode = {
+        "title" : "current episode name",
+        "url" : "/current/",
+      }
+      $(document).ready(function(){
+        var graph = new SvGraph(document.getElementById("graph"),document.getElementById("graphEdges"));
+        $("#panel").click(function(e){
+          curNode.id = id++;
+          curNode.current = true;
+          curNode.x = e.offsetX;
+          curNode.y = e.offsetY;
+          var current = graph.currentNodeId();
+          graph.addNode(
+            curNode
+          );
+          graph.addEdge({
+            start : current,
+            end : curNode.id
+          });
+          $("#panel").off("click");
+        });
+        
+        //static data
+        // graph.addNodes({
+        //   "edit" : false,
+        //   node:[
+        //     {
+        //       "x":150,
+        //       "y":70,
+        //       "title":"The battle of quell danas",
+        //       "url":"/book/episode/battle",
+        //       "id": 1000,
+        //       "current":true
+        //     },
+        //     {
+        //       "x":190,
+        //       "y":220,
+        //       "title":"The clash of the titans",
+        //       "url":"/book/episode/city1",
+        //       "id": 1001,
+        //     },
+        //     {
+        //       "x":115,
+        //       "y":98,
+        //       "title":"When all hell broke loose",
+        //       "url":"/book/episode/damnit3",
+        //       "id": 1002,
+        //     },
+        //     {
+        //       "x":201,
+        //       "y":88,
+        //       "title":"Ninjas attack",
+        //       "url":"/book/episode/gagag",
+        //       "id": 1003,
+        //     }
+        //   ],
+        //   edges:[
+        //     {
+        //       "start":1000,
+        //       "end":[1001],
+        //     },
+        //     {
+        //       "start":1001,
+        //       "end":[1002],
+        //     },
+        //     {
+        //       "start":1002,
+        //       "end":[1003],
+        //     }
+        //   ]
+        // })
+        
+      });
+</script>
