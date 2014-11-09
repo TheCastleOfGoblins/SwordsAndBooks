@@ -275,7 +275,7 @@ input
   position:absolute;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.8);
+  background:rgba(0,0,0,0.3);
 }
 .main-visual .intro
 {
@@ -409,6 +409,12 @@ code {
 .woodtable
 {
   background:url('/img/wood.jpg') repeat;
+  background-size:300px 300px;
+}
+
+.stonewall
+{
+  background:url('/img/stone.png') repeat;
   background-size:300px 300px;
 }
 
