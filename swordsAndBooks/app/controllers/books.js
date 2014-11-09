@@ -60,8 +60,11 @@ var Books = function () {
         throw new geddy.errors.NotFoundError();
       }
       else {
-        book.getEpisodes(function(err, episodes) {
-          self.respond({book: book, episodes: episodes});
+        // book.getEpisodes(function(err, episodes) {
+        geddy.model.Episode.first({bookId:book.id, isFirst:true},function(err, episode){
+          console.log(episode)
+          self.redirect('/episodes/' + episode.id);
+          // self.respond({book: book, episode: episode});
         })
       }
     });
