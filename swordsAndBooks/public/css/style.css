@@ -25,11 +25,11 @@
   stroke:gray;
   stroke-width:3;
 }
-.node:last-of-type
+.selected
 {
   fill:rgba(255,60,60,0.7);;
 }
-.node:first-of-type
+.root
 {
   fill:rgba(60,60,255,0.7);;
 }

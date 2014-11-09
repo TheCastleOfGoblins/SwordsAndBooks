@@ -27,7 +27,26 @@
     </fieldset>
   </form>
 </div>
+<script type="text/javascript">
+  $('#book-form').submit(function(e){
+    // e.preventDefault();
+    var firstEpisode = {
+      title: 'Episode 0',
+      story: '',
+      isFinal: false,
+      isFirst: true,
+      coordX: $('.node').attr('cx'),
+      coordY: $('.node').attr('cy'),
+      clickContidions: []
+    }
+    console.log(firstEpisode);
+    var input = '<textarea name="firstEpisode" style="visibility:hidden">'+ JSON.stringify(firstEpisode)  + ' </textarea>';
 
+    $('#book-form').append(input);
+
+
+  });
+</script>
 <script>
       var id = 1025;//current id
       var parrent = 1024;
@@ -54,53 +73,54 @@
         });
         
         //static data
-        graph.addNodes({
-          "edit" : false,
-          node:[
-            {
-              "x":150,
-              "y":70,
-              "title":"The battle of quell danas",
-              "url":"/book/episode/battle",
-              "id": 1000,
-              "current":true
-            },
-            {
-              "x":190,
-              "y":220,
-              "title":"The clash of the titans",
-              "url":"/book/episode/city1",
-              "id": 1001,
-            },
-            {
-              "x":115,
-              "y":98,
-              "title":"When all hell broke loose",
-              "url":"/book/episode/damnit3",
-              "id": 1002,
-            },
-            {
-              "x":201,
-              "y":88,
-              "title":"Ninjas attack",
-              "url":"/book/episode/gagag",
-              "id": 1003,
-            }
-          ],
-          edges:[
-            {
-              "start":1000,
-              "end":[1001],
-            },
-            {
-              "start":1001,
-              "end":[1002],
-            },
-            {
-              "start":1002,
-              "end":[1003],
-            }
-          ]
-        })
+        // graph.addNodes({
+        //   "edit" : false,
+        //   node:[
+        //     {
+        //       "x":150,
+        //       "y":70,
+        //       "title":"The battle of quell danas",
+        //       "url":"/book/episode/battle",
+        //       "id": 1000,
+        //       "current":true
+        //     },
+        //     {
+        //       "x":190,
+        //       "y":220,
+        //       "title":"The clash of the titans",
+        //       "url":"/book/episode/city1",
+        //       "id": 1001,
+        //     },
+        //     {
+        //       "x":115,
+        //       "y":98,
+        //       "title":"When all hell broke loose",
+        //       "url":"/book/episode/damnit3",
+        //       "id": 1002,
+        //     },
+        //     {
+        //       "x":201,
+        //       "y":88,
+        //       "title":"Ninjas attack",
+        //       "url":"/book/episode/gagag",
+        //       "id": 1003,
+        //     }
+        //   ],
+        //   edges:[
+        //     {
+        //       "start":1000,
+        //       "end":[1001],
+        //     },
+        //     {
+        //       "start":1001,
+        //       "end":[1002],
+        //     },
+        //     {
+        //       "start":1002,
+        //       "end":[1003],
+        //     }
+        //   ]
+        // })
+        
       });
-    </script>
+</script>

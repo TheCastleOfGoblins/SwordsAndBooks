@@ -28,7 +28,7 @@ var Books = function () {
     var self = this
       , book = geddy.model.Book.create(params);
 
-
+    console.log(params);
     if (!book.isValid()) {
       this.respondWith(book);
     }
@@ -38,7 +38,13 @@ var Books = function () {
           throw err;
         }
 
-        self.respondWith(book, {status: err});
+        params.firstEpisode = JSON.parse(params.firstEpisode);
+        episode = geddy.model.Episode.create(params.firstEpisode);
+        episode.bookId = data.id;
+        episode.save(function(err, savedEpisode){
+          self.redirect('/episodes/' + savedEpisode.id + '/edit');
+          // self.respondWith(book, {status: err}); 
+        });
       });
     }
   };

@@ -1,7 +1,14 @@
+<div id="panel" class="main-visual">
+  <img src="/img/map2.jpg">
+  <svg id="graph">
+    <path id="graphEdges" d="M0 0 Z"/>
+  </svg>
+</div>
+
 <div class="hero-unit">
   <form id="episode-form" class="form-horizontal" action="/episodes/<%= params.id %>?_method=PUT" method="POST">
     <fieldset>
-      <legend>Update this Episode</legend>
+      <legend>Create a new Episode</legend>
       <% if(params.errors) { %>
       <div class="control-group">
         <ul>
@@ -14,10 +21,152 @@
 
       <%- partial('form', {episode: episode}) %>
 
+      <textarea name="story"><%=episode.story%></textarea>
+
+      Next Episodes: <br>
+      <div class='conditions'></div>
+
+      <input type='hidden' name='isWinner'>
+
       <div class="form-actions">
-        <%- contentTag('input', 'Save', {type: 'submit', class: 'btn btn-primary'}) %>
-        <%- contentTag('button', 'Remove', {type: 'submit', formaction: '/episodes/' + params.id + '?_method=DELETE', formmethod: 'POST', class: 'btn btn-danger'}) %>
+        <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
       </div>
     </fieldset>
+
   </form>
 </div>
+<%
+  function utf8_to_b64( str ) {
+          return (encodeURIComponent( escape( str ))).toString('base64');
+  }
+ %>
+
+<script>
+      var id = 1025;//current id
+      var parrent = 1024;
+      var curNode = {
+        "title" : "current episode name",
+        "url" : "/current/",
+      }
+
+        function utf8_to_b64( str ) {
+          return window.btoa(encodeURIComponent( escape( str )));
+        }
+
+        function b64_to_utf8( str ) {
+          return unescape(decodeURIComponent(window.atob( str )));
+        }
+        // console.log('<%- utf8_to_b64(JSON.stringify(allEpisodesFromTheBook)) %>')
+
+      var allNodes = [];
+      <% for(var i in allEpisodesFromTheBook){ %>
+        allNodes.push(<%-allEpisodesFromTheBook[i]%>);
+       <% }%>;
+      // console.log(allNodes);
+
+      var numberOfConditions = 0;
+
+      $(document).ready(function(){
+        var graph = new SvGraph(document.getElementById("graph"),document.getElementById("graphEdges"));
+        $("#panel").dblclick(function(e){
+          numberOfConditions += 1;
+          var curNode = {
+          "title" : "Episode" + numberOfConditions.toString(),
+          "url" : "/current/",
+          }
+
+          curNode.id = id++;
+          curNode.current = true;
+          curNode.x = e.offsetX;
+          curNode.y = e.offsetY;
+          var current = graph.currentNodeId();
+          
+
+          graph.addNode(
+            curNode
+          );
+          graph.addCurEdge(graph.nodes()[current], curNode);
+
+          
+          var newCondition = '<div class="control-group">Title: ' + '<input type="text" name="clickContidions['+ numberOfConditions.toString() +'][title]" class="title" value="Episode ' + numberOfConditions.toString() + '"> Condition '+ 
+            '<input type="text" name="clickContidions['+ numberOfConditions.toString() + '][condition]" class="condition" >'
+          + '<input type="hidden" name="clickContidions['+ numberOfConditions.toString() + '][coordX]" class="" value=' + curNode.x + ' >' + 
+          '<input type="hidden" name="clickContidions['+ numberOfConditions.toString() + '][coordY]" class="" value='+ curNode.y + '>'   
+          + '</div>';
+
+          $('.conditions').append(newCondition);
+          // $("#panel").off("click");
+        });
+        var currentId = '<%-params.id%>';
+
+        var formatedNodes = allNodes.map(function(element, index){
+          return {title:element.title, x:element.coordX, y:element.coordY, url:'/episodes/' + element.id + '/edit', id:element.id, current: (currentId == element.id), first:element.isFirst}
+        });
+        // console.log(formatedNodes);
+        var edges = allNodes.map(function(element, index){
+          var ends = element.clickContidions.map(function(conditions, index){
+            if(!conditions){
+              return null;
+            }
+            return conditions.id;
+          });
+          return {start:element.id, end:ends};
+        });
+        // console.log(formatedNodes);
+        console.log(edges);
+        graph.addNodes({
+          "edit" : false,
+          node:formatedNodes, 
+          edges:edges
+        });
+
+        // graph.addNodes({
+        //   "edit" : false,
+        //   node:[
+        //     {
+        //       "x":150,
+        //       "y":70,
+        //       "title":"The battle of quell danas",
+        //       "url":"/book/episode/battle",
+        //       "id": 1000,
+        //       "current":true
+        //     },
+        //     {
+        //       "x":190,
+        //       "y":220,
+        //       "title":"The clash of the titans",
+        //       "url":"/book/episode/city1",
+        //       "id": 1001,
+        //     },
+        //     {
+        //       "x":115,
+        //       "y":98,
+        //       "title":"When all hell broke loose",
+        //       "url":"/book/episode/damnit3",
+        //       "id": 1002,
+        //     },
+        //     {
+        //       "x":201,
+        //       "y":88,
+        //       "title":"Ninjas attack",
+        //       "url":"/book/episode/gagag",
+        //       "id": 1003,
+        //     }
+        //   ],
+        //   edges:[
+        //     {
+        //       "start":1000,
+        //       "end":[1001],
+        //     },
+        //     {
+        //       "start":1001,
+        //       "end":[1002],
+        //     },
+        //     {
+        //       "start":1002,
+        //       "end":[1003],
+        //     }
+        //   ]
+        // })
+      });
+    </script>
