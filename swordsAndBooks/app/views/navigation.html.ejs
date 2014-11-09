@@ -1,3 +1,4 @@
+<% var hero = session.get('selectedHero');%>
 <div class="main-visual">
       <div class="content">
         <div class="container">
@@ -15,7 +16,7 @@
   <div class="container">
     <div class="row">
       <div class="offset2 span8">
-        <h2>All Books</h2>
+        <h2><%= hero.name %> , Ready for battle.</h2>
       </div>
     </div>
   </div>
@@ -25,13 +26,30 @@
     <div class="row">
       <div class="offset2 span8" style="text-align:center;padding-top:25px;padding-bottom:25px">
         <a class="btn btn-default btn-large offseted-content" href="/books/" style="display:inline">Read a book</a>
-        <a class="btn btn-default btn-large offseted-content" href="/startBattle/111" style="display:inline">Try a fight against a random opponent</a>
+        <a class="btn btn-default btn-large offseted-content" href="/heros/" style="display:inline">Select another hero</a>
       </div>
     </div>
   </div>
 </div>
-<div class="book">
-
+<div class="bg1">
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span2">
+        <a class="btn btn-default btn-large offseted-content" style="width:100%" href="#">Created Books</a>
+        <a class="btn btn-default btn-large offseted-content" style="width:100%" href="#">Statistics</a>
+      </div>
+      <div class="span4">
+        <a class="btn btn-default btn-large offseted-content" style="width:100%;background-color:white;color:black;" href="/books/add">Write a book</a>
+        <a class="btn btn-default btn-large offseted-content" style="width:100%;background-color:white;color:black;" href="#">Game Shop</a>
+      </div>
+      <div class="span2">
+        <a class="btn btn-default btn-large offseted-content" style="width:100%" href="#">Read Books</a>
+        <a class="btn btn-default btn-large offseted-content" style="width:100%" href="#">Friends</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="small-empty-space">
 </div>
 <div class="blackline">
 </div>
