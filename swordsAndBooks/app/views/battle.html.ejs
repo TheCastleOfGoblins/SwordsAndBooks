@@ -54,11 +54,57 @@
       <div class="span4" style="position:relative;height:350px">
         <div style="text-align:center">
           <h5>
-            <%=yourHero.name%> <img src='/img/crosswords.gif' style='display:inline-block;width:50px;height:50px'> <%=opponent.name%>
+            <%=yourHero.name%>(<%=yourHero.level%> lvl) <img src='/img/crosswords.gif' style='display:inline-block;width:50px;height:50px'>(<%=opponent.level%> lvl) <%=opponent.name%>
           </h5>
         </div>
-        <div style=''>
-        1
+        <div>
+          <div class='span2 attackMenu' style='margin-top:15px;font-size:12px'>
+            <strong>Try to attack his...</strong>
+            <br/>
+            <span style='margin-top:5px;'>
+              Head
+              <%-contentTag('input','',{type:'checkbox', class:'attack head', value:'head'})%>
+            </span>
+            <span style='margin-top:5px;'>
+              Body
+              <%-contentTag('input','',{type:'checkbox', class:'attack body', value:'body'})%>
+            </span>
+            <span style='margin-top:5px;'>
+              Arms
+              <%-contentTag('input','',{type:'checkbox', class:'attack arms', value:'arms'})%>
+            </span>
+            <span style='margin-top:5px;'>
+              Legs
+              <%-contentTag('input','',{type:'checkbox', class:'attack legs', value:'legs'})%>
+            </span>
+
+            <span style='margin-top:5px;'>
+              <%-contentTag('input','Attack',{type:'button', class:'btn-danger', id:'submitAtack'})%>
+            </span>
+          </div>
+          <div class='span2 defenseMenu' style='margin-top:15px;display:none'>
+            <strong>Defense Menu:</strong>
+            <span style='margin-top:5px;'>
+              Head:
+              <%-contentTag('input','',{type:'checkbox', class:'defense head', value:'head'})%>
+            </span>
+            <span style='margin-top:5px;'>
+              Body:
+              <%-contentTag('input','',{type:'checkbox', class:'defense body', value:'body'})%>
+            </span>
+            <span style='margin-top:5px;'>
+              Arms:
+              <%-contentTag('input','',{type:'checkbox', class:'defense arms', value:'arms'})%>
+            </span>
+            <span style='margin-top:5px;'>
+              Legs:
+              <%-contentTag('input','',{type:'checkbox', class:'defense legs', value:'legs'})%>
+            </span>
+
+            <span style='margin-top:5px;'>
+              <%-contentTag('input','Defense',{type:'button', class:'defense btn-info', id:'submitDefense'})%>
+            </span>
+          </div>
         </div>
       </div>
       <div class="span4" style="position:relative;height:350px">
