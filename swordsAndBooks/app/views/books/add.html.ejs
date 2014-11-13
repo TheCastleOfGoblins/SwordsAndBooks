@@ -194,8 +194,9 @@
       }
       $(document).ready(function(){
         var graph = new SvGraph(document.getElementById("graph"),document.getElementById("graphEdges"));
-        $("#panel").click(function(e){
+        $("#panel").dblclick(function(e){
           curNode.id = id++;
+          curNode.url = '#';
           curNode.current = true;
           curNode.x = e.offsetX;
           curNode.y = e.offsetY;
