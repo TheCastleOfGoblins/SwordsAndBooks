@@ -22,7 +22,7 @@ var router = new geddy.RegExpRouter();
 router.get('/').to('Main.index');
 router.get('/login').to('Main.login');
 router.get('/logout').to('Main.logout');
-router.post('/prepareSession').to('Main.prepareSession');
+router.get('/prepareSession').to('Main.prepareSession');
 router.get('/battleEnd/:end').to('Main.battleEnd');
 // Basic routes
 // router.match('/moving/pictures/:id', 'GET').to('Moving.pictures');
@@ -56,4 +56,18 @@ router.get('/target').to('Main.target');
 
 router.resource('conditions');
 
+
+router.get('/login').to('Main.login');
+router.get('/logout').to('Main.logout');
+router.post('/auth/local').to('Auth.local');
+router.get('/auth/twitter').to('Auth.twitter');
+router.get('/auth/twitter/callback').to('Auth.twitterCallback');
+router.get('/auth/facebook').to('Auth.facebook');
+router.get('/auth/facebook/callback').to('Auth.facebookCallback');
+router.get('/auth/yammer').to('Auth.yammer');
+router.get('/auth/yammer/callback').to('Auth.yammerCallback');
+router.get('/auth/google').to('Auth.google');
+router.get('/auth/google/callback').to('Auth.googleCallback');
+
+router.resource('users');
 exports.router = router;

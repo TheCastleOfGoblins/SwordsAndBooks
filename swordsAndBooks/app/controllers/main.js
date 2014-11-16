@@ -15,41 +15,50 @@
  * limitations under the License.
  *
 */
+var strategies = require('../helpers/passport/strategies')
+  , authTypes = geddy.mixin(strategies, {local: {name: 'local account'}});;
 
 var Main = function () {
+
   this.index = function (req, resp, params) {
-  	var _ = require('underscore');
-  	var jquery = require('jquery');
-
-    if(this.session && this.session.get('user')) {
-      this.redirect('/heros');
-    } else {
-      this.redirect('/login');
-    }
-  	// var io = require('socket.io').listen(geddy.server);
-
-  	// io.sockets.on('connection', function (socket) {
-	  // socket.on('newMessage', function (data) {
-	  // 	socket.emit('new', { message: 'world' });
-	  //   console.log(data);
-	  // });
-	  // });
-    this.respond({params: params}, {
-      format: 'html'
-    , template: 'app/views/main/index'
+    var self = this
+      , User = geddy.model.User;
+    User.first({id: this.session.get('userId')}, function (err, user) {
+      var data = {
+        user: null
+      , authType: null
+      };
+      if (user) {
+        data.user = user;
+        data.authType = authTypes[self.session.get('authType')].name;
+      }
+      self.respond(data, {
+        format: 'html'
+      , template: 'app/views/main/index'
+      });
     });
   };
-  this.login = function (req, resp, params){
-    this.respond({params: params}, {
+
+  this.login = function (req, resp, params) {
+    this.respond(params, {
       format: 'html'
     , template: 'app/views/main/login'
     });
+    
   };
 
+  this.logout = function (req, resp, params) {
+    this.session.unset('userId');
+    this.session.unset('authType');
+    this.respond(params, {
+      format: 'html'
+    , template: 'app/views/main/logout'
+    });
+  };
   this.prepareSession = function (req, resp, params) {
 
     var self = this;
-    geddy.model.User.first({name:params.userName},function(err, user){
+    geddy.model.User.first({id: this.session.get('userId')},function(err, user){
       if(err || !user){
         console.log(err);
         self.flash.error('Wrong user or password');
@@ -66,7 +75,7 @@ var Main = function () {
     this.session.set('winUrl', '/battleEnd/win');
     this.session.set('looseUrl', '/battleEnd/lose');
     this.respond({params:params}, {format: 'html',  template:'app/views/navigation'});
-  }
+  };
 
   this.startBattle = function(req, resp, params){
     var self = this;
@@ -165,26 +174,19 @@ var Main = function () {
       this.respond({params:params},{format: 'html',template:'app/views/lose'});
     }
   }
+
   this.chess = function (req, resp, params) {
     this.respond({params:params}, {format: 'html',  template:'app/views/chess'});
   }
-
+  
   this.target = function (req, resp, params) {
     this.respond({params:params}, {format: 'html',  template:'app/views/target'});
-  }
-
-  this.logout = function (req, resp, params) {
-    for(var i in this.session.data) {
-      this.session.unset(i);
-    }
-
-    this.respond({params:params}, {format: 'html',  template:'app/views/main/login'});
   }
 };
 
 exports.Main = Main;
+
 function shuffle(o){ //v1.0
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 };
-
