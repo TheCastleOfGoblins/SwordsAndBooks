@@ -37,9 +37,9 @@ var config = {
 , model: {
     defaultAdapter: 'mongo'
   }
+  
 , sessions: {
-    store: 'filesystem'
-  , filename: '_session_store.json'
+    store: 'memory'
   , key: 'sid'
   , expiry: 14 * 24 * 60 * 60
   },
