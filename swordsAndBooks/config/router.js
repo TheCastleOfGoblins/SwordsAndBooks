@@ -22,7 +22,7 @@ var router = new geddy.RegExpRouter();
 router.get('/').to('Main.index');
 router.get('/login').to('Main.login');
 router.get('/logout').to('Main.logout');
-router.get('/prepareSession').to('Main.prepareSession');
+
 router.get('/battleEnd/:end').to('Main.battleEnd');
 // Basic routes
 // router.match('/moving/pictures/:id', 'GET').to('Moving.pictures');

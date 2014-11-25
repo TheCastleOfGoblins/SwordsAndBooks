@@ -18,6 +18,7 @@
 var strategies = require('../helpers/passport/strategies')
   , authTypes = geddy.mixin(strategies, {local: {name: 'local account'}});;
 
+
 var Main = function () {
 
   this.index = function (req, resp, params) {
@@ -53,21 +54,6 @@ var Main = function () {
     this.respond(params, {
       format: 'html'
     , template: 'app/views/main/logout'
-    });
-  };
-  this.prepareSession = function (req, resp, params) {
-
-    var self = this;
-    geddy.model.User.first({id: this.session.get('userId')},function(err, user){
-      if(err || !user){
-        console.log(err);
-        self.flash.error('Wrong user or password');
-        self.redirect('/login');
-        return;
-      }
-
-      self.session.set('user',user);
-      self.redirect('/heros/');
     });
   };
 

@@ -1,6 +1,12 @@
+var passport = require('../helpers/passport')
+  , generateHash = passport.generateHash
+  , requireAuth = passport.requireAuth;
+
 var Heros = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
+  this.before(requireAuth);
+  
   this.index = function (req, resp, params) {
     var self = this;
     
@@ -17,10 +23,10 @@ var Heros = function () {
     var self = this;
     geddy.model.Hero.first(params.heroId,function(err, hero){
       if(err || !hero){
-        self.error.flash('No such hero.');
-        redirect('/heros/');
+        self.flash.error('No such hero.');
+        self.redirect('/heros/');
       }
-      console.log(hero);
+      
       self.session.set('selectedHero', hero);
       self.redirect('/navigation');
       self.respond({params:params}, {template:'app/views/navigation'} )

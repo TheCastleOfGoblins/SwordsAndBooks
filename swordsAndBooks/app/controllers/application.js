@@ -14,9 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
-*/
-
+// */
+// var passport = require('../helpers/passport')
+//   , generateHash = passport.generateHash
+//   , requireAuth = passport.requireAuth;
+  
 var Application = function () {
+	// this.before(requireAuth);
 };
 
 exports.Application = Application;

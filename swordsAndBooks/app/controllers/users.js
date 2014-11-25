@@ -53,12 +53,12 @@ var Users = function () {
         throw err;
       }
       if (data) {
-        user.errors  = {
-          username: 'This username is already in use.'
-        };
-        self.respondWith(user);
+        
+        self.flash.error('This username is already in use.');
+        self.redirect('/users/add');
       }
       else {
+
         if (user.isValid()) {
           user.password = generateHash(user.password);
 
@@ -104,18 +104,20 @@ var Users = function () {
                 if (err) {
                   throw err;
                 }
-                self.respondWith(user, options);
+
+                self.redirect('/login');
               };
               geddy.mailer.sendMail(mailOptions, mailCallback);
             }
 
             else {
-              self.respondWith(user);
+              self.redirect('/login')
             }
           });
         }
         else {
-          self.respondWith(user, {status: err});
+          console.log(user.errors);
+          self.redirect('/');
         }
       }
     });

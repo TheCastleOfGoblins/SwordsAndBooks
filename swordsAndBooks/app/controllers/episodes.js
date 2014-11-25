@@ -1,6 +1,12 @@
+
+var passport = require('../helpers/passport')
+  , generateHash = passport.generateHash
+  , requireAuth = passport.requireAuth;
+
 var Episodes = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
-
+  this.before(requireAuth);
+  
   this.index = function (req, resp, params) {
     var self = this;
 

@@ -94,7 +94,7 @@ var actions = new (function () {
       };
 
   this.local = function (req, resp, params) {
-    console.log(this,params)
+    
     var self = this
       , username = params.username
       , password = params.password
@@ -107,8 +107,6 @@ var actions = new (function () {
       if (err) {
         self.redirect(failureRedirect);
       }
-      console.log(user);
-      console.log(password + geddy.config.secret);
       if (user) {
         if (bcrypt.compareSync(password + geddy.config.secret, user.password)) {
           redirect = self.session.get('successRedirect');
@@ -130,7 +128,9 @@ var actions = new (function () {
           // No third-party auth tokens
           self.session.set('authData', {});
 
-          self.redirect(redirect);
+          self.prepareSession(user,function(){
+            self.redirect(redirect);  
+          });
         }
         else {
           self.flash.error('Could not verify your login information.');
@@ -142,6 +142,14 @@ var actions = new (function () {
         self.redirect(failureRedirect);
       }
     });
+
+  this.prepareSession = function(user, callback){
+    var self = this;
+    self.session.set('user',user);
+    //in case there are some async actions
+    callback();
+  }
+
   };
 
   SUPPORTED_SERVICES.forEach(function (item) {

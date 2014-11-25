@@ -32,7 +32,7 @@ var config = {
   , includePattern: '\\.(js|coffee|css|less|scss)$'
   , excludePattern: '\\.git|node_modules'
   }
-, hostname: null
+, hostname: 'localhost'
 , port: 4000
 , model: {
     defaultAdapter: 'mongo'
@@ -42,8 +42,8 @@ var config = {
     store: 'memory'
   , key: 'sid'
   , expiry: 14 * 24 * 60 * 60
-  },
-  db: {
+  }
+  , db: {
     mongo: {
       username: null
     , dbname: 'swordsAndBooks'
