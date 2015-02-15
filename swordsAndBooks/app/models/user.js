@@ -2,8 +2,8 @@ var User = function () {
   this.defineProperties({
     username: {type: 'string', required: true, on: ['create', 'update']}
   , password: {type: 'string', required: true, on: ['create', 'update']}
-  // , familyName: {type: 'string', required: true}
-  // , givenName: {type: 'string', required: true}
+  // , familyName: {type: 'string'}
+  , givenName: {type: 'string'}
   , email: {type: 'string', required: true, on: ['create', 'update']}
   , activationToken: {type: 'string'}
   , activatedAt: {type: 'datetime'},

@@ -73,6 +73,7 @@ var actions = new (function () {
                       }
                       // Local account's userId
                       self.session.set('userId', user.id);
+                      self.session.set('user', user);
                       // Third-party auth type, e.g. 'facebook'
                       self.session.set('authType', authType);
                       // Third-party auth tokens, may include 'token', 'tokenSecret'
@@ -124,13 +125,13 @@ var actions = new (function () {
           }
 
           self.session.set('userId', user.id);
+          self.session.set('user',user);
           self.session.set('authType', 'local');
           // No third-party auth tokens
           self.session.set('authData', {});
 
-          self.prepareSession(user,function(){
-            self.redirect(redirect);  
-          });
+          self.redirect(redirect);  
+          
         }
         else {
           self.flash.error('Could not verify your login information.');
@@ -142,13 +143,6 @@ var actions = new (function () {
         self.redirect(failureRedirect);
       }
     });
-
-  this.prepareSession = function(user, callback){
-    var self = this;
-    self.session.set('user',user);
-    //in case there are some async actions
-    callback();
-  }
 
   };
 

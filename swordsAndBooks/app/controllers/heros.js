@@ -9,7 +9,7 @@ var Heros = function () {
   
   this.index = function (req, resp, params) {
     var self = this;
-    
+    console.log(params);
     geddy.model.Hero.all({userId:self.session.get('user').id},function(err, heros) {
       if (err) {
         throw err;
