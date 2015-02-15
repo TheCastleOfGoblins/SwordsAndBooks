@@ -43,6 +43,8 @@ router.get('/battleEnd/:end').to('Main.battleEnd');
 // });
 
 router.resource('users');
+router.get('/checkUserName(.:format)').to('Users.checkUserName');
+
 router.resource('books');
 router.resource('episodes');
 

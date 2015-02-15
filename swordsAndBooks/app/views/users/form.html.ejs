@@ -1,24 +1,25 @@
+<%- scriptLink('/js/create_users.js', {type:'text/javascript'}) %>
 <div class="control-group">
-  <label for="username" class="control-label">username</label>
+  <label for="username" class="control-label">Account Name</label>
   <div class="controls">
-    <%- contentTag('input', user.username, {type:'text', class:'span6', name:'username'}) %>
+    <%- contentTag('input','', {type:'text',id:'username', class:'span6', name:'username', pattern:".{4,}", required:true, title:"3+ characters"}) %>
   </div>
 </div>
 <div class="control-group">
-  <label for="password" class="control-label">password</label>
+  <label for="password" class="control-label">Your Password</label>
   <div class="controls">
-    <%- contentTag('input', '', {type:'password', class:'span6', name:'password'}) %>
+    <%- contentTag('input', '', {type:'password',id:'pass', class:'span6', name:'password', required:true, pattern:".{8,}", title:"8+ characters"}) %>
   </div>
 </div>
 <div class="control-group">
-  <label for="confirmPpassword" class="control-label">confirm password</label>
+  <label for="confirmPpassword"  class="control-label">Confirm Your Password</label>
   <div class="controls">
-    <%- contentTag('input', '', {type:'password', class:'span6', name:'confirmPassword'}) %>
+    <%- contentTag('input', '', {type:'password',id:'confPass', class:'span6', name:'confirmPassword', required:true, pattern:".{8,}", title:"8+ characters"}) %>
   </div>
 </div>
 <div class="control-group">
-  <label for="email" class="control-label">email</label>
+  <label for="email" class="control-label">Your Email</label>
   <div class="controls">
-    <%- contentTag('input', user.email, {type:'text', class:'span6', name:'email'}) %>
+    <%- contentTag('input', '', {type:'email', class:'span6', name:'email', required:true}) %>
   </div>
 </div>

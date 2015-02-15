@@ -1,30 +1,22 @@
 var passport = require('../helpers/passport')
   , generateHash = passport.generateHash
   , requireAuth = passport.requireAuth;
-
-
 var Users = function () {
-
+  this.respondsWith = ['html', 'json'];
   // Set this to false if you don't need e-mail activation
   // for local users
   var EMAIL_ACTIVATION = true
     , msg;
 
-  if (EMAIL_ACTIVATION) {
-    if (!geddy.mailer) {
-      msg = 'E-mail activation requires a mailer. ' +
-          'Please configure a mailer for your app.';
-      throw new Error(msg);
-    }
-    if (!geddy.config.fullHostname) {
-      msg = 'E-mail activation requires a hostname for the ' +
-          'activation URL. Please set "hostname" in your app config.';
-      throw new Error(msg);
-    }
-  }
+
+  // if (!geddy.config.fullHostname) {
+  //   msg = 'E-mail activation requires a hostname for the ' +
+  //       'activation URL. Please set "hostname" in your app config.';
+  //     throw new Error(msg);
+  // }
 
   this.before(requireAuth, {
-    except: ['add', 'create', 'activate']
+    except: ['add', 'create', 'activate', 'checkUserName']
   });
 
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -62,61 +54,64 @@ var Users = function () {
         if (user.isValid()) {
           user.password = generateHash(user.password);
 
-          if (EMAIL_ACTIVATION) {
-            user.activationToken = generateHash(user.email);
-          }
-          else {
-            user.activatedAt = new Date();
-          }
+          // if (EMAIL_ACTIVATION) {
+          //   user.activationToken = generateHash(user.email);
+          // }
+          // else {
+          user.activatedAt = new Date();
+          // }
           user.save(function(err, data) {
-            var options = {}
-              , mailOptions
-              , mailCallback
-              , mailHtml
-              , mailText;
+            // var options = {}
+            //   , mailOptions
+            //   , mailCallback
+            //   , mailHtml
+            //   , mailText;
 
             if (err) {
               throw err;
             }
 
-            if (EMAIL_ACTIVATION) {
-              activationUrl = geddy.config.fullHostname + '/users/activate?token=' +
-                  encodeURIComponent(user.activationToken);
-              options.status = 'You have successfully signed up. ' +
-                  'Check your e-mail to activate your account.';
+            // if (EMAIL_ACTIVATION) {
+            //   activationUrl = geddy.config.fullHostname + '/users/activate?token=' +
+            //       encodeURIComponent(user.activationToken);
+            //   options.status = 'You have successfully signed up. ' +
+            //       'Check your e-mail to activate your account.';
 
-              mailHtml = 'Welcome to ' + geddy.config.appName + '. ' +
-                  'Use the following URL to activate your account: ' +
-                  '<a href="' + activationUrl + '">' + activationUrl + '</a>.';
-              mailText = 'Welcome to ' + geddy.config.appName + '. ' +
-                  'Use the following URL to activate your account: ' +
-                  activationUrl + '.';
+            //   mailHtml = 'Welcome to ' + geddy.config.appName + '. ' +
+            //       'Use the following URL to activate your account: ' +
+            //       '<a href="' + activationUrl + '">' + activationUrl + '</a>.';
+            //   mailText = 'Welcome to ' + geddy.config.appName + '. ' +
+            //       'Use the following URL to activate your account: ' +
+            //       activationUrl + '.';
 
-              mailOptions = {
-                from: geddy.config.mailer.fromAddressUsername + '@' +
-                    geddy.config.hostname
-              , to: user.email
-              , subject: 'Welcome to ' + geddy.config.appName
-              , html: mailHtml
-              , text: mailText
-              };
-              mailCallback = function (err, data) {
-                if (err) {
-                  throw err;
-                }
+            //   mailOptions = {
+            //     from: geddy.config.mailer.fromAddressUsername + '@' +
+            //         geddy.config.hostname
+            //   , to: user.email
+            //   , subject: 'Welcome to ' + geddy.config.appName
+            //   , html: mailHtml
+            //   , text: mailText
+            //   };
+            //   mailCallback = function (err, data) {
+            //     if (err) {
+            //       throw err;
+            //     }
 
-                self.redirect('/login');
-              };
-              geddy.mailer.sendMail(mailOptions, mailCallback);
-            }
-
+            //     self.redirect('/login');
+            //   };
+            //   geddy.mailer.sendMail(mailOptions, mailCallback);
+            // }
+            // if (EMAIL_ACTIVATION){
+            //   var emailInterFace = require('../helpers/emailInterface.js');
+            //   emailInterFace.sendEmail();
+            // }
             else {
               self.redirect('/login')
             }
           });
         }
         else {
-          console.log(user.errors);
+          console.log(err , user.errors);
           self.redirect('/');
         }
       }
@@ -145,7 +140,6 @@ var Users = function () {
         self.redirect('/login');
       });
     });
-
   };
 
   this.show = function (req, resp, params) {
@@ -229,6 +223,22 @@ var Users = function () {
     });
   };
 
+  this.checkUserName = function(req,resp,params){
+    var self = this;
+    console.log(this,params);
+
+    geddy.model.User.first({username:params.username},function(err, user){
+      self.respondTo({
+        json:function(){
+          if(!user){
+            self.respond({free:true });
+          }else{
+            self.respond({free:false });
+          }
+        }
+      })
+    })
+  }
 };
 
 exports.Users = Users;
