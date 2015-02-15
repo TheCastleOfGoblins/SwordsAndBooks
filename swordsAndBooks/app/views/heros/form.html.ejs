@@ -1,0 +1,72 @@
+<div> 
+	<div class='row' style='margin-top:15px'>
+		<div> 
+			<label class='span2'>
+				Hero's Name
+			</label>
+			<%-contentTag('input',hero.name, {type:'text',class:'span3'})%>
+		</div>
+	</div>
+
+	<!-- if hero else -->
+	<div class='row' style='margin-top:15px'>
+		<div> 
+			<label class='span2'>
+				Hero's Gender
+			</label>
+			<select name='gender'>
+				<option value='male'> Male </option>
+				<option value='female'> Female </option>
+			</select>
+		</div>
+	</div>
+	<!-- if hero else -->
+	<div class='row' style='margin-top:15px'>
+		<div> 
+			<label  class='span2'>
+				Hero's Race
+			</label>
+			<select name='race'>
+				<option value='male'> Human </option>
+				<option value='female'> Elf </option>
+				<option value='female'> Orc </option>
+			</select>
+		</div>
+	</div>
+
+	<div class='row' style='margin-top:15px'>
+		<div> 
+			<label class='span2'>
+				Hero's Power
+			</label>
+			<%-contentTag('input',hero.power || 5, {type:'number',min:5, name:'power',class:'span1'})%>
+		</div>
+	</div>
+
+	<div class='row' style='margin-top:15px'>
+		<div> 
+			<label class='span2'>
+				Hero's Stamina
+			</label>
+			<%-contentTag('input',hero.stamina || 5, {type:'number',min:5, name:'stamina',class:'span1'})%>
+		</div>
+	</div>
+
+	<div class='row' style='margin-top:15px'>
+		<div> 
+			<label class='span2'>
+				Hero's Speed
+			</label>
+			<%-contentTag('input',hero.speed || 5, {type:'number',min:5,name:'speed',class:'span1'})%>
+		</div>
+	</div>
+
+	<div class='row' style='margin-top:15px'>
+		<div> 
+			<label class='span2'>
+				Hero's Armor
+			</label>
+			<%-contentTag('input',hero.armor || 5, {type:'number',min:5,class:'span1'})%>
+		</div>
+	</div>
+</div>

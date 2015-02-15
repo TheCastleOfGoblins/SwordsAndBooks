@@ -4,12 +4,19 @@ var Hero = function () {
     name:{type:'string', required:true},
     maxHealth: {type:'number',required:true},
     currentHealth: {type:'number',required:true},
+    expirience: {type:'number',required:true},
+    nextLevelExp: {type:'number',required:true}, 
+    unusedPoints:{type:'number',required:true},
+
     gender:{type:'string', required: true }, 
+    race: {type:'string', required: true},
     level: {type:'number', required: true},
+    
     power:{type:'number',required: true}, 
-    strength:{type:'number',required: true},
+    stamina:{type:'number',required: true},
     speed:{type:'number',required: true},
-    intelligence:{type:'number',required: true},
+    armor:{type:'number',required: true},
+
     image:{type:'string',required:true}
   });
   
@@ -17,6 +24,7 @@ var Hero = function () {
   this.damage = function(){
     return Math.ceil(Math().random() * 3) + this.power;
   }
+
   /*
   this.property('login', 'string', {required: true});
   this.property('password', 'string', {required: true});

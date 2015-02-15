@@ -11,7 +11,11 @@ $(document).ready(function () {
 			}
 		})
 	});
-
+	
+	$('#username').keydown(function(e){
+		$("#givenName").val($(this).val());
+	});
+	
 	// passwords matching check: 
 	$('[type="submit"]').click(function(e){
 		var passwords = $('[type="password"]');

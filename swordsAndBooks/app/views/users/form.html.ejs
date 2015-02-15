@@ -5,6 +5,14 @@
     <%- contentTag('input','', {type:'text',id:'username', class:'span6', name:'username', pattern:".{4,}", required:true, title:"3+ characters"}) %>
   </div>
 </div>
+
+<div class="control-group">
+  <label for="username" class="control-label">Nick Name</label>
+  <div class="controls">
+    <%- contentTag('input','', {type:'text',id:'givenName', class:'span6', name:'givenName', pattern:".{4,}", required:true, title:"3+ characters"}) %>
+  </div>
+</div>
+
 <div class="control-group">
   <label for="password" class="control-label">Your Password</label>
   <div class="controls">

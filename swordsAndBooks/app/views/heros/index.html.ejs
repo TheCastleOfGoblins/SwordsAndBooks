@@ -1,3 +1,4 @@
+<%- scriptLink('heros_index.js',{type:'text/javascript'})%>
 <div class="main-visual">
   <img src="/img/battle1.jpg">
 </div>
@@ -5,7 +6,7 @@
   <div class="container">
     <div class="row">
       <div class="offset2 span8">
-        <h2><%=session.get('user').name%>'s Heroes</h2>
+        <h2><%=session.get('user').givenName%>'s Heroes</h2>
       </div>
     </div>
   </div>
@@ -18,7 +19,7 @@
       <div class="offset2 span8">
         <% if (heros) { %>
             <% for (var i = 0, ii = heros.length; i < ii; i++) { %>
-              <div class='span4 hero' id='<%=heros[i].id%>'>
+              <div class='span4 hero heroActions' id='<%=heros[i].id%>'>
                 <div class='span2'>
                   <img src='<%=heros[i].image%>'/>
                 </div>
@@ -40,7 +41,7 @@
               </div>
             <% } %>
         <% } %>
-        <div class='span4 hero'>
+        <div class='span4 hero addHero'>
           <div class='span2'>
             <img src='/img/plus.png'/>
           </div>
@@ -76,9 +77,3 @@
 
 <div class="blackline">
 </div>
-
-<script type="text/javascript">
-  $('.hero').click(function() {
-    window.location.href = '/selectHero/' + $(this).attr('id');
-  });
-</script>
