@@ -4,10 +4,10 @@
       <div>
        <strong> Create a new Hero </strong>
       </div>
-      <%- partial('form', {hero: params}) %>
+      <%- partial('form', {hero: hero}) %>
 
       <div class="form-actions">
-        <%- contentTag('input', 'Add', {type: 'submit',name:'name', class: 'btn btn-primary'}) %>
+        <%- contentTag('input', 'Add', {type: 'submit', class: 'btn btn-primary'}) %>
       </div>
     </fieldset>
   </form>
