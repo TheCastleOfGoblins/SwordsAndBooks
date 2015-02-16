@@ -1,0 +1,19 @@
+<% var hero = session.get('selectedHero');%>
+<div class='span4 herosOnline' style="margin-left:-10px;height:250px">
+  <h4 style='text-align:center'> Online Heros  </h4>
+  <div class='' id='<%=hero.id%>'>
+    <div class='span1'>
+      <img src="<%=hero.image%>" style='height:40px; width:40px'>
+    </div>
+    <div class='span2'>
+      <h6> <%= hero.name %> (<%=hero.level%> Level ) </h6>
+    </div>
+    <div class='span3'>
+      <strong> Gender: </strong>  <%= hero.gender%>
+      <strong> Race: </strong>  <%= hero.race%>
+
+      <a href="javascript:;" class='btn btn-default btn-small' style='margin:2px'>You</a>
+    </div>
+  </div>
+</div>
+<%- scriptLink('list_online_heros.js',{type:'text/javascript'})

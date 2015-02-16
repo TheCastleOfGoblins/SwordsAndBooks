@@ -51,6 +51,8 @@ router.resource('episodes');
 // router.get('/heros/:userId').to('Heros.index');
 router.resource('heros');
 router.get('/selectHero/:heroId').to('Heros.selectHero');
+router.get('/getOnlineHeros(.:format)').to('Heros.getOnlineHeros');
+
 router.get('/navigation').to('Main.navigation');
 router.get('/startBattle/:opponentId').to('Main.startBattle');
 router.get('/chess').to('Main.chess');

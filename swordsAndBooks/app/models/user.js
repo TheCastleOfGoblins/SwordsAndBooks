@@ -14,8 +14,21 @@ var User = function () {
   this.validatesConfirmed('password', 'confirmPassword');
 
   this.hasMany('Passports');
-  this.hasMany('Heroes');
+  this.hasMany('Heros');
   
+  this.setAllHerosOffline = function(leaveOnlineHeroIds){
+    var self = this;
+    this.getHeros(function(err, heroes){
+      
+      heroes.forEach(function(hero){
+        if(leaveOnlineHeroIds.indexOf(hero.id) < 0){
+          hero.isOnline = false;
+          //careful all here is async
+          hero.save();
+        }
+      });
+    });
+  }  
 };
 
 User.prototype.isActive = function () {

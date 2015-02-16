@@ -386,6 +386,19 @@ code {
   color:#aaaaaa;
   overflow:hidden;
 }
+
+.herosOnline
+{
+  height:200px;
+  background-color:#222222;
+  padding:5px;
+  border-radius:10px;
+  color:#aaaaaa;
+  overflow-x:auto;
+  /*overflow:hidden;*/
+}
+
+
 .hero:hover
 {
   background-color:#333333;

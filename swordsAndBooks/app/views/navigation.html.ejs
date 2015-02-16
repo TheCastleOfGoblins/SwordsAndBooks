@@ -3,7 +3,10 @@
       <div class="content">
         <div class="container">
           <div class="row">
-            <div class="offset6 span4" style="margin-top:15px";>
+            <div class="offset1 span4" style="margin-top:15px";>
+              <%-partial('./list_online_heros',{session:session})%>  
+            </div>
+            <div class="offset2 span4" style="margin-top:15px";>
               <%-partial('./hero_aside',{session:session})%>	
             </div>
           </div>

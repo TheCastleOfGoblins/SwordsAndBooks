@@ -25,6 +25,10 @@ var Hero = function () {
   this.damage = function(){
     return Math.ceil(Math().random() * 3) + this.power;
   }
+  this.returnPublicInfo = function(){
+    return {id:this.id, name: this.name,maxHealth:this.maxHealth, currentHealth:this.currentHealth,
+            gender: this.gender, race: this.race, level: this.level, image:this.image};
+  }
 
   /*
   this.property('login', 'string', {required: true});

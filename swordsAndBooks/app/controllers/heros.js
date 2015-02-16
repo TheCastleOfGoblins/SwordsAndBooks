@@ -6,6 +6,7 @@ var Heros = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
   this.before(requireAuth);
+  //TODO require hero selected for some methods here:
 
   this.index = function (req, resp, params) {
     var self = this;
@@ -20,16 +21,44 @@ var Heros = function () {
   };
 
   this.selectHero = function(req, resp, params){
-    var self = this;
+    var self = this,
+        user = self.session.get('user');
     geddy.model.Hero.first(params.heroId,function(err, hero){
       if(err || !hero){
         self.flash.error('No such hero.');
         self.redirect('/heros/');
       }
-      
-      self.session.set('selectedHero', hero);
-      self.redirect('/navigation');
-      self.respond({params:params}, {template:'app/views/navigation'} )
+      if(hero.userId != user.id){
+        self.flash.error('This hero is not yours');
+        self.redirect('/heros');
+        return;
+      }
+
+      hero.isOnline = true;
+      user.setAllHerosOffline([hero.id]);
+      hero.save(function(err, savedHero){
+        self.session.set('selectedHero', savedHero);
+        self.redirect('/navigation');
+        // self.respond({params:params}, {template:'app/views/navigation'} )
+      });
+    });
+  };
+
+  this.getOnlineHeros = function(req, resp, params){
+    var self = this;
+    geddy.model.Hero.all({and:[{isOnline:true}, {not:{id:self.session.get('selectedHero').id}}]},{sort:{name:'asc'}},function(err, online){
+      self.respondTo({
+        json:function(){
+          online = online.map(function(hero){
+            return hero.returnPublicInfo();
+          });
+          onlineIds = online.map(function(publicHero){
+            return publicHero.id;
+          });
+
+          self.respond({onlineHeros: online, onlineIds:onlineIds});
+        }
+      })
     });
   };
 
@@ -52,7 +81,8 @@ var Heros = function () {
       params[key] = parseInt(params[key]);
       sumOfAllPoints += params[key];
     });
-      params.isOnline = false;
+    
+    params.isOnline = false;
       
     if(sumOfAllPoints > 20 + 10){
       self.flash.error('Uncorrect Hero data');
@@ -124,8 +154,26 @@ var Heros = function () {
       if (err) {
         throw err;
       }
+
+      if(hero.userId != self.session.get('userId')){
+        self.flash.error('This hero is not yours.');
+        self.redirect('/heros');
+        return;
+      }
+
+      var sumOfAllUsedPoints = 0;
+      ['power','stamina', 'speed', 'armor'].forEach(function(key){
+        params[key] = parseInt(params[key]);
+        sumOfAllUsedPoints += params[key] - hero[key];
+      });
+
+      if(sumOfAllUsedPoints > hero.unusedPoints){
+        self.flash.error('Uncorrect data')
+        self.redirect('/heros/');
+        return;
+      }
+      params.unusedPoints = hero.unusedPoints - sumOfAllUsedPoints;
       
-      //TODO secure the update stats!!!
       hero.updateProperties(params);
       
       if (!hero.isValid()) {
