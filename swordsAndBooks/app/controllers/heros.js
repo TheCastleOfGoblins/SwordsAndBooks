@@ -52,7 +52,8 @@ var Heros = function () {
       params[key] = parseInt(params[key]);
       sumOfAllPoints += params[key];
     });
-    
+      params.isOnline = false;
+      
     if(sumOfAllPoints > 20 + 10){
       self.flash.error('Uncorrect Hero data');
       self.redirect('/heros/add');
@@ -65,10 +66,10 @@ var Heros = function () {
     }
 
     params.unusedPoints = 10 - (sumOfAllPoints - 20);
-    params.image = '/';
+    
     var hero = geddy.model.Hero.create(params);
     hero.userId = self.session.get('userId');
-    
+
     if (!hero.isValid()) {
       self.flash.error(hero.errors);
       self.redirect('/heros/add');
@@ -109,6 +110,7 @@ var Heros = function () {
       if (!hero) {
         throw new geddy.errors.BadRequestError();
       }
+      
       else {
         self.respondWith(hero);
       }
@@ -122,17 +124,21 @@ var Heros = function () {
       if (err) {
         throw err;
       }
+      
+      //TODO secure the update stats!!!
       hero.updateProperties(params);
-
+      
       if (!hero.isValid()) {
-        self.respondWith(hero);
+        self.flash.error('Uncorrect data')
+        self.redirect('/heros/');
+        return;
       }
       else {
         hero.save(function(err, data) {
           if (err) {
             throw err;
           }
-          self.respondWith(hero, {status: err});
+          self.redirect('/heros/');
         });
       }
     });

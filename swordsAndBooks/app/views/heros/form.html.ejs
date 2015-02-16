@@ -11,39 +11,83 @@
 
 <div> 
 	<div class='row' style='margin-top:15px'>
-		<div> 
-			<label class='span2'>
-				Hero's Name
-			</label>
-			<%-contentTag('input',hero.name, {type:'text',class:'span3',name:'name', required:true})%>
-		</div>
-	</div>
+			<div class="span4 hero">
+                <div class="span2">
+                  <img id='heroImage' src="<%=hero.image%>">
+                </div>
 
-	<!-- if hero else -->
-	<div class='row' style='margin-top:15px'>
-		<div> 
-			<label class='span2'>
-				Hero's Gender
-			</label>
-			<select name='gender'>
-				<option value='male'> Male </option>
-				<option value='female'> Female </option>
-			</select>
+				<div class='pull-right span2'>
+	                <h6>
+						Hero's Name
+					</h6 >
+					
+						<%-contentTag('input',hero.name, {type:'text',class:'span2',name:'name', required:true})%>
+					
+				</div>
+
+				<div class='pull-right span2'>
+					
+						
+					<select name='gender' id='gender' class='span2' required='required' >
+						<option value='Male'<%= (hero.gender == 'Male' ? 'selected' : '')%> > Male </option>
+						<option value='Female' <%= (hero.gender == 'Female' ? 'selected' : '')%>> Female </option>
+					</select>
+				</div>
+
+				<div class='pull-right span2'>
+					<select name='race' id='race' class='span2' required='required'>
+						<option value='Human' <%= (hero.race == 'Human' ? 'selected' : '')%>> Human </option>
+						<option value='Elf' <%= (hero.race == 'Elf' ? 'selected' : '')%>> Elf </option>
+						<option value='Orc' <%= (hero.race == 'Orc' ? 'selected' : '')%>> Orc </option>
+					</select>
+				</div>
+
+                <div class='pull-right span2'>
+                  	<%if(typeof isAdd != 'undefined' && isAdd) {%>
+
+	                	<%-contentTag('input',"Change Image",{type:'button',class:'btn btn-primary span2', id:'anotherImg'})%>
+	                <% } %>
+	                	<%-contentTag('input',hero.image, {type:'hidden',class:'span2',name:'image',id:'imageHidden', required:true})%>
+	                	<script type="text/javascript">
+			            	(function(){
+			            		var lastIndex = -1; 
+			            		function changeImage(){
+			            			var possibleClasses = ['Mage','Rouge', 'Warrior', 'Hinter'];
+			            			var gender = $('#gender').val(),
+			            				race = $('#race').val();
+
+			            			var classIndex = -1;
+			            			while(classIndex < 0 || classIndex == lastIndex){
+			            				classIndex = Math.floor(Math.random()*possibleClasses.length);
+			            			}
+			            			
+			            			var src = '/heroes_images/' + race + gender + possibleClasses[classIndex] + '.jpg';
+
+			            			$('#heroImage').attr('src',src);
+			            			$('#imageHidden').val(src);
+			            			lastIndex = classIndex;
+			            			
+			            		}
+
+			            		if(!$('#heroImage').attr('src')){
+			            			changeImage();
+			            		}
+			            		
+			            		$('#anotherImg').click(function(){
+			            			changeImage();
+			            		});
+			            		$('#gender, #race').change(function(){
+			            			changeImage();
+			            		})
+			            	})();
+	                	</script>
+                	
+
+                </div>
+            </div>
 		</div>
-	</div>
-	<!-- if hero else -->
-	<div class='row' style='margin-top:15px'>
-		<div> 
-			<label  class='span2'>
-				Hero's Race
-			</label>
-			<select name='race'>
-				<option value='human'> Human </option>
-				<option value='elf'> Elf </option>
-				<option value='orc'> Orc </option>
-			</select>
-		</div>
-	</div>
+	
+
 
 	<div class='row' style='margin-top:15px'>
 		<div> 
@@ -80,4 +124,5 @@
 			<%-contentTag('input',hero.armor || 5, {type:'number',name:'armor',min:hero.armor,class:'span1 skillPoints', required:true})%>
 		</div>
 	</div>
+	
 </div>

@@ -8,4 +8,9 @@ $(document).ready(function(){
 		window.location.href = '/heros/add';
 	});
 
+	$('.editHero').click(function(){
+		window.location.href = '/heros/' + $(this).attr('data-heroId') + '/edit';
+		return false;
+	})
+
 })

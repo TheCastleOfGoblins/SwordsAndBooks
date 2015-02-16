@@ -35,10 +35,21 @@
                 </div>
                 <div class='span2'>
                   <span class="offseted-content">
+                    <i>Race:</i> <%=heros[i].race%>
+                  </span>
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
                     <i>Level:</i> <%=heros[i].level%>
                   </span>
                 </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                    <a src='javascript:;' data-heroId='<%=heros[i].id%>' class='editHero btn btn-default btn-normal'>Edit</a>
+                  </span>
+                </div>
               </div>
+              
             <% } %>
         <% } %>
         <div class='span4 hero addHero'>

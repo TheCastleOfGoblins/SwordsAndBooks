@@ -17,7 +17,8 @@ var Hero = function () {
     speed:{type:'number',required: true},
     armor:{type:'number',required: true},
 
-    image:{type:'string',required:true}
+    image:{type:'string',required:true},
+    isOnline: {type:'boolean'}
   });
   
   this.belongsTo('User');
