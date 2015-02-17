@@ -19,12 +19,20 @@
 		$('.herosOnline').append(newRow);
 
 		$('#' + heroInfo.id + ' a.challange').click(function(){
+			
+			$.post('/challenge',{challengedId:heroInfo.id},function(response){
+				console.log(response);
+				if(response.success){
+					alert('Challange Send Successfull');
+				}else{
+					alert('Challange fail to Send');
+				}
+			});
 			console.log('fua');
 		});
 	}
 	function getAllOnlineHeros(){
 		$.get('/getOnlineHeros.json',{},function(response){
-			console.log(response);
 			$('.hero-online').each(function(){
 				if(response.onlineIds.indexOf($(this).attr('id')) < 0){
 					$(this).remove();
@@ -32,7 +40,6 @@
 			});
 
 			response.onlineHeros.forEach(function(hero){
-				console.log(hero, $('#' + hero.id).length, $('#' + hero.id))
 				if($('#' + hero.id).length == 0){
 					addRow(hero);
 				}

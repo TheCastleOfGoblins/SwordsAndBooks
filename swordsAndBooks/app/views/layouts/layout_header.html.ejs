@@ -13,6 +13,8 @@
     <![endif]-->
 
     <%- scriptLink('jquery.min.js', {type:'text/javascript'}) %>
+    <%- scriptLink('jquery-ui.min.js', {type:'text/javascript'}) %>
+    
     <%- scriptLink('bootstrap.min.js', {type:'text/javascript'}) %>
     <%- scriptLink('config/init.js', {type: 'text/javascript'}) %>
     <%- scriptLink('custom.js', {type: 'text/javascript'}) %>
@@ -27,4 +29,8 @@
     <%- styleLink('bootstrap.responsive.min.css', {rel:'stylesheet'}) %>
     <%- styleLink('style.css', {rel:'stylesheet'}) %>
     <%- styleLink('chessboard-0.3.0.min.css', {rel:'stylesheet'}) %>
+    <%- styleLink('jquery-ui.min.css', {rel:'stylesheet'}) %>    
+    <%- styleLink('jquery-ui.theme.min.css', {rel:'stylesheet'}) %>
+    
+    <%- scriptLink('/js/socket.io.js', { type: 'text/javascript' }) %>
   </head>

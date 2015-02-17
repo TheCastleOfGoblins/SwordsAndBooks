@@ -16,7 +16,7 @@ var Heros = function () {
       if (err) {
         throw err;
       }
-      
+      self.session.unset('selectedHero');
       self.respond({heros:heros});
     });
   };
@@ -43,6 +43,7 @@ var Heros = function () {
         // self.respond({params:params}, {template:'app/views/navigation'} )
       });
     });
+
   };
 
   this.navigation = function (req, resp, params) {
@@ -107,7 +108,7 @@ var Heros = function () {
     var hero = geddy.model.Hero.create(params);
     hero.userId = self.session.get('userId');
     hero.updateHealth();
-    
+
     if (!hero.isValid()) {
       self.flash.error(hero.errors);
       self.redirect('/heros/add');

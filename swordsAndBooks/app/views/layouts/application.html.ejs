@@ -1,6 +1,11 @@
 <%= partial('layout_header'); %>
+<% if(session.get('selectedHero')){%>
+  <script type="text/javascript">
+  var heroId = '<%-session.get("selectedHero").id%>';
+  </script>
+  <%- scriptLink('challenges_on_hero_selected.js', {type:'text/javascript'}) %>
+<% } %>
   <body>
-
     <div class="blackline">
     </div>
     <header>
@@ -26,6 +31,10 @@
               <a href="/heros" class="btn btn-default btn-large">Heroes</a>
               <a href="/books" class="btn btn-default btn-large">Books</a>
               <a href="#" class="btn btn-default btn-large">Friends</a>
+              <% if(session.get('selectedHero')){%>
+                <a href="javascript:;" id='challengesBtn' class="btn btn-default btn-large">Challenges ( <strong id='numberOfChallenges'>0 </strong> )</a>
+              <% } %>
+
             </nav>
           </div>
         </div>
@@ -73,13 +82,16 @@
                     var currentPart = 0;
                     sayEverything(readParts, currentPart);
                 });
-            });
+      });
     </script>
 
   <div class="row-fluid">
       <br/><br/>
   </div>
-
+  <% if(session.get('selectedHero')){%>
+    <div id='challengesList' style='display:none'>
+    </div>
+  <% } %>
   </body>
 <%= partial('layout_footer'); %>
 
