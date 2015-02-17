@@ -18,9 +18,13 @@
 var strategies = require('../helpers/passport/strategies')
   , authTypes = geddy.mixin(strategies, {local: {name: 'local account'}});;
 
+  // var passport = require('../helpers/passport')
+  // , generateHash = passport.generateHash
+  // , requireAuth = passport.requireAuth
+  // , requireHeroSelected = passport.requireHeroSelected
 
 var Main = function () {
-
+  
   this.index = function (req, resp, params) {
     var self = this
       , User = geddy.model.User;
@@ -55,12 +59,6 @@ var Main = function () {
       format: 'html'
     , template: 'app/views/main/logout'
     });
-  };
-
-  this.navigation = function (req, resp, params) {
-    this.session.set('winUrl', '/battleEnd/win');
-    this.session.set('looseUrl', '/battleEnd/lose');
-    this.respond({params:params}, {format: 'html',  template:'app/views/navigation'});
   };
 
   this.startBattle = function(req, resp, params){

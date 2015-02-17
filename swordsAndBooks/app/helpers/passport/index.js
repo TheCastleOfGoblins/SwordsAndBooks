@@ -17,7 +17,17 @@ exports.requireAuth = function () {
     this.redirect('/login');
   }
 };
-
+exports.requireHeroSelected = function(){
+  if (!(this.session.get('selectedHero') ||
+      this.name == 'Main' ||
+      this.name == 'Auth')) {
+    // Record the page the user was trying to get to, will
+    // try to return them there after login
+    this.session.set('successRedirect', this.request.url);
+    this.flash.keep('success');
+    this.redirect('/heros');
+  }
+}
 exports.generateHash = function (cleartextPass) {
   if (!geddy.config.secret) {
     throw new Error('Need application secret');

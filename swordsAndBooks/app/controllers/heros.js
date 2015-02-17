@@ -1,12 +1,13 @@
 var passport = require('../helpers/passport')
   , generateHash = passport.generateHash
-  , requireAuth = passport.requireAuth;
-
+  , requireAuth = passport.requireAuth
+  , requireHeroSelected = passport.requireHeroSelected;
 var Heros = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
   this.before(requireAuth);
   //TODO require hero selected for some methods here:
+  this.before(requireHeroSelected,{except:['index','selectHero','add','create','show']})
 
   this.index = function (req, resp, params) {
     var self = this;
@@ -44,6 +45,12 @@ var Heros = function () {
     });
   };
 
+  this.navigation = function (req, resp, params) {
+    this.session.set('winUrl', '/battleEnd/win');
+    this.session.set('looseUrl', '/battleEnd/lose');
+    this.respond({params:params}, {format: 'html',  template:'app/views/navigation'});
+  };
+  
   this.getOnlineHeros = function(req, resp, params){
     var self = this;
     geddy.model.Hero.all({and:[{isOnline:true}, {not:{id:self.session.get('selectedHero').id}}]},{sort:{name:'asc'}},function(err, online){
