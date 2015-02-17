@@ -7,7 +7,7 @@ var Heros = function () {
 
   this.before(requireAuth);
   //TODO require hero selected for some methods here:
-  this.before(requireHeroSelected,{except:['index','selectHero','add','create','show']})
+  this.before(requireHeroSelected,{only:['navigation', 'getOnlineHeros']})
 
   this.index = function (req, resp, params) {
     var self = this;
@@ -50,7 +50,7 @@ var Heros = function () {
     this.session.set('looseUrl', '/battleEnd/lose');
     this.respond({params:params}, {format: 'html',  template:'app/views/navigation'});
   };
-  
+
   this.getOnlineHeros = function(req, resp, params){
     var self = this;
     geddy.model.Hero.all({and:[{isOnline:true}, {not:{id:self.session.get('selectedHero').id}}]},{sort:{name:'asc'}},function(err, online){
@@ -106,7 +106,8 @@ var Heros = function () {
     
     var hero = geddy.model.Hero.create(params);
     hero.userId = self.session.get('userId');
-
+    hero.updateHealth();
+    
     if (!hero.isValid()) {
       self.flash.error(hero.errors);
       self.redirect('/heros/add');
@@ -182,7 +183,7 @@ var Heros = function () {
       params.unusedPoints = hero.unusedPoints - sumOfAllUsedPoints;
       
       hero.updateProperties(params);
-      
+      hero.updateHealth();
       if (!hero.isValid()) {
         self.flash.error('Uncorrect data')
         self.redirect('/heros/');

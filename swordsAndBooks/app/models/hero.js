@@ -30,6 +30,11 @@ var Hero = function () {
             gender: this.gender, race: this.race, level: this.level, image:this.image};
   }
 
+  this.updateHealth = function(){
+    this.currentHealth = 20 * this.stamina;
+    this.maxHealth = this.currentHealth;
+  }
+
   /*
   this.property('login', 'string', {required: true});
   this.property('password', 'string', {required: true});
