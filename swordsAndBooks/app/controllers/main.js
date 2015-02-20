@@ -78,7 +78,7 @@ var Main = function () {
   this.startBattle = function(req, resp, params){
     var self = this;
     geddy.model.Hero.first(params.opponentId,function(err, opponent){
-
+      console.log(params.opponentId,opponent)
       var yourHero = self.session.get('selectedHero');
       self.session.set('opponent', opponent);
 

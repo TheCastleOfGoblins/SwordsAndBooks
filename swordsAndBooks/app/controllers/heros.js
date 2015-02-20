@@ -2,6 +2,8 @@ var passport = require('../helpers/passport')
   , generateHash = passport.generateHash
   , requireAuth = passport.requireAuth
   , requireHeroSelected = passport.requireHeroSelected;
+var socketsInterface = require('../helpers/add_sockets.js');
+
 var Heros = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
@@ -47,6 +49,8 @@ var Heros = function () {
   };
 
   this.navigation = function (req, resp, params) {
+    // async operation
+    socketsInterface.addChalangeSockets(this);
     this.session.set('winUrl', '/battleEnd/win');
     this.session.set('looseUrl', '/battleEnd/lose');
     this.respond({params:params}, {format: 'html',  template:'app/views/navigation'});

@@ -1,4 +1,7 @@
 (function () {
+	var socketForSendingChallanges = io(window.location.hostname);
+		
+
 	function addRow(heroInfo){
 		var newRow ="<div class='hero-online' id="+ heroInfo.id + ">" + 
 					    "<div class='span1'>" + 
@@ -11,24 +14,33 @@
 					    "<div class='span3'>" + 
 					      "<strong> Gender: </strong>" + heroInfo.gender + 
 					      "<strong> Race: </strong> " + heroInfo.race + 
-					      "<a href='javascript:;' data-heroId=" + heroInfo.id + " class='challange btn btn-default btn-small' style='margin:2px'>Challange</a>" + 
+					      "<a href='javascript:;' data-heroId=" + heroInfo.id + " class='challenge btn btn-default btn-small' style='margin:2px'>Challange</a>" + 
 					    "</div>" + 
 					"</div>";
 
 
 		$('.herosOnline').append(newRow);
 
-		$('#' + heroInfo.id + ' a.challange').click(function(){
+		$('#' + heroInfo.id + ' a.challenge').click(function(){
+			socketForSendingChallanges.emit('challenge',{challengedId:heroInfo.id});
+			// $.post('/challenge',{challengedId:heroInfo.id},function(response){
+				
+			// 	if(response.success){
+			// 		console.log(response)
+			// 		// console.log('declined_' + response.challengedId + '_' + heroId);
+			// 		decliner.once('declined_' + response.challengedId + '_' + heroId, function(){
+			// 			alert(response.name + ' has declined your challange. What a pussy!')
+			// 		});
+			// 		decliner.once('accepted_' + response.challengedId + '_' + myId,function(){
+			// 			alert(response.name + ' is ready.Prepare for battle!')
+			// 		});
+			// 		alert('Challange Send Successfull');
+			// 		console.log(response);
+			// 	}else{
+			// 		alert('Challange fail to Send');
+			// 	}
+			// });
 			
-			$.post('/challenge',{challengedId:heroInfo.id},function(response){
-				console.log(response);
-				if(response.success){
-					alert('Challange Send Successfull');
-				}else{
-					alert('Challange fail to Send');
-				}
-			});
-			console.log('fua');
 		});
 	}
 	function getAllOnlineHeros(){

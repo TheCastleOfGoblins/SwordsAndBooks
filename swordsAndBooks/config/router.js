@@ -76,5 +76,7 @@ router.get('/auth/google/callback').to('Auth.googleCallback');
 router.resource('users');
 router.resource('battles');
 router.post('/challenge').to('Battles.challenge')
+router.post('/declineChallenge').to('Battles.declineChallenge')
+
 
 exports.router = router;

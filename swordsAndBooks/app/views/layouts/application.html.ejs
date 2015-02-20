@@ -1,4 +1,9 @@
 <%= partial('layout_header'); %>
+<% if(session.get('userId')){%>
+    <script type="text/javascript">
+     var myId = '<%-session.get("userId")%>';
+    </script>
+<% } %>
 <% if(session.get('selectedHero')){%>
   <script type="text/javascript">
   var heroId = '<%-session.get("selectedHero").id%>';

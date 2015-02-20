@@ -102,7 +102,8 @@ $(document).ready(function() {
 <script>
   $(document).ready(function(){
     $.ajax({
-      url:'/startBattle/111',
+
+      url:'/startBattle/<%-episode.heroId%>',
     }).done(function(data) {
       $('.game').html(data);
     });
