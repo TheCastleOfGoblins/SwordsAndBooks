@@ -27,6 +27,7 @@
               "</div>" + 
           "</div>";
       $("#challengesList").append(newRow);
+      
     });
 })();
 

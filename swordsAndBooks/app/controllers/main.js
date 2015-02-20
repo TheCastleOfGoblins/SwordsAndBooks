@@ -45,6 +45,9 @@ var Main = function () {
   };
 
   this.login = function (req, resp, params) {
+    if(typeof this.session.get('userId') != 'undefined'){
+      this.redirect('/heros/')
+    }
     this.respond(params, {
       format: 'html'
     , template: 'app/views/main/login'
@@ -53,8 +56,19 @@ var Main = function () {
   };
 
   this.logout = function (req, resp, params) {
+    
+    var hero = this.session.get('selectedHero');
+    if(typeof hero != 'undefined'){
+      hero.isOnline = false;
+      //async save here 
+      hero.save();
+    }
+
     this.session.unset('userId');
     this.session.unset('authType');
+
+
+    this.session.unset('selectedHero');
     this.respond(params, {
       format: 'html'
     , template: 'app/views/main/logout'
