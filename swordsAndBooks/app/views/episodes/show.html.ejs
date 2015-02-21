@@ -103,7 +103,7 @@ $(document).ready(function() {
   $(document).ready(function(){
     $.ajax({
 
-      url:'/startBattle/<%-episode.heroId%>',
+      url:'/bosses/startBattle/<%-episode.heroId%>',
     }).done(function(data) {
       $('.game').html(data);
     });

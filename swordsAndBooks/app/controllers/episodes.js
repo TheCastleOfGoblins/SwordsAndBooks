@@ -93,7 +93,7 @@ var Episodes = function () {
           throw new geddy.errors.BadRequestError();
         }
         else {
-          geddy.model.Hero.all(function(err, allHeroes){
+          geddy.model.Boss.all(function(err, allHeroes){
             self.respond({episode: episode, allEpisodesFromTheBook:allEpisodesFromTheBook, allHeroes:allHeroes});
           });
         }
