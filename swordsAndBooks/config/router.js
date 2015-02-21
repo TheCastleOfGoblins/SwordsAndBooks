@@ -77,6 +77,7 @@ router.resource('users');
 router.resource('battles');
 router.post('/challenge').to('Battles.challenge')
 router.post('/declineChallenge').to('Battles.declineChallenge')
-
-
+router.resource('bosses');
+router.get('/bosses/startBattle/:opponentId').to('Bosses.startBattle');
+router.get('/levelUp').to('Heros.levelUp');
 exports.router = router;

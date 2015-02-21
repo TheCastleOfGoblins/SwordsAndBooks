@@ -1,4 +1,4 @@
-var Hero = function () {
+var Boss = function () {
 
   this.defineProperties({
     name:{type:'string', required:true},
@@ -6,7 +6,6 @@ var Hero = function () {
     currentHealth: {type:'number',required:true},
     expirience: {type:'number',required:true},
     nextLevelExp: {type:'number',required:true}, 
-    unusedPoints:{type:'number',required:true},
 
     gender:{type:'string', required: true }, 
     race: {type:'string', required: true},
@@ -18,16 +17,12 @@ var Hero = function () {
     armor:{type:'number',required: true},
 
     image:{type:'string',required:true},
-    isOnline: {type:'boolean'}
+    wins: {type: 'number'},
+    looses: {type: 'number'}
   });
   
-  this.belongsTo('User');
   this.damage = function(){
-    return parseInt(Math.random()*3 * this.level + this.power);
-  }
-  this.returnPublicInfo = function(){
-    return {id:this.id, name: this.name,maxHealth:this.maxHealth, currentHealth:this.currentHealth,
-            gender: this.gender, race: this.race, level: this.level, image:this.image};
+    return parseInt(Math.random() * 3 * this.level + this.power);
   }
 
   this.updateHealth = function(){
@@ -55,16 +50,9 @@ var Hero = function () {
     this.currentHealth -= damage;
     return damage;
   }
-
   this.restore = function(){
     this.currentHealth = this.maxHealth;
   }
-
-  this.levelUp = function(){
-    this.level++;
-    this.unusedPoints += 10;
-  }
-
   /*
   this.property('login', 'string', {required: true});
   this.property('password', 'string', {required: true});
@@ -91,14 +79,15 @@ var Hero = function () {
 
 /*
 // Can also define them on the prototype
-Hero.prototype.someOtherMethod = function () {
+Boss.prototype.someOtherMethod = function () {
   // Do some other stuff
 };
 // Can also define static methods and properties
-Hero.someStaticMethod = function () {
+Boss.someStaticMethod = function () {
   // Do some other stuff
 };
-Hero.someStaticProperty = 'YYZ';
+Boss.someStaticProperty = 'YYZ';
 */
 
-Hero = geddy.model.register('Hero', Hero);
+exports.Boss = Boss;
+

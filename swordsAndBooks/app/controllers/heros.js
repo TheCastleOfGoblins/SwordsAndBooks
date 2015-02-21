@@ -8,8 +8,8 @@ var Heros = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
   this.before(requireAuth);
-  //TODO require hero selected for some methods here:
-  this.before(requireHeroSelected,{only:['navigation', 'getOnlineHeros']})
+  
+  this.before(requireHeroSelected,{only:['navigation', 'getOnlineHeros','levelUp']})
 
   this.index = function (req, resp, params) {
     var self = this;
@@ -47,6 +47,13 @@ var Heros = function () {
     });
 
   };
+  this.levelUp = function(req, resp,params){
+    var selectedHero = this.session.get('selectedHero');
+    selectedHero.levelUp();
+    //async operation
+    selectedHero.save();
+    this.redirect('/navigation');
+  }
 
   this.navigation = function (req, resp, params) {
     // async operation

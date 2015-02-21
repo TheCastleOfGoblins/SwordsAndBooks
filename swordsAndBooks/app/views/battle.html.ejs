@@ -43,12 +43,12 @@
 	}
 </script>
 
-<div class="bg2">
-    <div class="row move-a-little-bit-right" style="overflow:hidden">
+<div class="bg2 span12">
+    <div class="row" style="overflow:hidden">
       <div class="span4" style="position:relative;height:350px">
         <img class="on-top" src="/img/dragon-left.png" style="height:350px">
         <div class="health-orb left-orb">
-          <div data-hp='<%=Math.floor(yourHero.currentHealth / 10)%>' class="hp yourHealthBar"></div>
+          <div data-hp='<%=parseInt(yourHero.currentHealth / yourHero.maxHealth)*10%>' class="hp yourHealthBar"></div>
         </div>
       </div>
       <div class="span4" style="position:relative;height:350px">
@@ -139,7 +139,7 @@
       <div class="span4" style="position:relative;height:350px">
         <img class="on-top" src="/img/dragon-right.png" style="height:350px">
         <div class="health-orb right-orb">
-          <div data-hp='<%=Math.floor(opponent.currentHealth / 10)%>' class="hp enemyHeathBar"></div>
+          <div data-hp='<%=Math.floor(opponent.currentHealth / opponent.maxHealth)*10%>' class="hp enemyHeathBar"></div>
         </div>
       </div>
     </div>
@@ -165,12 +165,13 @@
 			$('.attackMenu').fadeOut('slow',function () {
 				$('.defenseMenu').fadeIn('slow');	
 			});
+			console.log(data);
 			if(data.win){
 				console.log('You win.');
 				$('.attackInfoContainer').html('<h1><strong>You Win!</strong></h1>');
-				setTimeout(function(){
-					window.location.href = $('.battleInfo').attr('data-win');
-				},2000);
+				// setTimeout(function(){
+				// 	window.location.href = $('.battleInfo').attr('data-win');
+				// },2000);
 			}
 			$('.attackInfoContainer .damageDone .dmg').text(data.damageDone);
 
@@ -187,7 +188,8 @@
 			});
 
 			$('.opponentCurrentHealth').text(data.opponent.currentHealth);
-			$('.enemyHeathBar').attr('data-hp', Math.floor(data.opponent.currentHealth/10));
+			
+			$('.enemyHeathBar').attr('data-hp', parseInt((data.opponent.currentHealth/data.opponent.maxHealth)*10));
 			$('.attack').attr('checked',false);
 	});
 
@@ -209,9 +211,9 @@
 		if(data.lose){
 			console.log('You lose.');
 			$('.defenseInfoContainer').html('<h1><strong>You lose!</strong></h1>');
-				setTimeout(function(){
-					window.location.href = $('.battleInfo').attr('data-lose');
-				},2000);
+				// setTimeout(function(){
+				// 	window.location.href = $('.battleInfo').attr('data-lose');
+				// },2000);
 		}
 
 		$('.defenseInfoContainer .damageTaken .dmg').text(data.damageDone);
@@ -229,7 +231,7 @@
 	
 		
 		$('#yourCurrentHealth').text(data.yourHero.currentHealth);
-		$('.yourHealthBar').attr('data-hp', Math.floor(data.yourHero.currentHealth/10));
+		$('.yourHealthBar').attr('data-hp', parseInt((data.yourHero.currentHealth/data.yourHero.maxHealth)*10));
 		$('.defense').attr('checked',false);
 
 		console.log(data);

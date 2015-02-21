@@ -1,0 +1,68 @@
+
+<div class="small-empty-space"></div>
+<div class="bg1">
+  <div class="small-empty-space"></div>
+  <div class="container">
+    <div class="row">
+      <div class="offset2 span8">
+        <% if (bosses) { %>
+            <% for (var i = 0, ii = bosses.length; i < ii; i++) { %>
+              <div class='span4 hero heroActions' id='<%=bosses[i].id%>'>
+                <div class='span2'>
+                  <img src='<%=bosses[i].image%>'/>
+                </div>
+                <div class='span2'>
+                  <h4 class="offseted-content">
+                    <%=bosses[i].name%>
+                  </h4>
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                    <i>Gender:</i> <%=bosses[i].gender%>
+                  </span class="offseted-content">
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                    <i>Race:</i> <%=bosses[i].race%>
+                  </span>
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                    <i>Level:</i> <%=bosses[i].level%>
+                  </span>
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                    <i>Wins:</i> <%=bosses[i].wins%>
+                  </span>
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                    <i>Looses:</i> <%=bosses[i].looses%>
+                  </span>
+                </div>
+                <div class='span2'>
+                  <span class="offseted-content">
+                  <a href='/bosses/startBattle/<%=bosses[i].id%>' data-heroId='<%=bosses[i].id%>' class='btn btn-default btn-danger'>Fight</a>
+                  </span>
+                </div>
+              </div>
+              
+            <% } %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <div class="small-empty-space"></div>
+</div>
+
+<div class="grayline">
+</div>
+
+<div class="small-empty-space">
+  <div class="container">
+  </div>
+</div>
+
+<div class="blackline">
+</div>
