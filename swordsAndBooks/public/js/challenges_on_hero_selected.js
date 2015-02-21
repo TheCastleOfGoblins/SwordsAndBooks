@@ -1,8 +1,9 @@
-var socketForChallanges = io(window.location.hostname);
+
 (function(){
-    var socketForChallanges = io(window.location.hostname);
     
-    socketForChallanges.on('challenged_' + heroId, function(details){
+    var socket = io(window.location.hostname);
+
+    socket.on('challenged_' + heroId, function(details){
       console.log(details);
       $('#challengesBtn').css('background','white');
       setTimeout(function(){
@@ -34,9 +35,10 @@ var socketForChallanges = io(window.location.hostname);
       });
 
       $('[data-id="' + details.challenger.id + '"] .decline').click(function(){
-        $.post('/declineChallenge',{challengerId: details.challenger.id },function(response){
-          console.log(response)
-        })
+        socket.emit('decline', {challengerId: details.challenger.id });
+        // $.post('/declineChallenge',{challengerId: details.challenger.id },function(response){
+        //   console.log(response)
+        // })
       });
     });
 })();

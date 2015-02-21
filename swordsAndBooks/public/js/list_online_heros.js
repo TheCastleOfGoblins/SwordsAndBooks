@@ -1,6 +1,7 @@
 (function () {
-	var socketForSendingChallanges = io(window.location.hostname);
 		
+	
+	var socket = io(window.location.hostname);
 
 	function addRow(heroInfo){
 		var newRow ="<div class='hero-online' id="+ heroInfo.id + ">" + 
@@ -22,7 +23,11 @@
 		$('.herosOnline').append(newRow);
 
 		$('#' + heroInfo.id + ' a.challenge').click(function(){
-			socketForSendingChallanges.emit('challenge',{challengedId:heroInfo.id});
+			console.log('daaa');
+			socket.emit('challenge',{challengedId:heroInfo.id});
+			socket.once('declined_' + heroId + '_' + heroInfo.id , function(){
+						alert(response.name + ' has declined your challange. What a pussy!')
+					});
 			// $.post('/challenge',{challengedId:heroInfo.id},function(response){
 				
 			// 	if(response.success){
