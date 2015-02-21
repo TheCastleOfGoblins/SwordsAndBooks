@@ -10,6 +10,7 @@
     "geddy": "^13.0.7",
     "jake": "0.5.x",
     "jquery": "^2.1.1",
+    "mocha": "^2.1.0",
     "mongodb": "1.x",
     "nodemailer": "^0.7.1",
     "passport": "0.1.x",

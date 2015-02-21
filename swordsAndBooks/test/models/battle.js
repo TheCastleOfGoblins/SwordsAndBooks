@@ -26,4 +26,5 @@ tests = {
 
 };
 
+// tests['simple test if the model saves without a error']();
 module.exports = tests;

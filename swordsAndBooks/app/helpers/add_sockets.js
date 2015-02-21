@@ -18,7 +18,7 @@ exports.addChalangeSockets = function (self) {
 		    
 		      console.log('challenged_' + challengedHero.id);
 		      
-		      socket.emit('challenged_' + challengedHero.id, {challenger: hero.returnPublicInfo()});
+		      io.sockets.emit('challenged_' + challengedHero.id, {challenger: hero.returnPublicInfo()});
 		  	});
 	  		
 	  	});
