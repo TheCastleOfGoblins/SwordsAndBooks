@@ -12,7 +12,7 @@ var Bosses = function () {
 
   this.index = function (req, resp, params) {
     var self = this;
-    geddy.model.Boss.all(function(err, bosses){
+    geddy.model.Boss.all({},{sort:{level:'asc'}},function(err, bosses){
       if(err){
         throw err;
         return;
