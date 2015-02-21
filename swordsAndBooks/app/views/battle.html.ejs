@@ -2,13 +2,37 @@
 <script type="text/javascript">
 	function checkPropertBox(part){
 		if($('.attackMenu').is(':visible')){
-			$('.attack.' + part).attr('checked',true);
+			$('.attack.' + part).attr('checked',!$('.attack.' + part).is(':checked'));
 		}else{
-			$('.defense.' + part).attr('checked',true);
+			$('.defense.' + part).attr('checked',!$('.defense.' + part).is(':checked'));
 		}
 	}
+	function checkForShortKeys(event){
+		// console.log(event);
+		var charCode = event.charCode || event.keyCode,
+			charPressed = String.fromCharCode(charCode);
+		// console.log(charPressed);
+		if(charPressed == '1'){
+			checkPropertBox('head');
+		}else if(charPressed == '2'){
+			checkPropertBox('body');
+		}else if(charPressed == '3'){
+			checkPropertBox('arms');
+		}else if(charPressed == '4'){
+			checkPropertBox('legs');
+		}else if(charPressed == 'A'){
+			if($('#submitAtack').is(':visible')){
+	  				$('#submitAtack').click();
+  			}
+		}else if(charPressed == 'D'){
+			if($('#submitDefense').is(':visible')){
+  				$('#submitDefense').click();
+  			}
+		}
+			
+
+	}
 	if (annyang) {
-  		console.log('yeah?');
   		
 	  	var commands = {
 	  		'head': function(){
@@ -39,16 +63,56 @@
 		annyang.addCommands(commands);
 
 	  	// Start listening. You can call this here, or attach this call to an event, button, etc.
-	  	annyang.start();
+	  	$(document).ready(function(){
+	  		$('#letMeTalk').change(function(){
+		  		
+		  		if($(this).is(':checked')){
+		  			annyang.start();
+		  		}else{
+		  			annyang.abort();
+		  		}
+	  		});
+	  		$('#shortKeys').change(function(){
+		  		
+		  		if($(this).is(':checked')){
+		  			$(document).keydown(checkForShortKeys)
+		  		}else{
+		  			$(document).off('keydown');
+		  		}
+	  		});
+	  		
+
+
+	  	})
+	  	// annyang.start();
 	}
+
+
+
 </script>
+
+<div class='span12' style='margin-bottom:50px;color:black'>
+	<div class='span4'>
+		<%-contentTag('input','',{type:'checkbox',id:'readMe'})%>
+		Read What's Happening in the battle
+	</div>
+	<div class='span4'>
+		<%-contentTag('input','',{type:'checkbox',id:'letMeTalk'})%>
+		Activate voice battle
+	</div>
+	<div class='span3'>
+		<%-contentTag('input','',{type:'checkbox',id:'shortKeys'})%>
+		Use short keys
+	</div>
+</div>
+
 
 <div class="bg2 span12">
     <div class="row" style="overflow:hidden">
       <div class="span4" style="position:relative;height:350px">
         <img class="on-top" src="/img/dragon-left.png" style="height:350px">
         <div class="health-orb left-orb">
-          <div data-hp='<%=parseInt(yourHero.currentHealth / yourHero.maxHealth)*10%>' class="hp yourHealthBar"></div>
+          <div data-hp='<%=parseInt((yourHero.currentHealth / yourHero.maxHealth)*10)%>' class="hp yourHealthBar"></div>
         </div>
       </div>
       <div class="span4" style="position:relative;height:350px">
@@ -139,7 +203,7 @@
       <div class="span4" style="position:relative;height:350px">
         <img class="on-top" src="/img/dragon-right.png" style="height:350px">
         <div class="health-orb right-orb">
-          <div data-hp='<%=Math.floor(opponent.currentHealth / opponent.maxHealth)*10%>' class="hp enemyHeathBar"></div>
+          <div data-hp='<%=parseInt((opponent.currentHealth / opponent.maxHealth)*10)%>' class="hp enemyHeathBar"></div>
         </div>
       </div>
     </div>
@@ -165,7 +229,7 @@
 			$('.attackMenu').fadeOut('slow',function () {
 				$('.defenseMenu').fadeIn('slow');	
 			});
-			console.log(data);
+			
 			if(data.win){
 				console.log('You win.');
 				$('.attackInfoContainer').html('<h1><strong>You Win!</strong></h1>');
@@ -179,7 +243,7 @@
 				$('.attackInfoContainer .roundInfo').text('Blocked');
 				$('.attackBlock .dmg').text(data.blockDamage);
 			}else{
-				$('.attackInfoContainer .roundInfo').text('Hit');
+				$('.attackInfoContainer .roundInfo').text('Successful Hit');
 				$('.attackBlock .dmg').text(0);
 			}
 
@@ -191,6 +255,19 @@
 			
 			$('.enemyHeathBar').attr('data-hp', parseInt((data.opponent.currentHealth/data.opponent.maxHealth)*10));
 			$('.attack').attr('checked',false);
+
+			if($('#readMe').is(':checked')){
+				var forReading = $('.attackInfoContainer').text()
+									.split('  ')
+									.map(function(value){
+										return value.trim();
+									})
+									.filter(function(value) { return value});
+				forReading.push('');
+
+				sayEverything(forReading,0);
+			}
+			
 	});
 
 	$('#submitDefense').click(function() {
@@ -222,7 +299,7 @@
 			$('.defenseInfoContainer .roundInfo').text('Blocked');
 			$('.defenseInfoContainer .defenseBlock .dmg').text(data.blockDamage);
 		}else{
-			$('.defenseInfoContainer .roundInfo').text('Hit');
+			$('.defenseInfoContainer .roundInfo').text('Successful Hit');
 			$('.defenseInfoContainer .defenseBlock .dmg').text(0);
 		}
 		$('.attackInfoContainer').fadeOut('slow',function(){
@@ -234,6 +311,17 @@
 		$('.yourHealthBar').attr('data-hp', parseInt((data.yourHero.currentHealth/data.yourHero.maxHealth)*10));
 		$('.defense').attr('checked',false);
 
-		console.log(data);
+		if($('#readMe').is(':checked')){
+			var forReading = $('.defenseInfoContainer').text()
+									.split('  ')
+									.map(function(value){
+										return value.trim();
+									})
+									.filter(function(value) { return value});
+			
+			forReading.push('');
+			sayEverything(forReading,0);
+		}
+		
 	});
 </script>
